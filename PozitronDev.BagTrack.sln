@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.33913.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PozitronDev.BagTrack", "src\PozitronDev.BagTrack\PozitronDev.BagTrack.csproj", "{CD5EA141-9F34-477F-AAAC-30E34C72E250}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PozitronDev.SharedKernel", "src\PozitronDev.SharedKernel\PozitronDev.SharedKernel.csproj", "{CA9FE36E-9DD9-465B-AEB3-ABF42919FF4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PozitronDev.Extensions", "src\PozitronDev.Extensions\PozitronDev.Extensions.csproj", "{A59659C9-D8AC-4191-9D2B-70ADE4814249}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PozitronDev.BagTrack.Tests", "tests\PozitronDev.BagTrack.Tests\PozitronDev.BagTrack.Tests.csproj", "{35E26DD4-59FD-42C7-9474-B46D4FF62B58}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CF8FC388-CE5E-434B-AA9B-53D65BAD5C82}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD5EA141-9F34-477F-AAAC-30E34C72E250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD5EA141-9F34-477F-AAAC-30E34C72E250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD5EA141-9F34-477F-AAAC-30E34C72E250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD5EA141-9F34-477F-AAAC-30E34C72E250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA9FE36E-9DD9-465B-AEB3-ABF42919FF4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA9FE36E-9DD9-465B-AEB3-ABF42919FF4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA9FE36E-9DD9-465B-AEB3-ABF42919FF4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA9FE36E-9DD9-465B-AEB3-ABF42919FF4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A59659C9-D8AC-4191-9D2B-70ADE4814249}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A59659C9-D8AC-4191-9D2B-70ADE4814249}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A59659C9-D8AC-4191-9D2B-70ADE4814249}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A59659C9-D8AC-4191-9D2B-70ADE4814249}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35E26DD4-59FD-42C7-9474-B46D4FF62B58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35E26DD4-59FD-42C7-9474-B46D4FF62B58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35E26DD4-59FD-42C7-9474-B46D4FF62B58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35E26DD4-59FD-42C7-9474-B46D4FF62B58}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {015F8F24-7766-4F26-A0AB-294A331F5FD3}
+	EndGlobalSection
+EndGlobal
