@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using PozitronDev.BagTrack.Domain;
 using PozitronDev.Extensions.EntityFrameworkCore;
 using PozitronDev.SharedKernel.Contracts;
 
@@ -10,6 +11,8 @@ public class BagTrackDbContext : DbContext
     private readonly IDateTime _dateTime;
     private readonly ICurrentUser _currentUser;
     private readonly IMediator _mediator;
+
+    public DbSet<Bag> Bags => Set<Bag>();
 
     public BagTrackDbContext(
         DbContextOptions<BagTrackDbContext> options,
