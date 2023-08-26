@@ -1,6 +1,5 @@
 ﻿namespace PozitronDev.Extensions;
 
-public class Class1
+public class ExtensionsMarker
 {
-
 }
