@@ -344,3 +344,7 @@ CoverageResults
 
 # Scaffolding connection strings
 scaffoldconnectionstrings.txt
+
+# Developer config files
+Logs
+CoverageResults
