@@ -25,28 +25,28 @@ generateBagTrackMigration()
 uuid=$(echo $RANDOM | md5sum | head -c 20)
 echo ""
 echo "Generating migrations for BagTrack DB.."
-dotnet ef migrations add $uuid -c BagTrackDbContext -s $ApiProject -p BagTrackProject -o Migrations
+dotnet ef migrations add $uuid -c $BagTrackDbContext -s $ApiProject -p $BagTrackProject -o Migrations
 }
 
 generateBagTrackScript()
 {
 echo ""
 echo "Generating script for BagTrack DB.."
-dotnet ef migrations script -i -o "$DBDir"/bagtrack.sql -c BagTrackDbContext -s $ApiProject -p BagTrackProject
+dotnet ef migrations script -i -o "$DBDir"/bagtrack.sql -c $BagTrackDbContext -s $ApiProject -p $BagTrackProject
 }
 
 dropBagTrackDb()
 {
 echo ""
 echo "Dropping BagTrack database.."
-dotnet ef database drop -c BagTrackDbContext -s $ApiProject -p BagTrackProject -f
+dotnet ef database drop -c $BagTrackDbContext -s $ApiProject -p $BagTrackProject -f
 }
 
 updateBagTrackDb()
 {
 echo ""
 echo "Updating BagTrack database.."
-dotnet ef database update -c BagTrackDbContext -s $ApiProject -p BagTrackProject
+dotnet ef database update -c $BagTrackDbContext -s $ApiProject -p $BagTrackProject
 }
 
 
@@ -66,7 +66,7 @@ checkParameters()
 		exit 1;
 	fi
 
-	if [ "$module" != "bagtrack" ] && [ "$module" != "all" ]; then
+	if [ "$module" != "bagtrack" ] && [ "$module" != "all" ]  && [ "$module" != "" ]; then
 		showUsage;
 		exit 1;
 	fi
