@@ -1,0 +1,45 @@
+trigger: none
+
+pool:
+  vmImage: 'windows-2022'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+    
+- task: DotNetCoreCLI@2
+  displayName: 'Restore NuGet Packages'
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+    
+- task: DotNetCoreCLI@2
+  displayName: 'Run Tests'
+  inputs:
+    command: test
+    projects: '**/*Tests.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: Create BagTrack Artifact
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: 'src\PozitronDev.BagTrack\PozitronDev.BagTrack.csproj'
+    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)'
+    zipAfterPublish: true
+
+- task: CopyFiles@2
+  displayName: Copy Database Deployment scripts
+  inputs:
+    sourceFolder: 'db'
+    contents: '*'
+    targetFolder: '$(build.artifactstagingdirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifacts'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'  
