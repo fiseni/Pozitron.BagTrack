@@ -1,8 +1,6 @@
-﻿using Ardalis.GuardClauses;
-using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using PozitronDev.SharedKernel.Exceptions;
-using System;
 using System.Diagnostics;
 using System.Net;
 using System.Text.Json;

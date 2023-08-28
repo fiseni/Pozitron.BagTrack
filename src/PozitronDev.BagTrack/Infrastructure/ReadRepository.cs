@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using PozitronDev.BagTrack.Infrastructure;
 using PozitronDev.Extensions.Data;
 using PozitronDev.SharedKernel.Contracts;
 

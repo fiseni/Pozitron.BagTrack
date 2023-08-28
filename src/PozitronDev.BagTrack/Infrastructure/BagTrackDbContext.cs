@@ -1,6 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using PozitronDev.BagTrack.Domain;
+﻿using Microsoft.EntityFrameworkCore;
 using PozitronDev.Extensions.EntityFrameworkCore;
 using PozitronDev.SharedKernel.Contracts;
 

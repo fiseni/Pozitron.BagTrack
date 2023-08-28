@@ -1,5 +1,4 @@
 ﻿using Ardalis.Specification;
-using PozitronDev.SharedKernel.Data;
 
 namespace PozitronDev.SharedKernel.Contracts;
 

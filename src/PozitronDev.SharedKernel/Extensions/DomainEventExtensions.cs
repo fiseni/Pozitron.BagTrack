@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using PozitronDev.SharedKernel.Data;
 
 namespace PozitronDev.SharedKernel.Extensions;
 

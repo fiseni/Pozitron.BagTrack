@@ -1,8 +1,6 @@
 ﻿using Azure.Identity;
 using BlazarTech.QueryableValues;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
-using PozitronDev.BagTrack.Infrastructure;
 using PozitronDev.CommissionPayment.Infrastructure;
 using PozitronDev.Extensions.Automapper;
 using PozitronDev.Extensions.Net;

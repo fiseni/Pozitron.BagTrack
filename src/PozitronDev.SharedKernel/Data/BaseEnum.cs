@@ -1,7 +1,4 @@
-﻿using Ardalis.GuardClauses;
-using System.Diagnostics.CodeAnalysis;
-
-namespace PozitronDev.SharedKernel.Data;
+﻿namespace PozitronDev.SharedKernel.Data;
 
 public abstract class BaseEnum<TEnum> :
     BaseEnum<TEnum, int>

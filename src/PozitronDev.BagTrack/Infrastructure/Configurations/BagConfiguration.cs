@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PozitronDev.BagTrack.Domain;
 
 namespace PozitronDev.BagTrack.Infrastructure.Configurations;
 

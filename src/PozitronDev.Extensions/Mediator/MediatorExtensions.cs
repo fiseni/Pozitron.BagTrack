@@ -28,7 +28,7 @@ public static class MediatorExtensions
 
     public static IServiceCollection AddExtendedMediatR(this IServiceCollection services, params Type[] handlerAssemblyMarkerTypes)
     {
-        var assemblies = handlerAssemblyMarkerTypes.Select(x=>x.Assembly).ToArray();
+        var assemblies = handlerAssemblyMarkerTypes.Select(x => x.Assembly).ToArray();
 
         services.TryAdd(new ServiceDescriptor(typeof(IPublisherProvider), typeof(NotificationPublisherProvider), ServiceLifetime.Singleton));
 

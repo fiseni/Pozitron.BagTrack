@@ -1,6 +1,4 @@
-﻿using Ardalis.GuardClauses;
-
-namespace PozitronDev.SharedKernel.Extensions;
+﻿namespace PozitronDev.SharedKernel.Extensions;
 
 public static class LinqExtensions
 {

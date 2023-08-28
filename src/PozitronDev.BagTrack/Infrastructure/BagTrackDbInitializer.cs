@@ -1,5 +1,4 @@
-﻿using PozitronDev.BagTrack.Infrastructure;
-using PozitronDev.SharedKernel.Contracts;
+﻿using PozitronDev.SharedKernel.Contracts;
 
 namespace PozitronDev.CommissionPayment.Infrastructure;
 

@@ -27,7 +27,7 @@ public static class ModelConfigurationBuilderExtensions
 
             if (baseEnumType is null) continue;
 
-            var baseType = baseEnumType.GenericTypeArguments[0];    
+            var baseType = baseEnumType.GenericTypeArguments[0];
             var keyType = baseEnumType.GenericTypeArguments[1];
 
             if (baseType is null || keyType is null) continue;
