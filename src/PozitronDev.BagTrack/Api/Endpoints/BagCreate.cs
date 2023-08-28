@@ -38,7 +38,6 @@ public class ArrivalTrackingCreateHandler : IRequestHandler<BagCreateRequest, Ba
         {
             BagTrackId = bag.BagTrackId,
             DeviceId = bag.DeviceId,
-            IsResponseNeeded = bag.IsResponseNeeded,
             JulianDate = bag.JulianDate,
         };
     }
