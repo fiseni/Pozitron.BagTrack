@@ -30,6 +30,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
+app.MapGet("/", () => "Pozitron BagTrack API v1");
+
 await app.Initialize();
 
 app.Run();

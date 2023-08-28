@@ -26,7 +26,7 @@ public static class SwaggerExtensions
         app.UseSwaggerUI(c =>
         {
             c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pozitron BagTrack API");
-            c.RoutePrefix = "api/documentation";
+            c.RoutePrefix = "api";
         });
     }
 }
