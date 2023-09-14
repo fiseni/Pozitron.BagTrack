@@ -21,7 +21,7 @@ public class BagGetHandler : IRequestHandler<BagGetRequest, BagDto>
                 DeviceId = x.DeviceId,
                 JulianDate = x.JulianDate,
             })
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
 
         Guard.Against.NotFound(request.BagTagId, bagDto);
 

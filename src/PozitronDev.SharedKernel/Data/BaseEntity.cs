@@ -5,11 +5,11 @@ public abstract class BaseEntity : IEntity<Guid>, IAuditableEntity, ISoftDelete
     public Guid Id { get; protected set; }
     public bool IsDeleted { get; private set; }
 
-    public DateTime? AuditCreatedTime { get; set; }
-    public string? AuditCreatedByUserId { get; set; }
+    public DateTime? AuditCreatedAt { get; set; }
+    public string? AuditCreatedBy { get; set; }
     public string? AuditCreatedByUsername { get; set; }
-    public DateTime? AuditModifiedTime { get; set; }
-    public string? AuditModifiedByUserId { get; set; }
+    public DateTime? AuditModifiedAt { get; set; }
+    public string? AuditModifiedBy { get; set; }
     public string? AuditModifiedByUsername { get; set; }
 
 
@@ -22,15 +22,15 @@ public abstract class BaseEntity : IEntity<Guid>, IAuditableEntity, ISoftDelete
 
     public void UpdateCreateInfo(DateTime now, ICurrentUser currentUser)
     {
-        AuditCreatedTime = now;
-        AuditCreatedByUserId = currentUser?.UserId;
+        AuditCreatedAt = now;
+        AuditCreatedBy = currentUser?.UserId;
         AuditCreatedByUsername = currentUser?.Username;
     }
 
     public void UpdateModifyInfo(DateTime now, ICurrentUser currentUser)
     {
-        AuditModifiedTime = now;
-        AuditModifiedByUserId = currentUser?.UserId;
+        AuditModifiedAt = now;
+        AuditModifiedBy = currentUser?.UserId;
         AuditModifiedByUsername = currentUser?.Username;
     }
 }

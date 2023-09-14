@@ -11,12 +11,12 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
 
     public async Task<BagDto> Handle(BagCreateRequest request, CancellationToken cancellationToken)
     {
-        var create = request.BagCreateDto;
+        var createDto = request.BagCreateDto;
 
-        var bag = new Bag(create.BagTrackId, create.DeviceId, create.IsResponseNeeded, create.JulianDate);
+        var bag = new Bag(createDto.BagTrackId, createDto.DeviceId, createDto.IsResponseNeeded, createDto.JulianDate);
 
         _dbContext.Bags.Add(bag);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         return new BagDto
         {
