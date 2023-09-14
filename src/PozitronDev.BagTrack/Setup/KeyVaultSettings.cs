@@ -7,7 +7,7 @@ public class KeyVaultSettings
     public static KeyVaultSettings Instance { get; } = new KeyVaultSettings();
     private KeyVaultSettings() { }
 
-    public virtual string? AzureKeyVault { get; set; }
-    public virtual bool DisableAzureKeyVault { get; set; } = false;
+    public string? AzureKeyVault { get; set; }
+    public bool DisableAzureKeyVault { get; set; } = false;
 }
 

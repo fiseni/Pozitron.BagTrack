@@ -25,7 +25,7 @@ generateBagTrackMigration()
 uuid=$(echo $RANDOM | md5sum | head -c 20)
 echo ""
 echo "Generating migrations for BagTrack DB.."
-dotnet ef migrations add $uuid -c $BagTrackDbContext -s $ApiProject -p $BagTrackProject -o Migrations
+dotnet ef migrations add $uuid -c $BagTrackDbContext -s $ApiProject -p $BagTrackProject -o Infrastructure/Migrations
 }
 
 generateBagTrackScript()

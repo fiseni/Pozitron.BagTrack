@@ -1,4 +1,5 @@
 ﻿using PozitronDev.SharedKernel.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace PozitronDev.BagTrack.Setup;
 
@@ -9,14 +10,6 @@ public class BagTrackSettings
     public static BagTrackSettings Instance { get; } = new BagTrackSettings();
     private BagTrackSettings() { }
 
-    public string? ConnectionString { get; set; }
-    public string? DbSecretName { get; set; }
-
-    public DbConnectionInfo GetDbConnectionInfo(IConfiguration configuration)
-    {
-        var connectionStringFromAzureKeyVault = !string.IsNullOrWhiteSpace(DbSecretName) ? configuration.GetSection(DbSecretName).Get<string>() : string.Empty;
-        var disableAzureKeyVault = configuration.GetSection($"{KeyVaultSettings.CONFIG_NAME}:{nameof(KeyVaultSettings.DisableAzureKeyVault)}").Get<bool>();
-
-        return new DbConnectionInfo(ConnectionString, connectionStringFromAzureKeyVault, !disableAzureKeyVault);
-    }
+    [Required]
+    public string ConnectionString { get; set; } = default!;
 }

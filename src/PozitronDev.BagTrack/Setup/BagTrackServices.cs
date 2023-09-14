@@ -28,9 +28,11 @@ public static class BagTrackServices
         builder.Services.AddCustomAutoMapper(typeof(BagTrackMarker).Assembly);
         builder.Services.AddCustomFluentValidation(typeof(BagTrackMarker).Assembly);
 
-        var dbConnectionInfo = BagTrackSettings.Instance.GetDbConnectionInfo(builder.Configuration);
+        var connectionString = KeyVaultSettings.Instance.DisableAzureKeyVault
+            ? BagTrackSettings.Instance.ConnectionString
+            : builder.Configuration.GetSection(BagTrackSettings.Instance.ConnectionString).Get<string>();
 
-        builder.Services.AddDbContext<BagTrackDbContext>(options => options.UseSqlServer(dbConnectionInfo.ConnectionString, sqlServerOptions =>
+        builder.Services.AddDbContext<BagTrackDbContext>(options => options.UseSqlServer(connectionString, sqlServerOptions =>
         {
             sqlServerOptions.UseQueryableValues(config => config.Serialization(SqlServerSerialization.Auto));
         }));
