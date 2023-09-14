@@ -10,6 +10,6 @@ public class BagConfiguration : IEntityTypeConfiguration<Bag>
         builder.Property(x => x.BagTrackId).HasMaxLength(10);
         builder.Property(x => x.DeviceId).HasMaxLength(10);
         builder.Property(x => x.IsResponseNeeded).HasMaxLength(1);
-        builder.Property(x => x.JulianDate).HasMaxLength(3);
+        builder.Property(x => x.JulianDate).HasMaxLength(10);
     }
 }

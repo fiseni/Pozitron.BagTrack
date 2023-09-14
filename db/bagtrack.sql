@@ -11,36 +11,36 @@ GO
 BEGIN TRANSACTION;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230826165919_41eabab6431c4720c3ad')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230914230936_38d677a10d88e731ddde')
 BEGIN
     CREATE TABLE [Bag] (
         [Id] uniqueidentifier NOT NULL,
         [BagTrackId] nvarchar(10) NOT NULL,
         [DeviceId] nvarchar(10) NOT NULL,
-        [IsResponseNeeded] nvarchar(1) NULL,
-        [JulianDate] nvarchar(3) NULL,
+        [IsResponseNeeded] bit NOT NULL,
+        [JulianDate] nvarchar(10) NULL,
         [IsDeleted] bit NOT NULL,
-        [AuditCreatedTime] datetime2 NULL,
-        [AuditCreatedByUserId] nvarchar(250) NULL,
+        [AuditCreatedAt] datetime2 NULL,
+        [AuditCreatedBy] nvarchar(250) NULL,
         [AuditCreatedByUsername] nvarchar(250) NULL,
-        [AuditModifiedTime] datetime2 NULL,
-        [AuditModifiedByUserId] nvarchar(250) NULL,
+        [AuditModifiedAt] datetime2 NULL,
+        [AuditModifiedBy] nvarchar(250) NULL,
         [AuditModifiedByUsername] nvarchar(250) NULL,
         CONSTRAINT [PK_Bag] PRIMARY KEY ([Id])
     );
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230826165919_41eabab6431c4720c3ad')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230914230936_38d677a10d88e731ddde')
 BEGIN
     CREATE INDEX [IX_Bag_IsDeleted] ON [Bag] ([IsDeleted]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230826165919_41eabab6431c4720c3ad')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230914230936_38d677a10d88e731ddde')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20230826165919_41eabab6431c4720c3ad', N'7.0.10');
+    VALUES (N'20230914230936_38d677a10d88e731ddde', N'7.0.10');
 END;
 GO
 

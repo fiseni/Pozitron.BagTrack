@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PozitronDev.BagTrack.Infrastructure;
 
 #nullable disable
 
-namespace PozitronDev.BagTrack.Migrations
+namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    partial class BagTrackDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230914230936_38d677a10d88e731ddde")]
+    partial class _38d677a10d88e731ddde
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -450,7 +453,10 @@ namespace PozitronDev.BagTrack.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AuditCreatedByUserId")
+                    b.Property<DateTime?>("AuditCreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("AuditCreatedBy")
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
@@ -458,19 +464,16 @@ namespace PozitronDev.BagTrack.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<DateTime?>("AuditCreatedTime")
+                    b.Property<DateTime?>("AuditModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("AuditModifiedByUserId")
+                    b.Property<string>("AuditModifiedBy")
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("AuditModifiedByUsername")
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
-
-                    b.Property<DateTime?>("AuditModifiedTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("BagTrackId")
                         .IsRequired()
@@ -485,13 +488,13 @@ namespace PozitronDev.BagTrack.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("IsResponseNeeded")
+                    b.Property<bool>("IsResponseNeeded")
                         .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
+                        .HasColumnType("bit");
 
                     b.Property<string>("JulianDate")
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
 
