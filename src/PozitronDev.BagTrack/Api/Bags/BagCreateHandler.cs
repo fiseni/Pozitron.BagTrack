@@ -24,7 +24,7 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
         var bag = new Bag(
             _dateTime,
             _deviceCache,
-            request.BagTrackId,
+            request.BagTagId,
             request.DeviceId,
             request.IsResponseNeeded,
             request.JulianDate

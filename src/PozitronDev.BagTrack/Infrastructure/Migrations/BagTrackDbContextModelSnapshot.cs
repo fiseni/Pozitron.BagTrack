@@ -454,7 +454,7 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<string>("BagTrackId")
+                    b.Property<string>("BagTagId")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");

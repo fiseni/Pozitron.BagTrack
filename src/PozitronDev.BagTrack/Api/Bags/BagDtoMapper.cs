@@ -6,7 +6,7 @@ public static class BagDtoMapper
 {
     private static readonly Expression<Func<Bag, BagDto>> _expression = x => new BagDto
     {
-        BagTrackId = x.BagTrackId,
+        BagTagId = x.BagTagId,
         DeviceId = x.DeviceId,
         Date = DateOnly.FromDateTime(x.Date),
         Carousel = x.Carousel,

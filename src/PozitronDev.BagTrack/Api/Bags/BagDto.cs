@@ -2,7 +2,7 @@
 
 public class BagDto
 {
-    public required string BagTrackId { get; set; }
+    public required string BagTagId { get; set; }
     public required string DeviceId { get; set; }
     public required DateOnly Date { get; set; }
     public required string? Carousel { get; set; }

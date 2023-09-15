@@ -19,10 +19,10 @@ public class BagGetHandler : IRequestHandler<BagGetRequest, BagDto>
 
         var key = string.Empty;
 
-        if (request.BagTrackId is not null)
+        if (request.BagTagId is not null)
         {
-            query = query.Where(x => x.BagTrackId == request.BagTrackId);
-            key = request.BagTrackId;
+            query = query.Where(x => x.BagTagId == request.BagTagId);
+            key = request.BagTagId;
         }
         else if (request.Carousel is not null)
         {

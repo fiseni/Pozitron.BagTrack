@@ -7,7 +7,7 @@ public class BagConfiguration : IEntityTypeConfiguration<Bag>
 {
     public void Configure(EntityTypeBuilder<Bag> builder)
     {
-        builder.Property(x => x.BagTrackId).HasMaxLength(10);
+        builder.Property(x => x.BagTagId).HasMaxLength(10);
         builder.Property(x => x.DeviceId).HasMaxLength(10);
         builder.Property(x => x.Carousel).HasMaxLength(10);
         builder.Property(x => x.Flight).HasMaxLength(50);

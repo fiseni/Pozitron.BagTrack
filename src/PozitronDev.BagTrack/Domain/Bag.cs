@@ -6,7 +6,7 @@ namespace PozitronDev.BagTrack.Domain;
 
 public class Bag : BaseEntity, IAggregateRoot
 {
-    public string BagTrackId { get; private set; } = default!;
+    public string BagTagId { get; private set; } = default!;
     public string DeviceId { get; private set; } = default!;
     public string? Carousel { get; private set; }
     public string? Flight { get; private set; }
@@ -16,9 +16,9 @@ public class Bag : BaseEntity, IAggregateRoot
     public bool IsResponseNeeded { get; private set; }
 
     private Bag() { }
-    public Bag(IDateTime dateTime, IDeviceCache deviceCache, string bagTrackId, string deviceId, string? isResponseNeeded, string? julianDate)
+    public Bag(IDateTime dateTime, IDeviceCache deviceCache, string bagTagId, string deviceId, string? isResponseNeeded, string? julianDate)
     {
-        BagTrackId = bagTrackId;
+        BagTagId = bagTagId;
         DeviceId = deviceId;
         Carousel = deviceCache.GetCarousel(deviceId);
 

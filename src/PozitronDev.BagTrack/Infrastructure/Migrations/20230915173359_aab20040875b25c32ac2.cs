@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _02810a5b6227d7fa55c6 : Migration
+    public partial class aab20040875b25c32ac2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,7 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BagTrackId = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    BagTagId = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     DeviceId = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Carousel = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Flight = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
