@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PozitronDev.BagTrack.Api.Handlers;
 using PozitronDev.BagTrack.Setup.Auth;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace PozitronDev.BagTrack.Api;
+namespace PozitronDev.BagTrack.Api.Bags;
 
 [ApiController]
 public class BagTrackController : ControllerBase

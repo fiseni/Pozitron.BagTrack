@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace PozitronDev.BagTrack.Api.Handlers;
+namespace PozitronDev.BagTrack.Api.Bags;
 
 public record BagGetRequest(string BagTagId) : IRequest<BagDto>;
 

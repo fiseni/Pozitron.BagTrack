@@ -1,6 +1,6 @@
 ﻿using PozitronDev.SharedKernel.Contracts;
 
-namespace PozitronDev.BagTrack.Api.Handlers;
+namespace PozitronDev.BagTrack.Api.Bags;
 
 public record BagCreateRequest(BagCreateDto BagCreateDto) : IRequest<BagDto>;
 
@@ -20,10 +20,10 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
         var createDto = request.BagCreateDto;
 
         var bag = new Bag(
-            _dateTime, 
-            createDto.BagTrackId, 
-            createDto.DeviceId, 
-            createDto.IsResponseNeeded, 
+            _dateTime,
+            createDto.BagTrackId,
+            createDto.DeviceId,
+            createDto.IsResponseNeeded,
             createDto.JulianDate
         );
 
