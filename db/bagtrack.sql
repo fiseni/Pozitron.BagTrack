@@ -41,3 +41,32 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230915133037_ab4d461d5debcaa9f201')
+BEGIN
+    ALTER TABLE [Bag] ADD [Date] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230915133037_ab4d461d5debcaa9f201')
+BEGIN
+    CREATE TABLE [Device] (
+        [Id] nvarchar(10) NOT NULL,
+        [Carousel] nvarchar(250) NOT NULL,
+        CONSTRAINT [PK_Device] PRIMARY KEY ([Id])
+    );
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230915133037_ab4d461d5debcaa9f201')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20230915133037_ab4d461d5debcaa9f201', N'7.0.10');
+END;
+GO
+
+COMMIT;
+GO
+

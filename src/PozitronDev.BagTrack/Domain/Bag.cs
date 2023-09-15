@@ -3,7 +3,7 @@ using PozitronDev.SharedKernel.Data;
 
 namespace PozitronDev.BagTrack.Domain;
 
-public class Bag : BaseEntity
+public class Bag : BaseEntity, IAggregateRoot
 {
     public string BagTrackId { get; private set; } = default!;
     public string DeviceId { get; private set; } = default!;
