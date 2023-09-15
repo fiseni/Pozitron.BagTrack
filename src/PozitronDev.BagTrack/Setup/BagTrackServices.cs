@@ -2,9 +2,9 @@
 using BlazarTech.QueryableValues;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using PozitronDev.BagTrack.Domain.Contracts;
 using PozitronDev.CommissionPayment.Infrastructure;
 using PozitronDev.Extensions.Automapper;
-using PozitronDev.Extensions.Net;
 using PozitronDev.Extensions.Validations;
 using PozitronDev.SharedKernel.Contracts;
 
@@ -54,13 +54,9 @@ public static class BagTrackServices
 
         builder.Services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
         builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-    }
 
-    public static async Task Initialize(this WebApplication app)
-    {
-        if (app.Environment.IsAnyDevelopment())
-        {
-            await BagTrackDbInitializer.SeedAsync(app.Services);
-        }
+        builder.Services.AddSingleton<DeviceCache>();
+        builder.Services.AddSingleton<IDeviceCache, DeviceCache>(x => x.GetRequiredService<DeviceCache>());
+        builder.Services.AddSingleton<ICacheReloader<Device>, DeviceCache>(x => x.GetRequiredService<DeviceCache>());
     }
 }

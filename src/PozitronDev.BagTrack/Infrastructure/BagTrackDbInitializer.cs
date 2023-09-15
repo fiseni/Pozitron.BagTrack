@@ -1,4 +1,6 @@
-﻿using PozitronDev.SharedKernel.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using PozitronDev.BagTrack.Infrastructure.Seeds;
+using PozitronDev.SharedKernel.Contracts;
 
 namespace PozitronDev.CommissionPayment.Infrastructure;
 
@@ -15,13 +17,15 @@ public class BagTrackDbInitializer
         _logger = logger;
     }
 
-    public static async Task SeedAsync(IServiceProvider serviceProvider)
+    public async Task SeedAsync(CancellationToken cancellationToken)
     {
-        using (var scope = serviceProvider.CreateScope())
-        {
-            var initializer = scope.ServiceProvider.GetRequiredService<BagTrackDbInitializer>();
+        var hasDevices = await _dbContext.Devices.AnyAsync();
 
-            await initializer._dbContext.Database.EnsureCreatedAsync();
+        if (!hasDevices)
+        {
+            var devices = DeviceSeed.Get();
+            _dbContext.Devices.AddRange(devices);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

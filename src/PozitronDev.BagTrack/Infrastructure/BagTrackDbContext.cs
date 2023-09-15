@@ -6,6 +6,7 @@ namespace PozitronDev.BagTrack.Infrastructure;
 public class BagTrackDbContext : DbContext
 {
     public DbSet<Bag> Bags => Set<Bag>();
+    public DbSet<Device> Devices => Set<Device>();
 
     public BagTrackDbContext(DbContextOptions<BagTrackDbContext> options)
         : base(options)

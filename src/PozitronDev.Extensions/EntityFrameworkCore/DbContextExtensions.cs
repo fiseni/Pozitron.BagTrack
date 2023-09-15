@@ -12,7 +12,7 @@ public static class DbContextExtensions
         var addedEntries = dbContext.ChangeTracker.Entries<IAuditableEntity>().Where(x => x.IsAdded());
         var modifiedEntries = dbContext.ChangeTracker.Entries<IAuditableEntity>().Where(x => x.IsModified());
 
-        var now = dateTime.Now;
+        var now = dateTime.UtcNow;
 
         foreach (var addedEntry in addedEntries)
         {

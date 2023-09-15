@@ -1,6 +1,7 @@
 ﻿using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using PozitronDev.BagTrack.Setup;
+using PozitronDev.BagTrack.Setup.Jobs;
 using PozitronDev.Extensions.Logging;
 using PozitronDev.SharedKernel.Contracts;
 using PozitronDev.SharedKernel.Data;
@@ -15,6 +16,8 @@ builder.Services.AddMemoryCache();
 builder.Services.AddSwaggerConfiguration();
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddHostedService<DbInitializerJob>();
+builder.Services.AddHostedService<ConfigurationReloadJob>();
 
 // Add application services
 builder.Services.AddSingleton(services => Clock.Initialize());
@@ -31,7 +34,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGet("/", () => "Pozitron BagTrack v1");
-
-await app.Initialize();
 
 app.Run();
