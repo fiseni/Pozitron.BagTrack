@@ -12,8 +12,8 @@ using PozitronDev.BagTrack.Infrastructure;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    [Migration("20230915121954_5e40eb45d75cf2523dbd")]
-    partial class _5e40eb45d75cf2523dbd
+    [Migration("20230915134006_9e43551cf5fe6782a53b")]
+    partial class _9e43551cf5fe6782a53b
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -453,15 +453,30 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Airline")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<string>("BagTrackId")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<string>("Carousel")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("DeviceId")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Flight")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -479,6 +494,22 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Bag");
+                });
+
+            modelBuilder.Entity("PozitronDev.BagTrack.Domain.Device", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Carousel")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Device");
                 });
 #pragma warning restore 612, 618
         }
