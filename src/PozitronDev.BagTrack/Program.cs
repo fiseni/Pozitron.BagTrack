@@ -8,7 +8,6 @@ using PozitronDev.SharedKernel.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add middleware services
-builder.BindConfigurations();
 builder.Logging.AddLogging(builder.Services, builder.Configuration, builder.Environment);
 builder.Services.AddTransient<IApplicationModelProvider, ResponseTypeModelProvider>();
 builder.Services.AddHttpContextAccessor();
@@ -16,6 +15,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddSwaggerConfiguration();
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
+
 // Add application services
 builder.Services.AddSingleton(services => Clock.Initialize());
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();

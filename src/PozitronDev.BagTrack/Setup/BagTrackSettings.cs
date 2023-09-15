@@ -1,15 +1,14 @@
-﻿using PozitronDev.SharedKernel.Data;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PozitronDev.BagTrack.Setup;
 
 public class BagTrackSettings
 {
-    public const string CONFIG_NAME = "BagTrack";
-
-    public static BagTrackSettings Instance { get; } = new BagTrackSettings();
-    private BagTrackSettings() { }
+    public const string SECTION_NAME = "BagTrack";
 
     [Required]
     public string ConnectionString { get; set; } = default!;
+
+    [Required]
+    public string ApiKey { get; set; } = default!;
 }

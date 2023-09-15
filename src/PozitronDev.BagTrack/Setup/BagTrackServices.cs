@@ -1,6 +1,7 @@
 ﻿using Azure.Identity;
 using BlazarTech.QueryableValues;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using PozitronDev.CommissionPayment.Infrastructure;
 using PozitronDev.Extensions.Automapper;
 using PozitronDev.Extensions.Net;
@@ -11,26 +12,39 @@ namespace PozitronDev.BagTrack.Setup;
 
 public static class BagTrackServices
 {
-    public static void BindConfigurations(this WebApplicationBuilder builder)
-    {
-        builder.Configuration.Bind(BagTrackSettings.CONFIG_NAME, BagTrackSettings.Instance);
-        builder.Configuration.Bind(KeyVaultSettings.CONFIG_NAME, KeyVaultSettings.Instance);
-
-        if (!KeyVaultSettings.Instance.DisableAzureKeyVault && !string.IsNullOrEmpty(KeyVaultSettings.Instance.AzureKeyVault))
-        {
-            builder.Configuration.AddAzureKeyVault(new Uri(KeyVaultSettings.Instance.AzureKeyVault), new DefaultAzureCredential());
-        }
-    }
-
     public static void AddBagTrackServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddExtendedMediatR(typeof(BagTrackMarker));
         builder.Services.AddCustomAutoMapper(typeof(BagTrackMarker).Assembly);
         builder.Services.AddCustomFluentValidation(typeof(BagTrackMarker).Assembly);
 
-        var connectionString = KeyVaultSettings.Instance.DisableAzureKeyVault
-            ? BagTrackSettings.Instance.ConnectionString
-            : builder.Configuration.GetSection(BagTrackSettings.Instance.ConnectionString).Get<string>();
+        builder.Services.AddOptions<BagTrackSettings>()
+            .BindConfiguration(BagTrackSettings.SECTION_NAME)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        builder.Services.AddOptions<KeyVaultSettings>()
+            .BindConfiguration(KeyVaultSettings.SECTION_NAME)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        builder.Services.AddSingleton(x => x.GetRequiredService<IOptions<BagTrackSettings>>().Value);
+        builder.Services.AddSingleton(x => x.GetRequiredService<IOptions<KeyVaultSettings>>().Value);
+
+        var keyVaultSettings = new KeyVaultSettings();
+        builder.Configuration.Bind(KeyVaultSettings.SECTION_NAME, keyVaultSettings);
+
+        var bagTrackSettings = new BagTrackSettings();
+        builder.Configuration.Bind(BagTrackSettings.SECTION_NAME, bagTrackSettings);
+
+        if (!keyVaultSettings.DisableAzureKeyVault && !string.IsNullOrEmpty(keyVaultSettings.AzureKeyVault))
+        {
+            builder.Configuration.AddAzureKeyVault(new Uri(keyVaultSettings.AzureKeyVault), new DefaultAzureCredential());
+        }
+
+        var connectionString = keyVaultSettings.DisableAzureKeyVault
+            ? bagTrackSettings.ConnectionString
+            : builder.Configuration.GetValue<string>(bagTrackSettings.ConnectionString);
 
         builder.Services.AddDbContext<BagTrackDbContext>(options => options.UseSqlServer(connectionString, sqlServerOptions =>
         {

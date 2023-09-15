@@ -2,10 +2,7 @@
 
 public class KeyVaultSettings
 {
-    public const string CONFIG_NAME = "KeyVault";
-
-    public static KeyVaultSettings Instance { get; } = new KeyVaultSettings();
-    private KeyVaultSettings() { }
+    public const string SECTION_NAME = "KeyVault";
 
     public string? AzureKeyVault { get; set; }
     public bool DisableAzureKeyVault { get; set; } = false;

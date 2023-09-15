@@ -7,8 +7,9 @@ public class BagTrackDbInitializer
     private readonly BagTrackDbContext _dbContext;
     private readonly IAppLogger<BagTrackDbInitializer> _logger;
 
-    public BagTrackDbInitializer(BagTrackDbContext dbContext,
-                                          IAppLogger<BagTrackDbInitializer> logger)
+    public BagTrackDbInitializer(
+        BagTrackDbContext dbContext,
+        IAppLogger<BagTrackDbInitializer> logger)
     {
         _dbContext = dbContext;
         _logger = logger;

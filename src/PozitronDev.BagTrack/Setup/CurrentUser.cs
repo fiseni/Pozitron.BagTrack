@@ -4,11 +4,11 @@ namespace PozitronDev.BagTrack.Setup;
 
 public class CurrentUser : ICurrentUser
 {
-    public string? UserId { get; } = null;
+    public string? UserId { get; }
 
-    public string? Username { get; } = null;
+    public string? Username { get; }
 
-    public string? Email { get; } = null;
+    public string? Email { get; }
 
     public bool IsTestUser { get; } = false;
 }
