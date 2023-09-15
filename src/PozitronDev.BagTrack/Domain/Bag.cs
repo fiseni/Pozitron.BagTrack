@@ -44,7 +44,7 @@ public class Bag : BaseEntity, IAggregateRoot
         else
         {
             JulianDate = null;
-            Date = dateTime.UtcNow;
+            Date = dateTime.UtcNow.Date;
         }
     }
 }

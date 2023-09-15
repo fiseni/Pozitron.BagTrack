@@ -3,8 +3,6 @@ using PozitronDev.SharedKernel.Contracts;
 
 namespace PozitronDev.BagTrack.Api.Bags;
 
-public record BagCreateRequest(BagCreateDto BagCreateDto) : IRequest<BagDto>;
-
 public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
 {
     private readonly IDateTime _dateTime;
@@ -23,15 +21,13 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
 
     public async Task<BagDto> Handle(BagCreateRequest request, CancellationToken cancellationToken)
     {
-        var createDto = request.BagCreateDto;
-
         var bag = new Bag(
             _dateTime,
             _deviceCache,
-            createDto.BagTrackId,
-            createDto.DeviceId,
-            createDto.IsResponseNeeded,
-            createDto.JulianDate
+            request.BagTrackId,
+            request.DeviceId,
+            request.IsResponseNeeded,
+            request.JulianDate
         );
 
         _dbContext.Bags.Add(bag);

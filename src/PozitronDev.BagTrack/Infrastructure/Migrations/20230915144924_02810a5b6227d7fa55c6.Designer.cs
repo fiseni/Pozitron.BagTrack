@@ -12,8 +12,8 @@ using PozitronDev.BagTrack.Infrastructure;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    [Migration("20230915134006_9e43551cf5fe6782a53b")]
-    partial class _9e43551cf5fe6782a53b
+    [Migration("20230915144924_02810a5b6227d7fa55c6")]
+    partial class _02810a5b6227d7fa55c6
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

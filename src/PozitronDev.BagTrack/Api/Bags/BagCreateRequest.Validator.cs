@@ -2,7 +2,7 @@
 
 namespace PozitronDev.BagTrack.Api.Bags;
 
-public class BagCreateDtoValidator : AbstractValidator<BagCreateDto>
+public class BagCreateDtoValidator : AbstractValidator<BagCreateRequest>
 {
     public BagCreateDtoValidator()
     {

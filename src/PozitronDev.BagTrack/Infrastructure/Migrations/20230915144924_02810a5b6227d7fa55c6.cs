@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _9e43551cf5fe6782a53b : Migration
+    public partial class _02810a5b6227d7fa55c6 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
