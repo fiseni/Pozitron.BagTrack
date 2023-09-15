@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using PozitronDev.Extensions.Data;
-using PozitronDev.SharedKernel.Contracts;
 
 namespace PozitronDev.CommissionPayment.Infrastructure;
 

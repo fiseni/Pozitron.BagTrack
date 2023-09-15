@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PozitronDev.BagTrack.Infrastructure.Seeds;
-using PozitronDev.SharedKernel.Contracts;
 
 namespace PozitronDev.CommissionPayment.Infrastructure;
 

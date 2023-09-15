@@ -55,3 +55,58 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230915185745_f2af546526cf4a0242af')
+BEGIN
+    CREATE TABLE [InboxMessage] (
+        [Id] uniqueidentifier NOT NULL,
+        [Type] int NOT NULL,
+        [Status] int NOT NULL,
+        [CreatedDate] datetime2 NOT NULL,
+        [ProcessedDate] datetime2 NULL,
+        [Data] nvarchar(max) NOT NULL,
+        [IsDeleted] bit NOT NULL,
+        CONSTRAINT [PK_InboxMessage] PRIMARY KEY ([Id])
+    );
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230915185745_f2af546526cf4a0242af')
+BEGIN
+    CREATE TABLE [OutboxMessage] (
+        [Id] uniqueidentifier NOT NULL,
+        [Type] int NOT NULL,
+        [Status] int NOT NULL,
+        [CreatedDate] datetime2 NOT NULL,
+        [ProcessedDate] datetime2 NULL,
+        [Data] nvarchar(max) NOT NULL,
+        [IsDeleted] bit NOT NULL,
+        CONSTRAINT [PK_OutboxMessage] PRIMARY KEY ([Id])
+    );
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230915185745_f2af546526cf4a0242af')
+BEGIN
+    CREATE INDEX [IX_InboxMessage_IsDeleted] ON [InboxMessage] ([IsDeleted]);
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230915185745_f2af546526cf4a0242af')
+BEGIN
+    CREATE INDEX [IX_OutboxMessage_IsDeleted] ON [OutboxMessage] ([IsDeleted]);
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230915185745_f2af546526cf4a0242af')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20230915185745_f2af546526cf4a0242af', N'7.0.10');
+END;
+GO
+
+COMMIT;
+GO
+

@@ -12,7 +12,7 @@ public class BagGetHandler : IRequestHandler<BagGetRequest, BagDto>
     public async Task<BagDto> Handle(BagGetRequest request, CancellationToken cancellationToken)
     {
         var date = request.Date is null
-            ? DateTime.UtcNow 
+            ? DateTime.UtcNow
             : request.Date.Value.ToDateTime(TimeOnly.MinValue);
 
         var query = _dbContext.Bags.Where(x => x.Date == date);

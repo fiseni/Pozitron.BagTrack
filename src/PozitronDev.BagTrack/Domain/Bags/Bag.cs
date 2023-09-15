@@ -1,8 +1,6 @@
-﻿using PozitronDev.BagTrack.Domain.Contracts;
-using PozitronDev.SharedKernel.Contracts;
-using PozitronDev.SharedKernel.Data;
+﻿using PozitronDev.SharedKernel.Data;
 
-namespace PozitronDev.BagTrack.Domain;
+namespace PozitronDev.BagTrack.Domain.Bags;
 
 public class Bag : BaseEntity, IAggregateRoot
 {
@@ -16,11 +14,11 @@ public class Bag : BaseEntity, IAggregateRoot
     public bool IsResponseNeeded { get; private set; }
 
     private Bag() { }
-    public Bag(IDateTime dateTime, IDeviceCache deviceCache, string bagTagId, string deviceId, string? isResponseNeeded, string? julianDate)
+    public Bag(IDateTime dateTime, string bagTagId, string deviceId, string? carousel, string? isResponseNeeded, string? julianDate)
     {
         BagTagId = bagTagId;
         DeviceId = deviceId;
-        Carousel = deviceCache.GetCarousel(deviceId);
+        Carousel = carousel;
 
         IsResponseNeeded = isResponseNeeded is not null && isResponseNeeded.Equals("y", StringComparison.OrdinalIgnoreCase);
 

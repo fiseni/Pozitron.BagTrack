@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using PozitronDev.BagTrack.Setup;
 using PozitronDev.BagTrack.Setup.Jobs;
 using PozitronDev.Extensions.Logging;
-using PozitronDev.SharedKernel.Contracts;
 using PozitronDev.SharedKernel.Data;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PozitronDev.BagTrack.Domain.Messaging;
 using PozitronDev.Extensions.EntityFrameworkCore;
 
 namespace PozitronDev.BagTrack.Infrastructure;
@@ -7,6 +8,8 @@ public class BagTrackDbContext : DbContext
 {
     public DbSet<Bag> Bags => Set<Bag>();
     public DbSet<Device> Devices => Set<Device>();
+    public DbSet<InboxMessage> InboxMessages => Set<InboxMessage>();
+    public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
 
     public BagTrackDbContext(DbContextOptions<BagTrackDbContext> options)
         : base(options)

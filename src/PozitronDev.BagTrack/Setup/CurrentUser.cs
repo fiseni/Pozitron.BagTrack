@@ -1,6 +1,4 @@
-﻿using PozitronDev.SharedKernel.Contracts;
-
-namespace PozitronDev.BagTrack.Setup;
+﻿namespace PozitronDev.BagTrack.Setup;
 
 public class CurrentUser : ICurrentUser
 {

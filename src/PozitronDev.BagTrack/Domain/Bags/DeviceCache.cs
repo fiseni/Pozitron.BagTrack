@@ -1,7 +1,6 @@
-﻿using PozitronDev.BagTrack.Domain.Contracts;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 
-namespace PozitronDev.BagTrack.Infrastructure;
+namespace PozitronDev.BagTrack.Domain.Bags;
 
 public class DeviceCache : IDeviceCache, ICacheReloader<Device>
 {

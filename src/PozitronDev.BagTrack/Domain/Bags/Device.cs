@@ -1,6 +1,4 @@
-﻿using PozitronDev.SharedKernel.Contracts;
-
-namespace PozitronDev.BagTrack.Domain;
+﻿namespace PozitronDev.BagTrack.Domain.Bags;
 
 public class Device : IAggregateRoot
 {

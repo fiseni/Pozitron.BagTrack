@@ -1,7 +1,4 @@
-﻿using PozitronDev.BagTrack.Domain.Contracts;
-using PozitronDev.SharedKernel.Contracts;
-
-namespace PozitronDev.BagTrack.Api.Bags;
+﻿namespace PozitronDev.BagTrack.Api.Bags;
 
 public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
 {
@@ -21,11 +18,13 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
 
     public async Task<BagDto> Handle(BagCreateRequest request, CancellationToken cancellationToken)
     {
+        var carousel = _deviceCache.GetCarousel(request.DeviceId);
+
         var bag = new Bag(
             _dateTime,
-            _deviceCache,
             request.BagTagId,
             request.DeviceId,
+            carousel,
             request.IsResponseNeeded,
             request.JulianDate
         );

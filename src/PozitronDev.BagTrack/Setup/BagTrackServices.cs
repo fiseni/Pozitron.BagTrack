@@ -2,11 +2,9 @@
 using BlazarTech.QueryableValues;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using PozitronDev.BagTrack.Domain.Contracts;
 using PozitronDev.CommissionPayment.Infrastructure;
 using PozitronDev.Extensions.Automapper;
 using PozitronDev.Extensions.Validations;
-using PozitronDev.SharedKernel.Contracts;
 
 namespace PozitronDev.BagTrack.Setup;
 

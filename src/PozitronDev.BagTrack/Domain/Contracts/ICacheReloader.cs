@@ -1,4 +1,4 @@
-﻿namespace PozitronDev.BagTrack.Infrastructure;
+﻿namespace PozitronDev.BagTrack.Domain.Contracts;
 
 public interface ICacheReloader<T>
 {
