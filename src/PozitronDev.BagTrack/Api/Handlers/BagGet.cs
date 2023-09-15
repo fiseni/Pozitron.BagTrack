@@ -19,7 +19,7 @@ public class BagGetHandler : IRequestHandler<BagGetRequest, BagDto>
             {
                 BagTrackId = x.BagTrackId,
                 DeviceId = x.DeviceId,
-                JulianDate = x.JulianDate,
+                Date = x.Date,
             })
             .FirstOrDefaultAsync(cancellationToken);
 
