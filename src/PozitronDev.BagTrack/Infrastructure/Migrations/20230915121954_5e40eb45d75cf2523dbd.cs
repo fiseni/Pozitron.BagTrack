@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _38d677a10d88e731ddde : Migration
+    public partial class _5e40eb45d75cf2523dbd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,13 +20,7 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     DeviceId = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     IsResponseNeeded = table.Column<bool>(type: "bit", maxLength: 1, nullable: false),
                     JulianDate = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    AuditCreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditCreatedBy = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
-                    AuditCreatedByUsername = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
-                    AuditModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditModifiedBy = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
-                    AuditModifiedByUsername = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

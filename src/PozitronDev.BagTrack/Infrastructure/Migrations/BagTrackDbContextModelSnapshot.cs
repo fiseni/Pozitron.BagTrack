@@ -450,28 +450,6 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("AuditCreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("AuditCreatedBy")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("AuditCreatedByUsername")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<DateTime?>("AuditModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("AuditModifiedBy")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("AuditModifiedByUsername")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
                     b.Property<string>("BagTrackId")
                         .IsRequired()
                         .HasMaxLength(10)

@@ -16,10 +16,7 @@ public class Clock
         {
             lock (_lock)
             {
-                if (_dateTimeProvider is null)
-                {
-                    _dateTimeProvider = dateTimeProvider ?? DateTimeProvider.Implementation;
-                }
+                _dateTimeProvider ??= dateTimeProvider ?? DateTimeProvider.Implementation;
             }
         }
 

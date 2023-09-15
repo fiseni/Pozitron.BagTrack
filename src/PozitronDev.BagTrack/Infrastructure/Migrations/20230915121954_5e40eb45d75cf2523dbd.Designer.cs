@@ -12,8 +12,8 @@ using PozitronDev.BagTrack.Infrastructure;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    [Migration("20230914230936_38d677a10d88e731ddde")]
-    partial class _38d677a10d88e731ddde
+    [Migration("20230915121954_5e40eb45d75cf2523dbd")]
+    partial class _5e40eb45d75cf2523dbd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -452,28 +452,6 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("AuditCreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("AuditCreatedBy")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("AuditCreatedByUsername")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<DateTime?>("AuditModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("AuditModifiedBy")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("AuditModifiedByUsername")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("BagTrackId")
                         .IsRequired()
