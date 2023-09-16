@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using PozitronDev.BagTrack.Setup;
 using PozitronDev.BagTrack.Setup.Jobs;
+using PozitronDev.BagTrack.Setup.Middleware;
 using PozitronDev.Extensions.Logging;
 using PozitronDev.SharedKernel.Data;
 
@@ -26,6 +27,7 @@ builder.AddBagTrackServices();
 // Build application
 var app = builder.Build();
 app.ConfigureExceptionHandler(app.Environment);
+app.UseHangfire();
 app.UseCustomSwagger();
 app.UseHttpsRedirection();
 app.UseAuthentication();

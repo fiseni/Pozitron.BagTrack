@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Text.Json;
 
-namespace PozitronDev.BagTrack.Setup;
+namespace PozitronDev.BagTrack.Setup.Middleware;
 
 public static class ExceptionMiddlewareExtensions
 {

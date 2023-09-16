@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Routing;
 
-namespace PozitronDev.BagTrack.Setup;
+namespace PozitronDev.BagTrack.Setup.Middleware;
 
 public class ResponseTypeModelProvider : IApplicationModelProvider
 {

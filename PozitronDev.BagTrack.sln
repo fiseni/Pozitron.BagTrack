@@ -23,6 +23,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{4CBFBC09-B01E-490F-91F8-9A075C38D4F1}"
 	ProjectSection(SolutionItems) = preProject
 		db\bagtrack.sql = db\bagtrack.sql
+		db\HangFireScript.sql = db\HangFireScript.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{28025412-9B71-4AC6-966F-506450E6BF3D}"

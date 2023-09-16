@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace PozitronDev.BagTrack.Setup;
+namespace PozitronDev.BagTrack.Setup.Middleware;
 
 public static class SwaggerExtensions
 {

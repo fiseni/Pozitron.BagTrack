@@ -1,4 +1,4 @@
-﻿namespace PozitronDev.BagTrack.Setup;
+﻿namespace PozitronDev.BagTrack.Infrastructure;
 
 public class CurrentUser : ICurrentUser
 {
