@@ -14,7 +14,7 @@ public class InboxMessage : BaseEntity
     public DateTime? ProcessedDate { get; private set; }
     public string Data { get; private set; }
 
-    public InboxMessage(IDateTime dateTime, string data, MessageType? messageType)
+    public InboxMessage(IDateTime dateTime, string data, MessageType? messageType = null)
     {
         Type = messageType ?? MessageType.Generic;
         Status = MessageStatus.New;
