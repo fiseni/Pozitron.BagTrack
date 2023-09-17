@@ -15,36 +15,13 @@ public class BagGetHandler : IRequestHandler<BagGetRequest, BagDto>
             ? DateTime.UtcNow.Date
             : request.Date.Value.ToDateTime(TimeOnly.MinValue);
 
-        var query = _dbContext.Bags.Where(x => x.Date == date);
-
-        var key = string.Empty;
-
-        if (request.BagTagId is not null)
-        {
-            query = query.Where(x => x.BagTagId == request.BagTagId);
-            key = request.BagTagId;
-        }
-        else if (request.Carousel is not null)
-        {
-            query = query.Where(x => x.Carousel == request.Carousel);
-            key = request.Carousel;
-        }
-        else if (request.Flight is not null)
-        {
-            query = query.Where(x => x.Flight == request.Flight);
-            key = request.Flight;
-        }
-        else if (request.Airline is not null)
-        {
-            query = query.Where(x => x.Airline == request.Airline);
-            key = request.Airline;
-        }
-
-        var result = await query
+        var result = await _dbContext.Bags
+            .Where(x => x.Date == date)
+            .Where(x => x.BagTagId == request.BagTagId)
             .Select(BagDtoMapper.Expression)
             .FirstOrDefaultAsync(cancellationToken);
 
-        Guard.Against.NotFound(key, result);
+        Guard.Against.NotFound(request.BagTagId, result);
 
         return result;
     }

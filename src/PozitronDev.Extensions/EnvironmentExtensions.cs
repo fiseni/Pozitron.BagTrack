@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace PozitronDev.Extensions.Net;
+namespace PozitronDev.Extensions;
 
 public static class EnvironmentExtensions
 {

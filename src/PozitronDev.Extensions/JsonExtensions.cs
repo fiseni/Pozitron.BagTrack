@@ -1,4 +1,4 @@
-﻿namespace PozitronDev.Extensions.Net;
+﻿namespace PozitronDev.Extensions;
 
 public static class JsonExtensions
 {
@@ -14,8 +14,8 @@ public static class JsonExtensions
         (await response.Content.ReadAsStringAsync()).FromJson<T>();
 
     public static string ToJson<T>(this T obj) =>
-        JsonSerializer.Serialize<T>(obj, _jsonOptions);
+        JsonSerializer.Serialize(obj, _jsonOptions);
 
     public static StringContent ToStringContent<T>(this T obj) =>
-       new StringContent(ToJson(obj), Encoding.UTF8, "application/json");
+       new StringContent(obj.ToJson(), Encoding.UTF8, "application/json");
 }
