@@ -12,8 +12,8 @@ using PozitronDev.BagTrack.Infrastructure;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    [Migration("20230915173359_aab20040875b25c32ac2")]
-    partial class aab20040875b25c32ac2
+    [Migration("20230917192403_e4d916d89ae4bdcdee8f")]
+    partial class e4d916d89ae4bdcdee8f
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -447,7 +447,7 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     b.ToView("QueryableValuesEntity", (string)null);
                 });
 
-            modelBuilder.Entity("PozitronDev.BagTrack.Domain.Bag", b =>
+            modelBuilder.Entity("PozitronDev.BagTrack.Domain.Bags.Bag", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -496,7 +496,7 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     b.ToTable("Bag");
                 });
 
-            modelBuilder.Entity("PozitronDev.BagTrack.Domain.Device", b =>
+            modelBuilder.Entity("PozitronDev.BagTrack.Domain.Bags.Device", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(10)
@@ -510,6 +510,72 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Device");
+                });
+
+            modelBuilder.Entity("PozitronDev.BagTrack.Domain.Messaging.InboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ProcessedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("InboxMessage");
+                });
+
+            modelBuilder.Entity("PozitronDev.BagTrack.Domain.Messaging.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ProcessedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("OutboxMessage");
                 });
 #pragma warning restore 612, 618
         }
