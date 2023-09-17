@@ -9,20 +9,36 @@
 <p></p>
 
 <EditForm Model="@Model" OnValidSubmit="@SubmitAsync">
-    <FluentValidationValidator Validator="_validator" />
-    <ValidationSummary />
+    <div class="row g-3 align-items-center">
+        <FluentValidationValidator Validator="_validator" />
+        <ValidationSummary />
 
-    <InputDate @bind-Value="Model!.Date"/>
-    <InputText @bind-Value="Model!.BagTagId" DisplayName="BagTag Id" placeholder="BagTag Id" />
-    <InputText @bind-Value="Model!.Carousel" DisplayName="Carousel" placeholder="Carousel" />
-    <InputText @bind-Value="Model!.Flight" DisplayName="Flight" placeholder="Flight" />
-    <InputText @bind-Value="Model!.Airline" DisplayName="Airline IATA" placeholder="Airline IATA" />
-    <button type="submit" class="btn-primary">Search</button>
-    <button class="btn-secondary" @onclick="Clear">Clear</button>
+        <div class="col-auto">
+            <InputDate @bind-Value="Model!.Date" class="col-auto form-control" />
+        </div>
+        <div class="col-auto">
+            <InputText @bind-Value="Model!.BagTagId" DisplayName="BagTag Id" placeholder="BagTag Id" class="col-auto form-control" />
+        </div>
+        <div class="col-auto">
+            <InputText @bind-Value="Model!.Carousel" DisplayName="Carousel" placeholder="Carousel" class="col-auto form-control" />
+        </div>
+        <div class="col-auto">
+            <InputText @bind-Value="Model!.Flight" DisplayName="Flight" placeholder="Flight" class="col-auto form-control" />
+        </div>
+        <div class="col-auto">
+            <InputText @bind-Value="Model!.Airline" DisplayName="Airline IATA" placeholder="Airline IATA" class="col-auto form-control" />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-secondary" @onclick="Clear">Clear</button>
+        </div>
+    </div>
 </EditForm>
 <p></p>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>BagTag Id</th>
@@ -39,7 +55,7 @@
             <tr>
                 <td>@bag.BagTagId</td>
                 <td>@bag.DeviceId</td>
-                <td>@bag.Date</td>
+                <td>@bag.Date.ToLongDateString()</td>
                 <td>@bag.Carousel</td>
                 <td>@bag.Flight</td>
                 <td>@bag.Airline</td>
