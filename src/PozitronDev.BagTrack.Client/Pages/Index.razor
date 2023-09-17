@@ -1,0 +1,50 @@
+﻿@page "/"
+@using PozitronDev.BagTrack.Contracts
+@inject HttpClient Http
+
+<PageTitle>Arrival Bags</PageTitle>
+
+<h1>Arrival Bags</h1>
+
+@if (bags == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>BagTagId</th>
+                <th>DeviceId</th>
+                <th>Date</th>
+                <th>Carousel</th>
+                <th>Flight</th>
+                <th>Airline</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bag in bags)
+            {
+                <tr>
+                    <td>@bag.BagTagId</td>
+                    <td>@bag.DeviceId</td>
+                    @* <td>@bag.Date.ToShortDateString()</td> *@
+                    <td>@bag.Date</td>
+                    <td>@bag.Carousel</td>
+                    <td>@bag.Flight</td>
+                    <td>@bag.Airline</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private BagDto[]? bags;
+
+    protected override async Task OnInitializedAsync()
+    {
+        bags = await Http.GetFromJsonAsync<BagDto[]>("bags");
+    }
+}

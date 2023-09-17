@@ -2,14 +2,14 @@
 
 namespace PozitronDev.BagTrack.Api.Bags;
 
-public class BagGetHandler : IRequestHandler<BagGetRequest, BagDto>
+public class BagListHandler : IRequestHandler<BagListRequest, List<BagDto>>
 {
     private readonly BagTrackDbContext _dbContext;
 
-    public BagGetHandler(BagTrackDbContext dbContext)
+    public BagListHandler(BagTrackDbContext dbContext)
         => _dbContext = dbContext;
 
-    public async Task<BagDto> Handle(BagGetRequest request, CancellationToken cancellationToken)
+    public async Task<List<BagDto>> Handle(BagListRequest request, CancellationToken cancellationToken)
     {
         var date = request.Date is null
             ? DateTime.UtcNow.Date
@@ -42,9 +42,7 @@ public class BagGetHandler : IRequestHandler<BagGetRequest, BagDto>
 
         var result = await query
             .Select(BagDtoMapper.Expression)
-            .FirstOrDefaultAsync(cancellationToken);
-
-        Guard.Against.NotFound(key, result);
+            .ToListAsync(cancellationToken);
 
         return result;
     }

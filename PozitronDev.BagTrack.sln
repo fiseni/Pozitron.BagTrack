@@ -30,6 +30,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{28025412
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{319092B9-47F1-4C08-BA5C-6389CBBE21A8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PozitronDev.BagTrack.Client", "src\PozitronDev.BagTrack.Client\PozitronDev.BagTrack.Client.csproj", "{27E3D992-E2CA-41B5-BA83-B92ECCBB4262}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PozitronDev.BagTrack.Contracts", "src\PozitronDev.BagTrack.Contracts\PozitronDev.BagTrack.Contracts.csproj", "{51F93159-EC54-4B6E-863B-FBE6397FEAB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +56,14 @@ Global
 		{35E26DD4-59FD-42C7-9474-B46D4FF62B58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35E26DD4-59FD-42C7-9474-B46D4FF62B58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35E26DD4-59FD-42C7-9474-B46D4FF62B58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27E3D992-E2CA-41B5-BA83-B92ECCBB4262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27E3D992-E2CA-41B5-BA83-B92ECCBB4262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27E3D992-E2CA-41B5-BA83-B92ECCBB4262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27E3D992-E2CA-41B5-BA83-B92ECCBB4262}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51F93159-EC54-4B6E-863B-FBE6397FEAB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51F93159-EC54-4B6E-863B-FBE6397FEAB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51F93159-EC54-4B6E-863B-FBE6397FEAB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51F93159-EC54-4B6E-863B-FBE6397FEAB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

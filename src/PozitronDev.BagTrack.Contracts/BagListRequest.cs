@@ -1,6 +1,8 @@
-﻿namespace PozitronDev.BagTrack.Api.Bags;
+﻿using MediatR;
 
-public record BagGetRequest : IRequest<BagDto>
+namespace PozitronDev.BagTrack.Contracts;
+
+public record BagListRequest : IRequest<List<BagDto>>
 {
     public DateOnly? Date { get; set; }
     public string? BagTagId { get; set; }

@@ -30,10 +30,14 @@ app.ConfigureExceptionHandler(app.Environment);
 app.UseHangfire();
 app.UseCustomSwagger();
 app.UseHttpsRedirection();
+app.UseBlazorFrameworkFiles();
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseRouting();
 app.MapControllers();
 
-app.MapGet("/", () => "Pozitron BagTrack v1");
+app.MapFallbackToFile("index.html");
+//app.MapGet("/", () => "Pozitron BagTrack v1");
 
 app.Run();

@@ -1,4 +1,6 @@
-﻿namespace PozitronDev.BagTrack.Api.Bags;
+﻿using MediatR;
+
+namespace PozitronDev.BagTrack.Contracts;
 
 public record BagCreateRequest : IRequest<BagDto>
 {

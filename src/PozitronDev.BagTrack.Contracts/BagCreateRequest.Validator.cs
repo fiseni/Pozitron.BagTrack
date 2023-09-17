@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace PozitronDev.BagTrack.Api.Bags;
+namespace PozitronDev.BagTrack.Contracts;
 
 public class BagCreateDtoValidator : AbstractValidator<BagCreateRequest>
 {

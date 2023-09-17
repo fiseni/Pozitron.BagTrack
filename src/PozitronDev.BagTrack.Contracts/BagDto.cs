@@ -1,4 +1,4 @@
-﻿namespace PozitronDev.BagTrack.Api.Bags;
+﻿namespace PozitronDev.BagTrack.Contracts;
 
 public class BagDto
 {

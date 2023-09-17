@@ -14,6 +14,7 @@ public static class ExceptionMiddlewareExtensions
         if (environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
+            app.UseWebAssemblyDebugging();
             return;
         }
 
