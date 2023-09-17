@@ -3,7 +3,7 @@
 public class PaginationSettings
 {
     public int DefaultPage { get; } = 1;
-    public int DefaultPageSize { get; } = 2;
+    public int DefaultPageSize { get; } = 20;
     public int DefaultPageSizeLimit { get; } = 50;
 
     public PaginationSettings()
