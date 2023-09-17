@@ -8,14 +8,16 @@
 <p></p>
 
 <EditForm Model="@Model" OnValidSubmit="@SubmitAsync">
-    <DataAnnotationsValidator />
+    <FluentValidationValidator Validator="_validator" />
     <ValidationSummary />
+
     <InputDate @bind-Value="Model!.Date"/>
     <InputText @bind-Value="Model!.BagTagId" DisplayName="BagTag Id" placeholder="BagTag Id" />
     <InputText @bind-Value="Model!.Carousel" DisplayName="Carousel" placeholder="Carousel" />
     <InputText @bind-Value="Model!.Flight" DisplayName="Flight" placeholder="Flight" />
     <InputText @bind-Value="Model!.Airline" DisplayName="Airline IATA" placeholder="Airline IATA" />
     <button type="submit" class="btn-primary">Search</button>
+    <button class="btn-secondary" @onclick="Clear">Clear</button>
 </EditForm>
 <p></p>
 
@@ -31,7 +33,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var bag in bags)
+        @foreach (var bag in _bags)
         {
             <tr>
                 <td>@bag.BagTagId</td>
@@ -46,18 +48,25 @@
 </table>
 
 @code {
-    private BagDto[] bags = Array.Empty<BagDto>();
+    private static BagListRequestValidator _validator = new();
+    private BagDto[] _bags = Array.Empty<BagDto>();
     public BagListRequest Model { get; set; } = new();
 
     protected override void OnInitialized()
     {
-        Model ??= new();
-        Model.Date = DateOnly.FromDateTime(DateTime.Now.Date);
+        Clear();
     }
 
     private async Task SubmitAsync()
     {
         string queryParameters = $"?date={Model.Date}&bagTagId={Model.BagTagId}&carousel={Model.Carousel}&flight={Model.Flight}&airline={Model.Airline}";
-        bags = (await Http.GetFromJsonAsync<BagDto[]>($"bags{queryParameters}")) ?? Array.Empty<BagDto>();
+        _bags = (await Http.GetFromJsonAsync<BagDto[]>($"bags{queryParameters}")) ?? Array.Empty<BagDto>();
+    }
+
+    private void Clear()
+    {
+        _bags = Array.Empty<BagDto>();
+        Model = new();
+        Model.Date = DateOnly.FromDateTime(DateTime.Now.Date);
     }
 }
