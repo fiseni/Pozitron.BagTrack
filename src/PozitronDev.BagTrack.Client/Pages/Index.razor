@@ -5,46 +5,59 @@
 <PageTitle>Arrival Bags</PageTitle>
 
 <h1>Arrival Bags</h1>
+<p></p>
 
-@if (bags == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
+<EditForm Model="@Model" OnValidSubmit="@SubmitAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <InputDate @bind-Value="Model!.Date"/>
+    <InputText @bind-Value="Model!.BagTagId" DisplayName="BagTag Id" placeholder="BagTag Id" />
+    <InputText @bind-Value="Model!.Carousel" DisplayName="Carousel" placeholder="Carousel" />
+    <InputText @bind-Value="Model!.Flight" DisplayName="Flight" placeholder="Flight" />
+    <InputText @bind-Value="Model!.Airline" DisplayName="Airline IATA" placeholder="Airline IATA" />
+    <button type="submit" class="btn-primary">Search</button>
+</EditForm>
+<p></p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>BagTag Id</th>
+            <th>Device Id</th>
+            <th>Date</th>
+            <th>Carousel</th>
+            <th>Flight</th>
+            <th>Airline IATA</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var bag in bags)
+        {
             <tr>
-                <th>BagTagId</th>
-                <th>DeviceId</th>
-                <th>Date</th>
-                <th>Carousel</th>
-                <th>Flight</th>
-                <th>Airline</th>
+                <td>@bag.BagTagId</td>
+                <td>@bag.DeviceId</td>
+                <td>@bag.Date</td>
+                <td>@bag.Carousel</td>
+                <td>@bag.Flight</td>
+                <td>@bag.Airline</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var bag in bags)
-            {
-                <tr>
-                    <td>@bag.BagTagId</td>
-                    <td>@bag.DeviceId</td>
-                    @* <td>@bag.Date.ToShortDateString()</td> *@
-                    <td>@bag.Date</td>
-                    <td>@bag.Carousel</td>
-                    <td>@bag.Flight</td>
-                    <td>@bag.Airline</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+        }
+    </tbody>
+</table>
 
 @code {
-    private BagDto[]? bags;
+    private BagDto[] bags = Array.Empty<BagDto>();
+    public BagListRequest Model { get; set; } = new();
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        bags = await Http.GetFromJsonAsync<BagDto[]>("bags");
+        Model ??= new();
+        Model.Date = DateOnly.FromDateTime(DateTime.Now.Date);
+    }
+
+    private async Task SubmitAsync()
+    {
+        string queryParameters = $"?date={Model.Date}&bagTagId={Model.BagTagId}&carousel={Model.Carousel}&flight={Model.Flight}&airline={Model.Airline}";
+        bags = (await Http.GetFromJsonAsync<BagDto[]>($"bags{queryParameters}")) ?? Array.Empty<BagDto>();
     }
 }
