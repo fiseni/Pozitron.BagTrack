@@ -84,7 +84,9 @@ public static class BagTrackServices
         var jobSettings = new JobSettings();
         app.Configuration.Bind(JobSettings.SECTION_NAME, jobSettings);
 
-        if (!app.Environment.IsDevelopment() && jobSettings.DashboardUsername is not null && jobSettings.DashboardPassword is not null)
+        if (!app.Environment.IsDevelopment() 
+            && !string.IsNullOrEmpty(jobSettings.DashboardUsername) 
+            && !string.IsNullOrEmpty(jobSettings.DashboardPassword))
         {
             var options = new DashboardOptions
             {

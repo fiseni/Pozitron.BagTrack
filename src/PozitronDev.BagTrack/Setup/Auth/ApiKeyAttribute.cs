@@ -28,14 +28,14 @@ public class ApiKeyAttribute : Attribute, IAuthorizationFilter
         return context.Request.Headers[API_KEY_HEADER_NAME];
     }
 
-    private static string? GetApiKey(HttpContext context)
+    private static string GetApiKey(HttpContext context)
     {
         var bagTrackSettings = context.RequestServices.GetRequiredService<BagTrackSettings>();
 
         return bagTrackSettings.ApiKey;
     }
 
-    private static bool IsApiKeyValid(string? apiKey, string? submittedApiKey)
+    private static bool IsApiKeyValid(string apiKey, string? submittedApiKey)
     {
         if (string.IsNullOrEmpty(submittedApiKey)) return false;
 
