@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using PozitronDev.SharedKernel.Data;
 
 namespace PozitronDev.BagTrack.Contracts;
 
-public record BagListRequest : IRequest<List<BagDto>>
+public record BagListRequest : BaseFilter, IRequest<PagedResponse<BagDto>>
 {
     public DateOnly? Date { get; set; }
     public string? BagTagId { get; set; }

@@ -4,7 +4,6 @@ using PozitronDev.BagTrack.Setup;
 using PozitronDev.BagTrack.Setup.Jobs;
 using PozitronDev.BagTrack.Setup.Middleware;
 using PozitronDev.Extensions.Logging;
-using PozitronDev.SharedKernel.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

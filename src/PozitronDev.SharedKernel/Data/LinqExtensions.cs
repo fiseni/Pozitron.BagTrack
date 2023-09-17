@@ -1,4 +1,4 @@
-﻿namespace PozitronDev.SharedKernel.Extensions;
+﻿namespace PozitronDev.SharedKernel.Data;
 
 public static class LinqExtensions
 {

@@ -32,8 +32,13 @@ public class Pagination
         HasNext = hasNext;
     }
 
+    public Pagination()
+        : this(new PaginationSettings(), 0, null, null)
+    {
+    }
+
     public Pagination(int itemsCount, BaseFilter baseFilter)
-        : this(new PaginationSettings(10, 1000), itemsCount, baseFilter.PageSize, baseFilter.Page)
+        : this(new PaginationSettings(), itemsCount, baseFilter.PageSize, baseFilter.Page)
     {
     }
 

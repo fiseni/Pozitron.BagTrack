@@ -1,6 +1,4 @@
-﻿using PozitronDev.SharedKernel.Data;
-
-namespace PozitronDev.BagTrack.Domain.Messaging;
+﻿namespace PozitronDev.BagTrack.Domain.Messaging;
 
 public class OutboxMessage : BaseEntity
 {

@@ -1,6 +1,4 @@
-﻿using PozitronDev.SharedKernel.Data;
-
-namespace PozitronDev.BagTrack.Domain.Bags;
+﻿namespace PozitronDev.BagTrack.Domain.Bags;
 
 public class Bag : BaseEntity, IAggregateRoot
 {

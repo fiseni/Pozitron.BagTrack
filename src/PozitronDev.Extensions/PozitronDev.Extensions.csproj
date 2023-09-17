@@ -18,6 +18,7 @@
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="7.0.0" />
     <PackageReference Include="PozitronDev.Convert" Version="1.1.0" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
   </ItemGroup>
   
   <ItemGroup>

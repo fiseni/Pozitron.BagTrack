@@ -1,5 +1,4 @@
-﻿using PozitronDev.SharedKernel.Data;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace PozitronDev.BagTrack.Domain.Messaging;
 

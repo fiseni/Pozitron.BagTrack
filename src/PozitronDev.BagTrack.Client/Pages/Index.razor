@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using PozitronDev.BagTrack.Contracts
+@using PozitronDev.SharedKernel.Data;
 @inject HttpClient Http
 
 <PageTitle>Arrival Bags</PageTitle>
@@ -33,7 +34,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var bag in _bags)
+        @foreach (var bag in Bags)
         {
             <tr>
                 <td>@bag.BagTagId</td>
@@ -47,10 +48,18 @@
     </tbody>
 </table>
 
+<div class="row">
+    <div class="col">
+        <Paging Pagination="Pagination" Spread="2" SelectedPage="SelectedPage" />
+    </div>
+</div>
+
 @code {
     private static BagListRequestValidator _validator = new();
-    private BagDto[] _bags = Array.Empty<BagDto>();
-    public BagListRequest Model { get; set; } = new();
+
+    public List<BagDto> Bags { get; set; } = default!;
+    public BagListRequest Model { get; set; } = default!;
+    public Pagination Pagination { get; set; } = default!;
 
     protected override void OnInitialized()
     {
@@ -59,14 +68,34 @@
 
     private async Task SubmitAsync()
     {
-        string queryParameters = $"?date={Model.Date}&bagTagId={Model.BagTagId}&carousel={Model.Carousel}&flight={Model.Flight}&airline={Model.Airline}";
-        _bags = (await Http.GetFromJsonAsync<BagDto[]>($"bags{queryParameters}")) ?? Array.Empty<BagDto>();
+        await PopulateBagsAsync(1);
     }
 
     private void Clear()
     {
-        _bags = Array.Empty<BagDto>();
+        Bags = new();
         Model = new();
+        Pagination = new();
         Model.Date = DateOnly.FromDateTime(DateTime.Now.Date);
+    }
+
+    private async Task SelectedPage(int page)
+    {
+        await PopulateBagsAsync(page);
+    }
+
+    private async Task PopulateBagsAsync(int page)
+    {
+        string queryParameters = $"?date={Model.Date}&bagTagId={Model.BagTagId}&carousel={Model.Carousel}&flight={Model.Flight}&airline={Model.Airline}&page={page}";
+        var result = await Http.GetFromJsonAsync<PagedResponse<BagDto>>($"bags{queryParameters}");
+
+        if (result is null)
+        {
+            Clear();
+            return;
+        }
+
+        Bags = result.Data;
+        Pagination = result.Pagination;
     }
 }

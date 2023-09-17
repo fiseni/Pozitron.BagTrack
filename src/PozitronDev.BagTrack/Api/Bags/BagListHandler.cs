@@ -2,14 +2,14 @@
 
 namespace PozitronDev.BagTrack.Api.Bags;
 
-public class BagListHandler : IRequestHandler<BagListRequest, List<BagDto>>
+public class BagListHandler : IRequestHandler<BagListRequest, PagedResponse<BagDto>>
 {
     private readonly BagTrackDbContext _dbContext;
 
     public BagListHandler(BagTrackDbContext dbContext)
         => _dbContext = dbContext;
 
-    public async Task<List<BagDto>> Handle(BagListRequest request, CancellationToken cancellationToken)
+    public async Task<PagedResponse<BagDto>> Handle(BagListRequest request, CancellationToken cancellationToken)
     {
         var date = request.Date is null
             ? DateTime.UtcNow.Date
@@ -21,26 +21,31 @@ public class BagListHandler : IRequestHandler<BagListRequest, List<BagDto>>
         {
             query = query.Where(x => x.BagTagId == request.BagTagId);
         }
-        
+
         if (request.Carousel is not null)
         {
             query = query.Where(x => x.Carousel == request.Carousel);
         }
-        
+
         if (request.Flight is not null)
         {
             query = query.Where(x => x.Flight == request.Flight);
         }
-        
+
         if (request.Airline is not null)
         {
             query = query.Where(x => x.Airline == request.Airline);
         }
 
-        var result = await query
+        var count = await query.CountAsync(cancellationToken);
+        var pagination = new Pagination(count, request);
+
+        var data = await query
+            .Skip(pagination.Skip)
+            .Take(pagination.Take)
             .Select(BagDtoMapper.Expression)
             .ToListAsync(cancellationToken);
 
-        return result;
+        return new PagedResponse<BagDto>(data, pagination);
     }
 }

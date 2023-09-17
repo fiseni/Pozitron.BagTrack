@@ -23,7 +23,7 @@ public class BagsController : ControllerBase
     [ApiKey]
     [HttpGet("bagmanager/services/tracking/arrTracking")]
     [SwaggerOperation(Summary = "Get Bag information by filter", Tags = new[] { "Bag Manager" })]
-    public async Task<ActionResult<BagDto>> Get([FromQuery] BagListRequest request, [FromServices] IMediator mediator, CancellationToken cancellationToken)
+    public async Task<ActionResult<PagedResponse<BagDto>>> Get([FromQuery] BagListRequest request, [FromServices] IMediator mediator, CancellationToken cancellationToken)
         => Ok(await mediator.Send(request, cancellationToken));
 
     [ApiKey]
@@ -34,6 +34,6 @@ public class BagsController : ControllerBase
 
     [HttpGet("bags")]
     [SwaggerOperation(Summary = "Get Bag information by filter", Tags = new[] { "Bags" })]
-    public async Task<ActionResult<List<BagDto>>> List([FromQuery] BagListRequest request, [FromServices] IMediator mediator, CancellationToken cancellationToken)
+    public async Task<ActionResult<PagedResponse<BagDto>>> List([FromQuery] BagListRequest request, [FromServices] IMediator mediator, CancellationToken cancellationToken)
         => Ok(await mediator.Send(request, cancellationToken));
 }

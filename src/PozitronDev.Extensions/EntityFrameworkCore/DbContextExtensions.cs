@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using PozitronDev.SharedKernel.Contracts;
 using PozitronDev.SharedKernel.Data;
-using PozitronDev.SharedKernel.Extensions;
 
 namespace PozitronDev.Extensions.EntityFrameworkCore;
 
@@ -53,6 +52,15 @@ public static class DbContextExtensions
     {
         var entities = dbContext.ChangeTracker.Entries<BaseEntity>().Select(x => x.Entity).Where(x => x.Events.Any()).ToList();
 
-        await entities.DispatchAndClearEvents(mediator);
+        foreach (var entity in entities)
+        {
+            var events = entity.Events.ToList();
+            entity.ClearDomainEvents();
+
+            foreach (var domainEvent in events)
+            {
+                await mediator.Publish(domainEvent);
+            }
+        }
     }
 }
