@@ -23,10 +23,10 @@
             <InputText @bind-Value="Model!.Carousel" DisplayName="Carousel" placeholder="Carousel" class="col-auto form-control" />
         </div>
         <div class="col-auto">
-            <InputText @bind-Value="Model!.Flight" DisplayName="Flight" placeholder="Flight" class="col-auto form-control" />
+            <InputText @bind-Value="Model!.AirlineIATA" DisplayName="Airline IATA" placeholder="Airline IATA" class="col-auto form-control" />
         </div>
         <div class="col-auto">
-            <InputText @bind-Value="Model!.Airline" DisplayName="Airline IATA" placeholder="Airline IATA" class="col-auto form-control" />
+            <InputText @bind-Value="Model!.Flight" DisplayName="Flight" placeholder="Flight" class="col-auto form-control" />
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-primary">Search</button>
@@ -45,8 +45,8 @@
             <th>Device Id</th>
             <th>Date</th>
             <th>Carousel</th>
-            <th>Flight</th>
             <th>Airline IATA</th>
+            <th>Flight</th>
         </tr>
     </thead>
     <tbody>
@@ -57,8 +57,8 @@
                 <td>@bag.DeviceId</td>
                 <td>@bag.Date.ToLongDateString()</td>
                 <td>@bag.Carousel</td>
+                <td>@bag.AirlineIATA</td>
                 <td>@bag.Flight</td>
-                <td>@bag.Airline</td>
             </tr>
         }
     </tbody>
@@ -107,7 +107,7 @@
 
     private async Task PopulateBagsAsync(int page)
     {
-        string queryParameters = $"?date={Model.Date}&bagTagId={Model.BagTagId}&carousel={Model.Carousel}&flight={Model.Flight}&airline={Model.Airline}&page={page}";
+        string queryParameters = $"?date={Model.Date}&bagTagId={Model.BagTagId}&carousel={Model.Carousel}&flight={Model.Flight}&airlineIATA={Model.AirlineIATA}&page={page}";
         var result = await Http.GetFromJsonAsync<PagedResponse<BagDto>>($"bags{queryParameters}");
 
         if (result is null)

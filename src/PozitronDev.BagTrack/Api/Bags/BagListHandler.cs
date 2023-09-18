@@ -32,9 +32,9 @@ public class BagListHandler : IRequestHandler<BagListRequest, PagedResponse<BagD
             query = query.Where(x => x.Flight == request.Flight);
         }
 
-        if (request.Airline is not null)
+        if (request.AirlineIATA is not null)
         {
-            query = query.Where(x => x.Airline == request.Airline);
+            query = query.Where(x => x.AirlineIATA == request.AirlineIATA);
         }
 
         var count = await query.CountAsync(cancellationToken);

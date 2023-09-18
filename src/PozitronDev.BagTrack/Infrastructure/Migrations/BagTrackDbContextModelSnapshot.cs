@@ -473,7 +473,7 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Airline")
+                    b.Property<string>("AirlineIATA")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 

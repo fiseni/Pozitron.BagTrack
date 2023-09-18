@@ -21,7 +21,7 @@ public static class BagTrackServices
     {
         builder.Services.AddExtendedMediatR(typeof(BagTrackMarker));
         builder.Services.AddCustomAutoMapper(typeof(BagTrackMarker).Assembly);
-        builder.Services.AddCustomFluentValidation(typeof(BagTrackMarker).Assembly);
+        builder.Services.AddCustomFluentValidation(typeof(BagTrackMarker).Assembly, typeof(BagTrackContractsMarker).Assembly);
 
         builder.Services.AddOptions<BagTrackSettings>()
             .BindConfiguration(BagTrackSettings.SECTION_NAME)
@@ -74,9 +74,9 @@ public static class BagTrackServices
         builder.Services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
         builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-        builder.Services.AddSingleton<DeviceCache>();
-        builder.Services.AddSingleton<IDeviceCache, DeviceCache>(x => x.GetRequiredService<DeviceCache>());
-        builder.Services.AddSingleton<ICacheReloader<Device>, DeviceCache>(x => x.GetRequiredService<DeviceCache>());
+        builder.Services.AddSingleton<CachedData>();
+        builder.Services.AddSingleton<IDataCache, CachedData>(x => x.GetRequiredService<CachedData>());
+        builder.Services.AddSingleton<ICacheReloader, CachedData>(x => x.GetRequiredService<CachedData>());
     }
 
     public static IApplicationBuilder UseHangfire(this WebApplication app)

@@ -10,8 +10,8 @@ public static class BagDtoMapper
         DeviceId = x.DeviceId,
         Date = DateOnly.FromDateTime(x.Date),
         Carousel = x.Carousel,
+        AirlineIATA = x.AirlineIATA,
         Flight = x.Flight,
-        Airline = x.Airline,
     };
 
     private static readonly Func<Bag, BagDto> _func = _expression.Compile();

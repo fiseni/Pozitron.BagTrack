@@ -7,6 +7,6 @@ public class BagListRequestValidator : AbstractValidator<BagListRequest>
     public BagListRequestValidator()
     {
         RuleFor(x => x.BagTagId).Length(10);
-        RuleFor(x => x.Airline).MaximumLength(5);
+        RuleFor(x => x.AirlineIATA).MaximumLength(5);
     }
 }

@@ -12,8 +12,8 @@ using PozitronDev.BagTrack.Infrastructure;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    [Migration("20230918201457_9e5eb58815bfa979ec1b")]
-    partial class _9e5eb58815bfa979ec1b
+    [Migration("20230918205650_5c79beb9db1feccbecb1")]
+    partial class _5c79beb9db1feccbecb1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -476,7 +476,7 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Airline")
+                    b.Property<string>("AirlineIATA")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 

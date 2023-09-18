@@ -1,6 +1,7 @@
 ﻿namespace PozitronDev.BagTrack.Domain.Contracts;
 
-public interface ICacheReloader<T>
+public interface ICacheReloader
 {
-    public void ReloadCache(List<T> items);
+    public void ReloadDeviceCache(List<Device> devices);
+    public void ReloadAirlineCache(List<Airline> airlines);
 }
