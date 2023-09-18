@@ -7,5 +7,5 @@ public class JobSettings
     public string? DashboardUsername { get; set; }
     public string? DashboardPassword { get; set; }
 
-    public string? InputMQJob { get; set; }
+    public string? SampleJob { get; set; }
 }

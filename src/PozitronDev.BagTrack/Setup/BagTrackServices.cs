@@ -118,7 +118,7 @@ public static class BagTrackServices
         GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 0 });
         GlobalJobFilters.Filters.Add(new ProlongExpirationTimeAttribute());
 
-        RecurringJob.AddOrUpdate<InputMQJob>(nameof(InputMQJob), job => job.Start(null!, CancellationToken.None), jobSettings.InputMQJob);
+        RecurringJob.AddOrUpdate<SampleJob>(nameof(SampleJob), job => job.Start(null!, CancellationToken.None), jobSettings.SampleJob);
 
         return app;
 

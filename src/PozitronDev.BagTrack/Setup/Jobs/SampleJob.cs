@@ -2,7 +2,7 @@
 
 namespace PozitronDev.BagTrack.Setup.Jobs;
 
-public class InputMQJob
+public class SampleJob
 {
     public async Task Start(PerformContext context, CancellationToken cancellationToken)
     {
