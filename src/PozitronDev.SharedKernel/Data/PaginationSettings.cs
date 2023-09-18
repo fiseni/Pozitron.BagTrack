@@ -4,9 +4,11 @@ public class PaginationSettings
 {
     public int DefaultPage { get; } = 1;
     public int DefaultPageSize { get; } = 20;
-    public int DefaultPageSizeLimit { get; } = 50;
+    public int DefaultPageSizeLimit { get; } = 100;
 
-    public PaginationSettings()
+    public static PaginationSettings Default { get; } = new();
+
+    private PaginationSettings()
     {
     }
 

@@ -69,6 +69,11 @@
         <Paging Pagination="Pagination" Spread="2" SelectedPage="SelectedPage" />
     </div>
 </div>
+<div class="row">
+    <div class="col text-center">
+        <p>Total Records: @Pagination.TotalItems</p>
+    </div>
+</div>
 
 @code {
     private static BagListRequestValidator _validator = new();
@@ -91,7 +96,7 @@
     {
         Bags = new();
         Model = new();
-        Pagination = new();
+        Pagination = Pagination.Default;
         Model.Date = DateOnly.FromDateTime(DateTime.Now.Date);
     }
 
