@@ -8,6 +8,7 @@ public class BagTrackDbContext : DbContext
 {
     public DbSet<Bag> Bags => Set<Bag>();
     public DbSet<Device> Devices => Set<Device>();
+    public DbSet<Airline> Airlines => Set<Airline>();
     public DbSet<InboxMessage> InboxMessages => Set<InboxMessage>();
     public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
 

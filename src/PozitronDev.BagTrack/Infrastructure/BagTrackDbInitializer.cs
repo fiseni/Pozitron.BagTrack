@@ -24,7 +24,16 @@ public class BagTrackDbInitializer
         {
             var devices = DeviceSeed.Get();
             _dbContext.Devices.AddRange(devices);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+
+        var hasAirlines = await _dbContext.Airlines.AnyAsync();
+
+        if (!hasAirlines)
+        {
+            var airlines = AirlineSeed.Get();
+            _dbContext.Airlines.AddRange(airlines);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

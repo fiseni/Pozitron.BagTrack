@@ -6,11 +6,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class e4d916d89ae4bdcdee8f : Migration
+    public partial class _9e5eb58815bfa979ec1b : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Airline",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IATA = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    BagCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Airline", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Bag",
                 columns: table => new
@@ -20,7 +34,7 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     DeviceId = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Carousel = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Flight = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Airline = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    Airline = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     JulianDate = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsResponseNeeded = table.Column<bool>(type: "bit", maxLength: 1, nullable: false),
@@ -36,7 +50,7 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Carousel = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false)
+                    Carousel = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,6 +110,9 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Airline");
+
             migrationBuilder.DropTable(
                 name: "Bag");
 

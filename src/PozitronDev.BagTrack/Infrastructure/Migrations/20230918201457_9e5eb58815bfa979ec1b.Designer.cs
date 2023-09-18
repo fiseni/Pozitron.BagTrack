@@ -12,15 +12,15 @@ using PozitronDev.BagTrack.Infrastructure;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    [Migration("20230917192403_e4d916d89ae4bdcdee8f")]
-    partial class e4d916d89ae4bdcdee8f
+    [Migration("20230918201457_9e5eb58815bfa979ec1b")]
+    partial class _9e5eb58815bfa979ec1b
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.10")
+                .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -447,6 +447,29 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     b.ToView("QueryableValuesEntity", (string)null);
                 });
 
+            modelBuilder.Entity("PozitronDev.BagTrack.Domain.Bags.Airline", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BagCode")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("IATA")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Airline");
+                });
+
             modelBuilder.Entity("PozitronDev.BagTrack.Domain.Bags.Bag", b =>
                 {
                     b.Property<Guid>("Id")
@@ -454,8 +477,8 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Airline")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("BagTagId")
                         .IsRequired()
@@ -504,8 +527,8 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
 
                     b.Property<string>("Carousel")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
 

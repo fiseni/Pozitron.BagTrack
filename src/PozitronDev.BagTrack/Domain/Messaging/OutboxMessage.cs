@@ -1,6 +1,6 @@
 ﻿namespace PozitronDev.BagTrack.Domain.Messaging;
 
-public class OutboxMessage : BaseEntity
+public class OutboxMessage : BaseEntity, IAggregateRoot
 {
 #pragma warning disable CS8618
     private OutboxMessage() { }

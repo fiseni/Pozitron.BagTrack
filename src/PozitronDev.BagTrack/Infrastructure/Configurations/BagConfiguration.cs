@@ -11,6 +11,7 @@ public class BagConfiguration : IEntityTypeConfiguration<Bag>
         builder.Property(x => x.DeviceId).HasMaxLength(10);
         builder.Property(x => x.Carousel).HasMaxLength(10);
         builder.Property(x => x.Flight).HasMaxLength(50);
+        builder.Property(x => x.Airline).HasMaxLength(10);
         builder.Property(x => x.IsResponseNeeded).HasMaxLength(1);
         builder.Property(x => x.JulianDate).HasMaxLength(10);
     }

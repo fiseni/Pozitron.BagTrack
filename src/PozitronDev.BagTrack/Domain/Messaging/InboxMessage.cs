@@ -1,6 +1,6 @@
 ﻿namespace PozitronDev.BagTrack.Domain.Messaging;
 
-public class InboxMessage : BaseEntity
+public class InboxMessage : BaseEntity, IAggregateRoot
 {
 #pragma warning disable CS8618
     private InboxMessage() { }
