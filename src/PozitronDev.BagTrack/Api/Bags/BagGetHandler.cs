@@ -13,10 +13,12 @@ public class BagGetHandler : IRequestHandler<BagGetRequest, BagDto>
     {
         var date = request.Date is null
             ? DateTime.UtcNow.Date
-            : request.Date.Value.ToDateTime(TimeOnly.MinValue);
+            : request.Date.Value.Date;
+
+        var nextDay = date.AddDays(1);
 
         var result = await _dbContext.Bags
-            .Where(x => x.Date == date)
+            .Where(x => x.Date >= date && x.Date < nextDay)
             .Where(x => x.BagTagId == request.BagTagId)
             .Select(BagDtoMapper.Expression)
             .FirstOrDefaultAsync(cancellationToken);

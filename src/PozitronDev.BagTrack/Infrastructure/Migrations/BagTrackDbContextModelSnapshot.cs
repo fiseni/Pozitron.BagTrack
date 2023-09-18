@@ -511,6 +511,10 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BagTagId");
+
+                    b.HasIndex("Date");
+
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Bag");

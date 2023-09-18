@@ -13,9 +13,11 @@ public class BagListHandler : IRequestHandler<BagListRequest, PagedResponse<BagD
     {
         var date = request.Date is null
             ? DateTime.UtcNow.Date
-            : request.Date.Value.ToDateTime(TimeOnly.MinValue);
+            : request.Date.Value.Date;
 
-        var query = _dbContext.Bags.Where(x => x.Date == date);
+        var nextDay = date.AddDays(1);
+
+        var query = _dbContext.Bags.Where(x => x.Date >= date && x.Date < nextDay);
 
         if (request.BagTagId is not null)
         {

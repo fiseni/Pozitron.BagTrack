@@ -38,7 +38,7 @@ public class Bag : BaseEntity, IAggregateRoot
         {
             var dt = new DateTime(dateTime.UtcNow.Year, 1, 1);
 
-            if (julianDateInt != 0)
+            if (julianDateInt > 1)
             {
                 dt = dt.AddDays(julianDateInt - 1);
             }
@@ -49,7 +49,7 @@ public class Bag : BaseEntity, IAggregateRoot
         else
         {
             JulianDate = null;
-            Date = dateTime.UtcNow.Date;
+            Date = dateTime.UtcNow;
         }
     }
 }

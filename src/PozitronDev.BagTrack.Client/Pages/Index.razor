@@ -38,7 +38,7 @@
 </EditForm>
 <p></p>
 
-<table class="table table-striped">
+<table class="table table-striped text-center">
     <thead>
         <tr>
             <th>BagTag Id</th>
@@ -55,7 +55,7 @@
             <tr>
                 <td>@bag.BagTagId</td>
                 <td>@bag.DeviceId</td>
-                <td>@bag.Date.ToLongDateString()</td>
+                <td>@bag.Date.ToString("s")</td>
                 <td>@bag.Carousel</td>
                 <td>@bag.AirlineIATA</td>
                 <td>@bag.Flight</td>
@@ -69,6 +69,7 @@
         <Paging Pagination="Pagination" Spread="2" SelectedPage="SelectedPage" />
     </div>
 </div>
+
 <div class="row">
     <div class="col text-center">
         <p>Total Records: @Pagination.TotalItems</p>
@@ -97,7 +98,7 @@
         Bags = new();
         Model = new();
         Pagination = Pagination.Default;
-        Model.Date = DateOnly.FromDateTime(DateTime.Now.Date);
+        Model.Date = DateTime.Now.Date;
     }
 
     private async Task SelectedPage(int page)
@@ -107,7 +108,13 @@
 
     private async Task PopulateBagsAsync(int page)
     {
-        string queryParameters = $"?date={Model.Date}&bagTagId={Model.BagTagId}&carousel={Model.Carousel}&flight={Model.Flight}&airlineIATA={Model.AirlineIATA}&page={page}";
+        string queryParameters = $"?bagTagId={Model.BagTagId}&carousel={Model.Carousel}&flight={Model.Flight}&airlineIATA={Model.AirlineIATA}&page={page}";
+
+        if (Model.Date.HasValue)
+        {
+            queryParameters += $"&date={Model.Date.Value.ToString("yyyy-MM-dd")}";
+        };
+
         var result = await Http.GetFromJsonAsync<PagedResponse<BagDto>>($"bags{queryParameters}");
 
         if (result is null)

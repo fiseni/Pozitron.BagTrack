@@ -14,5 +14,8 @@ public class BagConfiguration : IEntityTypeConfiguration<Bag>
         builder.Property(x => x.AirlineIATA).HasMaxLength(10);
         builder.Property(x => x.IsResponseNeeded).HasMaxLength(1);
         builder.Property(x => x.JulianDate).HasMaxLength(10);
+
+        builder.HasIndex(x => x.BagTagId);
+        builder.HasIndex(x => x.Date);
     }
 }

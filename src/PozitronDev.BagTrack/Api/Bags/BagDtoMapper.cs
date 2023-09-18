@@ -8,7 +8,7 @@ public static class BagDtoMapper
     {
         BagTagId = x.BagTagId,
         DeviceId = x.DeviceId,
-        Date = DateOnly.FromDateTime(x.Date),
+        Date = x.Date,
         Carousel = x.Carousel,
         AirlineIATA = x.AirlineIATA,
         Flight = x.Flight,

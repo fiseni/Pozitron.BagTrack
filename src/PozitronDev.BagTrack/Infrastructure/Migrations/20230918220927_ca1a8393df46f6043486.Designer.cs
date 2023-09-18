@@ -12,8 +12,8 @@ using PozitronDev.BagTrack.Infrastructure;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    [Migration("20230918205650_5c79beb9db1feccbecb1")]
-    partial class _5c79beb9db1feccbecb1
+    [Migration("20230918220927_ca1a8393df46f6043486")]
+    partial class ca1a8393df46f6043486
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -513,6 +513,10 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BagTagId");
+
+                    b.HasIndex("Date");
 
                     b.HasIndex("IsDeleted");
 

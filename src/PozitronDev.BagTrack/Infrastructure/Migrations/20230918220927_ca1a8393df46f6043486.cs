@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _5c79beb9db1feccbecb1 : Migration
+    public partial class ca1a8393df46f6043486 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -90,6 +90,16 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_OutboxMessage", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bag_BagTagId",
+                table: "Bag",
+                column: "BagTagId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bag_Date",
+                table: "Bag",
+                column: "Date");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bag_IsDeleted",

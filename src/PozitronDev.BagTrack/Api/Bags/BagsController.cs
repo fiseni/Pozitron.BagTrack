@@ -12,7 +12,7 @@ public class BagsController : ControllerBase
     [AllowAnonymous]
     [HttpGet("bagmanager/services/tracking/arrTracking/{bagTagId}")]
     [SwaggerOperation(Summary = "Get Bag information by tag", Tags = new[] { "Bag Manager" })]
-    public async Task<ActionResult<BagDto>> GetByTagId(string bagTagId, DateOnly? date, [FromServices] IMediator mediator, CancellationToken cancellationToken)
+    public async Task<ActionResult<BagDto>> GetByTagId(string bagTagId, DateTime? date, [FromServices] IMediator mediator, CancellationToken cancellationToken)
     {
         var request = new BagGetRequest
         {
