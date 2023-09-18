@@ -5,14 +5,18 @@ namespace PozitronDev.BagTrack.Api.Bags;
 public class BagListHandler : IRequestHandler<BagListRequest, PagedResponse<BagDto>>
 {
     private readonly BagTrackDbContext _dbContext;
+    private readonly IDateTime _dateTime;
 
-    public BagListHandler(BagTrackDbContext dbContext)
-        => _dbContext = dbContext;
+    public BagListHandler(BagTrackDbContext dbContext, IDateTime dateTime)
+    {
+        _dbContext = dbContext;
+        _dateTime = dateTime;
+    }
 
     public async Task<PagedResponse<BagDto>> Handle(BagListRequest request, CancellationToken cancellationToken)
     {
         var date = request.Date is null
-            ? DateTime.UtcNow.Date
+            ? _dateTime.UtcNow.Date
             : request.Date.Value.Date;
 
         var nextDay = date.AddDays(1);

@@ -55,7 +55,7 @@
             <tr>
                 <td>@bag.BagTagId</td>
                 <td>@bag.DeviceId</td>
-                <td>@bag.Date.ToString("s")</td>
+                <td>@bag.Date.ToString("yyyy-MM-dd HH:mm")</td>
                 <td>@bag.Carousel</td>
                 <td>@bag.AirlineIATA</td>
                 <td>@bag.Flight</td>
@@ -98,7 +98,7 @@
         Bags = new();
         Model = new();
         Pagination = Pagination.Default;
-        Model.Date = DateTime.Now.Date;
+        Model.Date = DateTime.UtcNow.Date;
     }
 
     private async Task SelectedPage(int page)
