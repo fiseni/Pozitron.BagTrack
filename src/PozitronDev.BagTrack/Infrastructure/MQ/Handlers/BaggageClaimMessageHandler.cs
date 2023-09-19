@@ -5,6 +5,7 @@ namespace PozitronDev.BagTrack.Infrastructure.MQ.Handlers;
 
 public class BaggageClaimMessageHandler : IMessageHandler
 {
+    private static readonly Random _random = new();
     public async Task<bool> HandleAsync(BagTrackDbContext dbContext, string data, CancellationToken cancellationToken)
     {
         var flightDto = ExtractData(data);
@@ -19,7 +20,7 @@ public class BaggageClaimMessageHandler : IMessageHandler
 
         if (flight is null)
         {
-            var newFlight = new Flight(flightDto.Airline!, flightDto.FlightNumber!, flightDto.OriginDate!.Value, flightDto.Carousel, flightDto.Start, flightDto.Stop);
+            var newFlight = new Flight(flightDto.Airline!, flightDto.FlightNumber! + _random.Next(1, 1_000).ToString(), flightDto.OriginDate!.Value, flightDto.Carousel, flightDto.Start, flightDto.Stop);
             dbContext.Flights.Add(newFlight);
         }
         else

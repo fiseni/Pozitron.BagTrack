@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aidx:IATA_AIDX_FlightLegNotifRQ xmlns:aidx="http://www.iata.org/IATA/2007/00" Target="Production" Version="16.1" CodeContext="3" TimeStamp="2023-09-18T14:19:38+03:00" EchoToken="2548d918bd8743ad83cf404829f46b57fb89aa23ba744a34af3d550be299e26e007a66" CorrelationID="2548d918bd8743ad83cf404829f46b57fb89aa23ba744a34af3d550be299e26e">
+	<aidx:Originator CompanyShortName="EDG" Code="XS" CodeContext="3"/>
+	<aidx:FlightLeg>
+		<aidx:LegIdentifier>
+			<aidx:Airline CodeContext="3">TK</aidx:Airline>
+			<aidx:FlightNumber>0032</aidx:FlightNumber>
+			<aidx:DepartureAirport CodeContext="3">ATL</aidx:DepartureAirport>
+			<aidx:ArrivalAirport CodeContext="3">IST</aidx:ArrivalAirport>
+			<aidx:OriginDate>2023-09-18</aidx:OriginDate>
+		</aidx:LegIdentifier>
+		<aidx:LegData InternationalStatus="International">
+			<aidx:OperationTime OperationQualifier="ONB" CodeContext="9750" RepeatIndex="1" TimeType="SCT">2023-09-18T11:15:00Z</aidx:OperationTime>
+			<aidx:OperationTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OperationQualifier="OFB" CodeContext="9750" RepeatIndex="2" TimeType="TAR" xsi:nil="true"/>
+			<aidx:OperationTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OperationQualifier="SAT" CodeContext="9750" RepeatIndex="3" TimeType="TAR" xsi:nil="true"/>
+			<aidx:OperationTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OperationQualifier="TDN" CodeContext="9750" RepeatIndex="6" TimeType="EST" xsi:nil="true"/>
+			<aidx:OperationTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OperationQualifier="FBG" CodeContext="9750" RepeatIndex="9" TimeType="ACT" xsi:nil="true"/>
+			<aidx:OperationTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OperationQualifier="LBG" CodeContext="9750" RepeatIndex="10" TimeType="ACT" xsi:nil="true"/>
+			<aidx:AircraftInfo>
+				<aidx:CallSign>THY32</aidx:CallSign>
+			</aidx:AircraftInfo>
+		</aidx:LegData>
+		<aidx:TPA_Extension>
+			<aip:ResourceAllocations xmlns:aip="http://www.sita.aero/aip/XMLSchema" xmlns:soap="http://www.w3.org/2001/12/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://exslt.org/common">
+				<aip:ResourceAllocation Index="1">
+					<aip:Resource>
+						<aip:ResourceType>BAY</aip:ResourceType>
+						<aip:Code/>
+					</aip:Resource>
+					<aip:TimeSlot>
+						<aip:Start>2023-09-18T14:10:00+03:00</aip:Start>
+						<aip:Stop>2023-09-18T15:40:00+03:00</aip:Stop>
+					</aip:TimeSlot>
+				</aip:ResourceAllocation>
+				<aip:ResourceAllocation Index="2">
+					<aip:Resource>
+						<aip:ResourceType>BAGGAGECLAIM</aip:ResourceType>
+						<aip:Code/>
+					</aip:Resource>
+					<aip:TimeSlot>
+						<aip:Start>2023-09-18T13:57:00+03:00</aip:Start>
+						<aip:Stop>2023-09-18T15:12:00+03:00</aip:Stop>
+					</aip:TimeSlot>
+				</aip:ResourceAllocation>
+				<aip:ResourceAllocation Index="3">
+					<aip:Resource>
+						<aip:ResourceType>LOUNGE</aip:ResourceType>
+						<aip:Code/>
+					</aip:Resource>
+					<aip:TimeSlot>
+						<aip:Start>2023-09-18T14:15:00+03:00</aip:Start>
+						<aip:Stop>2023-09-18T14:20:00+03:00</aip:Stop>
+					</aip:TimeSlot>
+				</aip:ResourceAllocation>
+			</aip:ResourceAllocations>
+		</aidx:TPA_Extension>
+	</aidx:FlightLeg>
+</aidx:IATA_AIDX_FlightLegNotifRQ>

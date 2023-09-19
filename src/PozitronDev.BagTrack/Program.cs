@@ -1,5 +1,6 @@
 ﻿using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using PozitronDev.BagTrack;
 using PozitronDev.BagTrack.Infrastructure.MQ;
 using PozitronDev.BagTrack.Setup;
 using PozitronDev.BagTrack.Setup.Jobs;
@@ -18,7 +19,9 @@ builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddHostedService<DbInitializerJob>();
 builder.Services.AddHostedService<ConfigurationReloadJob>();
-builder.Services.AddHostedService<MQSubscriberService>();
+//builder.Services.AddHostedService<MQSubscriberService>();
+
+builder.Services.AddSingleton<MQSubscriberService>();
 
 // Add application services
 builder.Services.AddSingleton(services => Clock.Initialize());
@@ -41,4 +44,6 @@ app.MapControllers();
 app.MapFallbackToFile("index.html");
 //app.MapGet("/", () => "Pozitron BagTrack v1");
 
-app.Run();
+await TestApp.RunJob(app.Services);
+
+//app.Run();
