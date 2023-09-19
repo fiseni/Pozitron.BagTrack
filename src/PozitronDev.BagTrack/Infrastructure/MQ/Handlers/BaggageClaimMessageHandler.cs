@@ -5,7 +5,7 @@ namespace PozitronDev.BagTrack.Infrastructure.MQ.Handlers;
 
 public class BaggageClaimMessageHandler : IMessageHandler
 {
-    public async Task<bool> Handle(BagTrackDbContext dbContext, string data, CancellationToken cancellationToken)
+    public async Task<bool> HandleAsync(BagTrackDbContext dbContext, string data, CancellationToken cancellationToken)
     {
         var flightDto = ExtractData(data);
 

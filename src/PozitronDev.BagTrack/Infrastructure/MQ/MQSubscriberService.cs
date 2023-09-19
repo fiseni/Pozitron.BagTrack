@@ -49,7 +49,7 @@ public class MQSubscriberService : BackgroundService
         }
     }
 
-    private async Task MessageHandler(string data, CancellationToken cancellationToken)
+    public async Task MessageHandler(string data, CancellationToken cancellationToken)
     {
         _logger.LogInformation(data);
 
@@ -62,7 +62,7 @@ public class MQSubscriberService : BackgroundService
             dbContext.InboxMessages.Add(inboxMessage);
             await dbContext.SaveChangesAsync(cancellationToken);
 
-            if (await _messageHandler.Handle(dbContext, data, cancellationToken))
+            if (await _messageHandler.HandleAsync(dbContext, data, cancellationToken))
             {
                 inboxMessage.MarkAsProcessed(_dateTime);
             }

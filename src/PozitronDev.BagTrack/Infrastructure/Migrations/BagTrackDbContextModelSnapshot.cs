@@ -567,9 +567,6 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(10)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -584,6 +581,9 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                         .HasMaxLength(10)
                         .IsUnicode(false)
                         .HasColumnType("varchar(10)");
+
+                    b.Property<DateTime>("OriginDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("Start")
                         .HasColumnType("datetime2");

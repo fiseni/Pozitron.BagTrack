@@ -12,8 +12,8 @@ using PozitronDev.BagTrack.Infrastructure;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    [Migration("20230919093244_e5ca7ed7527d59b83d98")]
-    partial class e5ca7ed7527d59b83d98
+    [Migration("20230919111627_92b999bf839b6493f0ff")]
+    partial class _92b999bf839b6493f0ff
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -570,9 +570,6 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(10)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -587,6 +584,9 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                         .HasMaxLength(10)
                         .IsUnicode(false)
                         .HasColumnType("varchar(10)");
+
+                    b.Property<DateTime>("OriginDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("Start")
                         .HasColumnType("datetime2");

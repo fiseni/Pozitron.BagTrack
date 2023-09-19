@@ -2,5 +2,5 @@
 
 public interface IMessageHandler
 {
-    Task<bool> Handle(BagTrackDbContext dbContext, string data, CancellationToken cancellationToken);
+    Task<bool> HandleAsync(BagTrackDbContext dbContext, string data, CancellationToken cancellationToken);
 }
