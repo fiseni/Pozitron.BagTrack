@@ -7,6 +7,8 @@ using Hangfire.Dashboard.BasicAuthorization;
 using Hangfire.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using PozitronDev.BagTrack.Infrastructure.MQ;
+using PozitronDev.BagTrack.Infrastructure.MQ.Handlers;
 using PozitronDev.BagTrack.Setup.Jobs;
 using PozitronDev.BagTrack.Setup.Middleware;
 using PozitronDev.CommissionPayment.Infrastructure;
@@ -38,9 +40,15 @@ public static class BagTrackServices
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
+        builder.Services.AddOptions<MQSettings>()
+            .BindConfiguration(MQSettings.SECTION_NAME)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
         builder.Services.AddSingleton(x => x.GetRequiredService<IOptions<BagTrackSettings>>().Value);
         builder.Services.AddSingleton(x => x.GetRequiredService<IOptions<KeyVaultSettings>>().Value);
         builder.Services.AddSingleton(x => x.GetRequiredService<IOptions<JobSettings>>().Value);
+        builder.Services.AddSingleton(x => x.GetRequiredService<IOptions<MQSettings>>().Value);
 
         var keyVaultSettings = new KeyVaultSettings();
         builder.Configuration.Bind(KeyVaultSettings.SECTION_NAME, keyVaultSettings);
@@ -73,6 +81,9 @@ public static class BagTrackServices
 
         builder.Services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
         builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+        builder.Services.AddSingleton<IMQAdapterService, MQAdapterService>();
+        builder.Services.AddSingleton<IMessageHandler, BaggageClaimMessageHandler>();
 
         builder.Services.AddSingleton<CachedData>();
         builder.Services.AddSingleton<IDataCache, CachedData>(x => x.GetRequiredService<CachedData>());

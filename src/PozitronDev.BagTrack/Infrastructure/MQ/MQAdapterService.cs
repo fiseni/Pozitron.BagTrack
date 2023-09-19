@@ -1,11 +1,14 @@
 ﻿using IBM.WMQ;
-using Newtonsoft.Json;
 using System.Collections;
+using System.Text.Json;
 
 namespace PozitronDev.BagTrack.Infrastructure.MQ;
 
 public class MQAdapterService : IMQAdapterService
 {
+    private const string CONNECTED = "Connected";
+    private const string DISCONNECTED = "Disconnected";
+
     private Hashtable _queueManagerProperties;
     private readonly MQSettings _mqSettings;
     private readonly ILogger<MQAdapterService> _logger;
@@ -26,11 +29,11 @@ public class MQAdapterService : IMQAdapterService
         };
     }
 
-    public bool SendMessageToQueue(string queueName, object objToSend)
+    public bool SendMessageToQueue<T>(string queueName, T objToSend)
     {
         try
         {
-            var hearBeatConfirmationText = JsonConvert.SerializeObject(objToSend);
+            var hearBeatConfirmationText = JsonSerializer.Serialize(objToSend);
 
             using (var queueManager = new MQQueueManager(_mqSettings.QueueManagerName, _queueManagerProperties))
             {
@@ -44,18 +47,18 @@ public class MQAdapterService : IMQAdapterService
 
             return true;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger?.LogError(e, $"Error in sending message to the queue {queueName}.");
+            _logger.LogError(ex, "Error in sending message to the queue {queueName}.", queueName);
             return false;
         }
     }
 
-    public bool SendMessageToTopic(string topicName, object objToSend)
+    public bool SendMessageToTopic<T>(string topicName, T objToSend)
     {
         try
         {
-            var hearBeatConfirmationText = JsonConvert.SerializeObject(objToSend);
+            var hearBeatConfirmationText = JsonSerializer.Serialize(objToSend);
 
             using (var queueManager = new MQQueueManager(_mqSettings.QueueManagerName, _queueManagerProperties))
             {
@@ -69,24 +72,29 @@ public class MQAdapterService : IMQAdapterService
 
             return true;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger?.LogError(e, $"Error in sending message to the topic {topicName}.");
+            _logger.LogError(ex, "Error in sending message to the topic {topicName}.", topicName);
             return false;
         }
     }
 
-    public Task ListenToTopic(string topicString, Action<MQMessage> messageHandler, Action<MQConnectionStatus> connectionStatusChangedHandler)
+    public Task ListenToTopic(string topicString, Func<string, CancellationToken, Task> messageHandler, CancellationToken cancellationToken)
     {
-        return ListenToMq(_mqSettings.QueueManagerName, topicString, false, messageHandler, connectionStatusChangedHandler);
+        return ListenToMq(_mqSettings.QueueManagerName, topicString, false, messageHandler, cancellationToken);
     }
 
-    public Task ListenToQueue(string queueName, Action<MQMessage> messageHandler, Action<MQConnectionStatus> connectionStatusChangedHandler)
+    public Task ListenToQueue(string queueName, Func<string, CancellationToken, Task> messageHandler, CancellationToken cancellationToken)
     {
-        return ListenToMq(_mqSettings.QueueManagerName, queueName, true, messageHandler, connectionStatusChangedHandler);
+        return ListenToMq(_mqSettings.QueueManagerName, queueName, true, messageHandler, cancellationToken);
     }
 
-    private Task ListenToMq(string queueManagerName, string topicOrQueueString, bool isQueue, Action<MQMessage> messageHandler, Action<MQConnectionStatus> connectionStatusChangedHandler)
+    private async Task ListenToMq(
+        string queueManagerName,
+        string topicOrQueueString,
+        bool isQueue,
+        Func<string, CancellationToken, Task> messageHandler,
+        CancellationToken cancellationToken)
     {
         var openOptionsForGet = MQC.MQSO_CREATE | MQC.MQSO_FAIL_IF_QUIESCING | MQC.MQSO_MANAGED | MQC.MQSO_NON_DURABLE;
         MQDestination inboundDestination;
@@ -102,49 +110,55 @@ public class MQAdapterService : IMQAdapterService
                 {
                     using (inboundDestination = queueManager.AccessQueue(topicOrQueueString, MQC.MQTOPIC_OPEN_AS_SUBSCRIPTION))
                     {
-                        connectionStatusChangedHandler(new MQConnectionStatus(queueManagerName, topicOrQueueString, Status.Connected));
-                        GetMessageLoop(messageHandler, inboundDestination, gmo);
+                        _logger.LogInformation("IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, TopicQueueName: {TopicQueueName}.", 
+                            queueManagerName, topicOrQueueString, CONNECTED);
+                        await GetMessageLoop(messageHandler, inboundDestination, gmo, cancellationToken);
                     }
                 }
                 else
                 {
                     using (inboundDestination = queueManager.AccessTopic(topicOrQueueString, null, MQC.MQTOPIC_OPEN_AS_SUBSCRIPTION, openOptionsForGet))
                     {
-                        connectionStatusChangedHandler(new MQConnectionStatus(queueManagerName, topicOrQueueString, Status.Connected));
-                        GetMessageLoop(messageHandler, inboundDestination, gmo);
+                        _logger.LogInformation("IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, TopicQueueName: {TopicQueueName}.",
+                            queueManagerName, topicOrQueueString, CONNECTED);
+                        await GetMessageLoop(messageHandler, inboundDestination, gmo, cancellationToken);
                     }
                 }
             }
         }
         catch (MQException mqException)
         {
-            _logger?.LogError(mqException, "Error accessing the queue.");
-            connectionStatusChangedHandler(new MQConnectionStatus(queueManagerName, topicOrQueueString, Status.Disconnected));
+            _logger.LogInformation("IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, TopicQueueName: {TopicQueueName}.",
+                queueManagerName, topicOrQueueString, DISCONNECTED);
+            _logger.LogError(mqException, "Error accessing the queue.");
         }
-
-        return Task.CompletedTask;
     }
 
-    private void GetMessageLoop(Action<MQMessage> messageHandler, MQDestination inboundDestination, MQGetMessageOptions gmo)
+    private async Task GetMessageLoop(
+        Func<string, CancellationToken, Task> messageHandler,
+        MQDestination inboundDestination,
+        MQGetMessageOptions gmo,
+        CancellationToken cancellationToken)
     {
-        while (true)
+        while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
-                var msg = new MQMessage();
-                inboundDestination.Get(msg, gmo);
+                var message = new MQMessage();
+                inboundDestination.Get(message, gmo);
+                var data = message.ReadString(message.DataLength);
 
-                messageHandler(msg);
+                await messageHandler(data, cancellationToken);
             }
             catch (MQException mqException)
             {
                 if (mqException.Reason == MQC.MQRC_NO_MSG_AVAILABLE)
                 {
-                    Thread.Sleep(200);
+                    await Task.Delay(200, cancellationToken);
                 }
                 else
                 {
-                    _logger?.LogError(mqException, "Error getting the messages.");
+                    _logger.LogError(mqException, "Error getting or processing the messages.");
                     throw;
                 }
             }

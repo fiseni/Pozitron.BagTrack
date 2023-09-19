@@ -1,5 +1,6 @@
 ﻿using IBM.WMQ;
 using PozitronDev.BagTrack.Domain.Messaging;
+using PozitronDev.BagTrack.Infrastructure.MQ.Handlers;
 
 namespace PozitronDev.BagTrack.Infrastructure.MQ;
 
@@ -9,51 +10,62 @@ public class MQSubscriberService : BackgroundService
     private readonly IDateTime _dateTime;
     private readonly IAppLogger<MQSubscriberService> _logger;
     private readonly IMQAdapterService _mqAdapterService;
+    private readonly IMessageHandler _messageHandler;
+    private readonly MQSettings _mQSettings;
 
     public MQSubscriberService(
         IServiceScopeFactory serviceScopeFactory,
         IDateTime dateTime,
         IAppLogger<MQSubscriberService> logger,
-        IMQAdapterService mqAdapterService)
+        IMQAdapterService mqAdapterService,
+        IMessageHandler messageHandler,
+        MQSettings mQSettings)
     {
         _serviceScopeFactory = serviceScopeFactory;
         _dateTime = dateTime;
         _logger = logger;
         _mqAdapterService = mqAdapterService;
+        _messageHandler = messageHandler;
+        _mQSettings = mQSettings;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!cancellationToken.IsCancellationRequested)
+        if (string.IsNullOrEmpty(_mQSettings.InputQueue)) return;
+
+        await Task.Delay(5000, stoppingToken);
+
+        while (!stoppingToken.IsCancellationRequested)
         {
-            await ListenForMessages(cancellationToken);
-            await Task.Delay(TimeSpan.FromMinutes(5), cancellationToken);
+            try
+            {
+                await _mqAdapterService.ListenToQueue(_mQSettings.InputQueue, MessageHandler, stoppingToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, "Error occurred. Retrying in 5 minutes");
+            }
+
+            await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
         }
     }
 
-    private async Task ListenForMessages(CancellationToken cancellationToken)
+    private async Task MessageHandler(string data, CancellationToken cancellationToken)
     {
-        await Task.Run(() => _mqAdapterService.ListenToTopic("BroadCast", MessageHandler, ConnectionStatusChangedHandler), cancellationToken);
-    }
+        _logger.LogInformation(data);
 
-    private void ConnectionStatusChangedHandler(MQConnectionStatus connectionStatus)
-    {
-        _logger.LogInformation(connectionStatus.ToString());
-    }
-
-    private void MessageHandler(MQMessage mqMessage)
-    {
-        var msg = mqMessage.ReadString(mqMessage.DataLength);
-        var message = new InboxMessage(_dateTime, msg);
+        var inboxMessage = new InboxMessage(_dateTime, data);
 
         using (var scope = _serviceScopeFactory.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<BagTrackDbContext>();
 
-            dbContext.InboxMessages.Add(message);
-            dbContext.SaveChanges();
-        }
+            dbContext.InboxMessages.Add(inboxMessage);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation(msg);
+            await _messageHandler.Handle(dbContext, data, cancellationToken);
+            inboxMessage.MarkAsProcessed(_dateTime);
+            await dbContext.SaveChangesAsync(cancellationToken);
+        }
     }
 }

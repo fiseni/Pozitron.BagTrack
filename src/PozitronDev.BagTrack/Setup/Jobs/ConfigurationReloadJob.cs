@@ -13,7 +13,7 @@ public class ConfigurationReloadJob : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await Task.Delay(2000);
+        await Task.Delay(2000, stoppingToken);
 
         var scope = _serviceScopeFactory.CreateScope();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();

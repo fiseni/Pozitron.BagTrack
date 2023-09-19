@@ -1,5 +1,6 @@
 ﻿using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using PozitronDev.BagTrack.Infrastructure.MQ;
 using PozitronDev.BagTrack.Setup;
 using PozitronDev.BagTrack.Setup.Jobs;
 using PozitronDev.BagTrack.Setup.Middleware;
@@ -17,6 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddHostedService<DbInitializerJob>();
 builder.Services.AddHostedService<ConfigurationReloadJob>();
+builder.Services.AddHostedService<MQSubscriberService>();
 
 // Add application services
 builder.Services.AddSingleton(services => Clock.Initialize());

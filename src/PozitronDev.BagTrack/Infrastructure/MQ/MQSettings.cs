@@ -2,11 +2,13 @@
 
 public class MQSettings
 {
-    public required string HostName { get; set; }
-    public required int Port { get; set; }
-    public required string Channel { get; set; }
-    public required string UserId { get; set; }
-    public required string Password { get; set; }
-    public required string QueueManagerName { get; set; }
-    public required string Queue { get; set; }
+    public const string SECTION_NAME = "MQ";
+
+    public string HostName { get; set; } = default!;
+    public int Port { get; set; }
+    public string Channel { get; set; } = default!;
+    public string UserId { get; set; } = default!;
+    public string Password { get; set; } = default!;
+    public string QueueManagerName { get; set; } = default!;
+    public string InputQueue { get; set; } = default!;
 }
