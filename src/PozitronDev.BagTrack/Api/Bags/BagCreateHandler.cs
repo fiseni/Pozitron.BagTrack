@@ -27,7 +27,7 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
         var utcNow = _dateTime.UtcNow;
 
         var flights = await _dbContext.Flights
-            .Where(x => x.Start <= utcNow && x.Stop >= utcNow)
+            .Where(x => x.Start != null && x.Stop != null && x.Start <= utcNow && x.Stop >= utcNow)
             .Where(x => x.AirlineIATA == airlineIATA)
             .Where(x => x.ActiveCarousel == carousel)
             .Take(4)

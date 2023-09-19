@@ -1,5 +1,4 @@
-﻿using IBM.WMQ;
-using PozitronDev.BagTrack.Domain.Messaging;
+﻿using PozitronDev.BagTrack.Domain.Messaging;
 using PozitronDev.BagTrack.Infrastructure.MQ.Handlers;
 
 namespace PozitronDev.BagTrack.Infrastructure.MQ;
@@ -63,8 +62,15 @@ public class MQSubscriberService : BackgroundService
             dbContext.InboxMessages.Add(inboxMessage);
             await dbContext.SaveChangesAsync(cancellationToken);
 
-            await _messageHandler.Handle(dbContext, data, cancellationToken);
-            inboxMessage.MarkAsProcessed(_dateTime);
+            if (await _messageHandler.Handle(dbContext, data, cancellationToken))
+            {
+                inboxMessage.MarkAsProcessed(_dateTime);
+            }
+            else
+            {
+                _logger.LogError("The message was not parsed successfully!");
+            }
+
             await dbContext.SaveChangesAsync(cancellationToken);
         }
     }
