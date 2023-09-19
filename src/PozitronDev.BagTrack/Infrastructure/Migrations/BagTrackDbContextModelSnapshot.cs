@@ -593,15 +593,15 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ActiveCarousel");
-
-                    b.HasIndex("AirlineIATA");
-
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("Start");
+                    b.HasIndex("AirlineIATA", "Number", "OriginDate", "IsDeleted");
 
-                    b.HasIndex("Stop");
+                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("AirlineIATA", "Number", "OriginDate", "IsDeleted"), new[] { "NumberIATA", "ActiveCarousel", "AllocatedCarousel", "Start", "Stop" });
+
+                    b.HasIndex("AirlineIATA", "ActiveCarousel", "IsDeleted", "Start", "Stop");
+
+                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("AirlineIATA", "ActiveCarousel", "IsDeleted", "Start", "Stop"), new[] { "Number" });
 
                     b.ToTable("Flight");
                 });

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _92b999bf839b6493f0ff : Migration
+    public partial class e663bbda150725c982d2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -127,29 +127,21 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Flight_ActiveCarousel",
+                name: "IX_Flight_AirlineIATA_ActiveCarousel_IsDeleted_Start_Stop",
                 table: "Flight",
-                column: "ActiveCarousel");
+                columns: new[] { "AirlineIATA", "ActiveCarousel", "IsDeleted", "Start", "Stop" })
+                .Annotation("SqlServer:Include", new[] { "Number" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Flight_AirlineIATA",
+                name: "IX_Flight_AirlineIATA_Number_OriginDate_IsDeleted",
                 table: "Flight",
-                column: "AirlineIATA");
+                columns: new[] { "AirlineIATA", "Number", "OriginDate", "IsDeleted" })
+                .Annotation("SqlServer:Include", new[] { "NumberIATA", "ActiveCarousel", "AllocatedCarousel", "Start", "Stop" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Flight_IsDeleted",
                 table: "Flight",
                 column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Flight_Start",
-                table: "Flight",
-                column: "Start");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Flight_Stop",
-                table: "Flight",
-                column: "Stop");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InboxMessage_IsDeleted",
