@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class ca1a8393df46f6043486 : Migration
+    public partial class c60e2ab3c7f8e12740ca : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,8 +17,8 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IATA = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    BagCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
+                    IATA = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false),
+                    BagCode = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,14 +30,14 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BagTagId = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    DeviceId = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Carousel = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    AirlineIATA = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    Flight = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    JulianDate = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    BagTagId = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false),
+                    DeviceId = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false),
+                    Carousel = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
+                    AirlineIATA = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
+                    Flight = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
+                    JulianDate = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsResponseNeeded = table.Column<bool>(type: "bit", maxLength: 1, nullable: false),
+                    IsResponseNeeded = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -49,8 +49,8 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                 name: "Device",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Carousel = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
+                    Id = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false),
+                    Carousel = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {

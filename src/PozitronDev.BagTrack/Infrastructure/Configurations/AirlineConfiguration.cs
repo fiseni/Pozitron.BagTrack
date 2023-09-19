@@ -7,7 +7,7 @@ public class AirlineConfiguration : IEntityTypeConfiguration<Airline>
 {
     public void Configure(EntityTypeBuilder<Airline> builder)
     {
-        builder.Property(x => x.IATA).HasMaxLength(10);
-        builder.Property(x => x.BagCode).HasMaxLength(10);
+        builder.Property(x => x.IATA).HasMaxLength(10).IsUnicode(false);
+        builder.Property(x => x.BagCode).HasMaxLength(10).IsUnicode(false);
     }
 }

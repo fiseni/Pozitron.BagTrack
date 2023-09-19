@@ -12,8 +12,8 @@ using PozitronDev.BagTrack.Infrastructure;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    [Migration("20230918220927_ca1a8393df46f6043486")]
-    partial class ca1a8393df46f6043486
+    [Migration("20230919081223_c60e2ab3c7f8e12740ca")]
+    partial class c60e2ab3c7f8e12740ca
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -458,12 +458,14 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     b.Property<string>("BagCode")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("IATA")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.HasKey("Id");
 
@@ -478,16 +480,19 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
 
                     b.Property<string>("AirlineIATA")
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("BagTagId")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("Carousel")
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -495,22 +500,24 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     b.Property<string>("DeviceId")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("Flight")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsResponseNeeded")
-                        .HasMaxLength(1)
                         .HasColumnType("bit");
 
                     b.Property<string>("JulianDate")
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.HasKey("Id");
 
@@ -527,12 +534,14 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("Carousel")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.HasKey("Id");
 
