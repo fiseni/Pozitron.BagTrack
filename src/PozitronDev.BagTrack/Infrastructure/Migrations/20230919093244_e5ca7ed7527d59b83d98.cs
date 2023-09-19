@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _7ef315edb6b5c2db6a6f : Migration
+    public partial class e5ca7ed7527d59b83d98 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -137,14 +137,19 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                 column: "AirlineIATA");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Flight_Date",
-                table: "Flight",
-                column: "Date");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Flight_IsDeleted",
                 table: "Flight",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Flight_Start",
+                table: "Flight",
+                column: "Start");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Flight_Stop",
+                table: "Flight",
+                column: "Stop");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InboxMessage_IsDeleted",

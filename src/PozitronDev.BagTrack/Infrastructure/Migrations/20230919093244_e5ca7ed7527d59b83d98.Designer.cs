@@ -12,8 +12,8 @@ using PozitronDev.BagTrack.Infrastructure;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    [Migration("20230919085635_7ef315edb6b5c2db6a6f")]
-    partial class _7ef315edb6b5c2db6a6f
+    [Migration("20230919093244_e5ca7ed7527d59b83d98")]
+    partial class e5ca7ed7527d59b83d98
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -600,9 +600,11 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
 
                     b.HasIndex("AirlineIATA");
 
-                    b.HasIndex("Date");
-
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("Start");
+
+                    b.HasIndex("Stop");
 
                     b.ToTable("Flight");
                 });

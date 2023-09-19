@@ -24,10 +24,10 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
         var airlineIATA = _dataCache.GetAirlineIATA(airlineBagCode);
         var carousel = _dataCache.GetCarousel(request.DeviceId);
 
-        var dateFilter = _dateTime.UtcNow.AddDays(-2);
+        var utcNow = _dateTime.UtcNow;
 
         var flights = await _dbContext.Flights
-            .Where(x => x.Date > dateFilter)
+            .Where(x => x.Start <= utcNow && x.Stop >= utcNow)
             .Where(x => x.AirlineIATA == airlineIATA)
             .Where(x => x.ActiveCarousel == carousel)
             .Take(4)
@@ -39,7 +39,7 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
             : null;
 
         var bag = new Bag(
-            _dateTime,
+            utcNow,
             request.BagTagId,
             request.DeviceId,
             carousel,

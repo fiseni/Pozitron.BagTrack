@@ -12,7 +12,7 @@ public class Bag : BaseEntity, IAggregateRoot
     public bool IsResponseNeeded { get; private set; }
 
     private Bag() { }
-    public Bag(IDateTime dateTime,
+    public Bag(DateTime utcNow,
                string bagTagId,
                string deviceId,
                string? carousel,
@@ -29,14 +29,20 @@ public class Bag : BaseEntity, IAggregateRoot
 
         IsResponseNeeded = isResponseNeeded is not null && isResponseNeeded.Equals("y", StringComparison.OrdinalIgnoreCase);
 
-        SetDate(dateTime, julianDate);
+        // We'll always set the actual time, won't consider julianDate
+        SetDate(utcNow, null);
     }
 
-    private void SetDate(IDateTime dateTime, string? julianDate)
+    private void SetDate(DateTime utcNow, string? julianDate)
     {
-        if (int.TryParse(julianDate, out var julianDateInt))
+        if (julianDate is null || !int.TryParse(julianDate, out var julianDateInt))
         {
-            var dt = new DateTime(dateTime.UtcNow.Year, 1, 1);
+            JulianDate = null;
+            Date = utcNow;
+        }
+        else
+        {
+            var dt = new DateTime(utcNow.Year, 1, 1);
 
             if (julianDateInt > 1)
             {
@@ -45,11 +51,6 @@ public class Bag : BaseEntity, IAggregateRoot
 
             JulianDate = julianDate;
             Date = dt;
-        }
-        else
-        {
-            JulianDate = null;
-            Date = dateTime.UtcNow;
         }
     }
 }

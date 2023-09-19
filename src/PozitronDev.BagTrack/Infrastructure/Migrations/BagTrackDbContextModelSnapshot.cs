@@ -597,9 +597,11 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
 
                     b.HasIndex("AirlineIATA");
 
-                    b.HasIndex("Date");
-
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("Start");
+
+                    b.HasIndex("Stop");
 
                     b.ToTable("Flight");
                 });
