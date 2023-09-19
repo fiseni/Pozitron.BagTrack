@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class c60e2ab3c7f8e12740ca : Migration
+    public partial class _7ef315edb6b5c2db6a6f : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,6 +55,26 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Device", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Flight",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AirlineIATA = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false),
+                    Number = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false),
+                    NumberIATA = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ActiveCarousel = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
+                    AllocatedCarousel = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
+                    Start = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Stop = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Flight", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,6 +127,26 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Flight_ActiveCarousel",
+                table: "Flight",
+                column: "ActiveCarousel");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Flight_AirlineIATA",
+                table: "Flight",
+                column: "AirlineIATA");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Flight_Date",
+                table: "Flight",
+                column: "Date");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Flight_IsDeleted",
+                table: "Flight",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InboxMessage_IsDeleted",
                 table: "InboxMessage",
                 column: "IsDeleted");
@@ -128,6 +168,9 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Device");
+
+            migrationBuilder.DropTable(
+                name: "Flight");
 
             migrationBuilder.DropTable(
                 name: "InboxMessage");

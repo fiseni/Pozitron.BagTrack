@@ -545,6 +545,65 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     b.ToTable("Device");
                 });
 
+            modelBuilder.Entity("PozitronDev.BagTrack.Domain.Bags.Flight", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ActiveCarousel")
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("AirlineIATA")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("AllocatedCarousel")
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("NumberIATA")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<DateTime?>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Stop")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActiveCarousel");
+
+                    b.HasIndex("AirlineIATA");
+
+                    b.HasIndex("Date");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Flight");
+                });
+
             modelBuilder.Entity("PozitronDev.BagTrack.Domain.Messaging.InboxMessage", b =>
                 {
                     b.Property<Guid>("Id")

@@ -1,4 +1,6 @@
-﻿namespace PozitronDev.BagTrack.Api.Bags;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PozitronDev.BagTrack.Api.Bags;
 
 public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
 {
@@ -20,8 +22,21 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
     {
         var airlineBagCode = request.BagTagId[0..4];
         var airlineIATA = _dataCache.GetAirlineIATA(airlineBagCode);
-
         var carousel = _dataCache.GetCarousel(request.DeviceId);
+
+        var dateFilter = _dateTime.UtcNow.AddDays(-2);
+
+        var flights = await _dbContext.Flights
+            .Where(x => x.Date > dateFilter)
+            .Where(x => x.AirlineIATA == airlineIATA)
+            .Where(x => x.ActiveCarousel == carousel)
+            .Take(4)
+            .Select(x => x.NumberIATA)
+            .ToArrayAsync();
+
+        var flightsNo = flights.Length > 0
+            ? string.Join(",", flights)
+            : null;
 
         var bag = new Bag(
             _dateTime,
@@ -29,7 +44,7 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
             request.DeviceId,
             carousel,
             airlineIATA,
-            null,
+            flightsNo,
             request.IsResponseNeeded,
             request.JulianDate
         );

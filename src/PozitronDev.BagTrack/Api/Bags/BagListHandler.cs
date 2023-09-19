@@ -35,7 +35,7 @@ public class BagListHandler : IRequestHandler<BagListRequest, PagedResponse<BagD
 
         if (request.Flight is not null)
         {
-            query = query.Where(x => x.Flight == request.Flight);
+            query = query.Where(x => x.Flight != null && x.Flight.Contains(request.Flight));
         }
 
         if (request.AirlineIATA is not null)

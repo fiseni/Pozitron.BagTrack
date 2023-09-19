@@ -43,7 +43,7 @@ public class Bag : BaseEntity, IAggregateRoot
                 dt = dt.AddDays(julianDateInt - 1);
             }
 
-            JulianDate = julianDateInt.ToString();
+            JulianDate = julianDate;
             Date = dt;
         }
         else

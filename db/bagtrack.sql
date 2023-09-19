@@ -11,7 +11,7 @@ GO
 BEGIN TRANSACTION;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919081223_c60e2ab3c7f8e12740ca')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
 BEGIN
     CREATE TABLE [Airline] (
         [Id] int NOT NULL IDENTITY,
@@ -22,7 +22,7 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919081223_c60e2ab3c7f8e12740ca')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
 BEGIN
     CREATE TABLE [Bag] (
         [Id] uniqueidentifier NOT NULL,
@@ -40,7 +40,7 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919081223_c60e2ab3c7f8e12740ca')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
 BEGIN
     CREATE TABLE [Device] (
         [Id] varchar(10) NOT NULL,
@@ -50,7 +50,25 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919081223_c60e2ab3c7f8e12740ca')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
+BEGIN
+    CREATE TABLE [Flight] (
+        [Id] uniqueidentifier NOT NULL,
+        [AirlineIATA] varchar(10) NOT NULL,
+        [Number] varchar(10) NOT NULL,
+        [NumberIATA] varchar(10) NOT NULL,
+        [Date] datetime2 NOT NULL,
+        [ActiveCarousel] varchar(10) NULL,
+        [AllocatedCarousel] varchar(10) NULL,
+        [Start] datetime2 NULL,
+        [Stop] datetime2 NULL,
+        [IsDeleted] bit NOT NULL,
+        CONSTRAINT [PK_Flight] PRIMARY KEY ([Id])
+    );
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
 BEGIN
     CREATE TABLE [InboxMessage] (
         [Id] uniqueidentifier NOT NULL,
@@ -65,7 +83,7 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919081223_c60e2ab3c7f8e12740ca')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
 BEGIN
     CREATE TABLE [OutboxMessage] (
         [Id] uniqueidentifier NOT NULL,
@@ -80,40 +98,64 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919081223_c60e2ab3c7f8e12740ca')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
 BEGIN
     CREATE INDEX [IX_Bag_BagTagId] ON [Bag] ([BagTagId]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919081223_c60e2ab3c7f8e12740ca')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
 BEGIN
     CREATE INDEX [IX_Bag_Date] ON [Bag] ([Date]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919081223_c60e2ab3c7f8e12740ca')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
 BEGIN
     CREATE INDEX [IX_Bag_IsDeleted] ON [Bag] ([IsDeleted]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919081223_c60e2ab3c7f8e12740ca')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
+BEGIN
+    CREATE INDEX [IX_Flight_ActiveCarousel] ON [Flight] ([ActiveCarousel]);
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
+BEGIN
+    CREATE INDEX [IX_Flight_AirlineIATA] ON [Flight] ([AirlineIATA]);
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
+BEGIN
+    CREATE INDEX [IX_Flight_Date] ON [Flight] ([Date]);
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
+BEGIN
+    CREATE INDEX [IX_Flight_IsDeleted] ON [Flight] ([IsDeleted]);
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
 BEGIN
     CREATE INDEX [IX_InboxMessage_IsDeleted] ON [InboxMessage] ([IsDeleted]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919081223_c60e2ab3c7f8e12740ca')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
 BEGIN
     CREATE INDEX [IX_OutboxMessage_IsDeleted] ON [OutboxMessage] ([IsDeleted]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919081223_c60e2ab3c7f8e12740ca')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230919085635_7ef315edb6b5c2db6a6f')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20230919081223_c60e2ab3c7f8e12740ca', N'7.0.11');
+    VALUES (N'20230919085635_7ef315edb6b5c2db6a6f', N'7.0.11');
 END;
 GO
 

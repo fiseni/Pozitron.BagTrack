@@ -12,8 +12,8 @@ using PozitronDev.BagTrack.Infrastructure;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    [Migration("20230919081223_c60e2ab3c7f8e12740ca")]
-    partial class c60e2ab3c7f8e12740ca
+    [Migration("20230919085635_7ef315edb6b5c2db6a6f")]
+    partial class _7ef315edb6b5c2db6a6f
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -546,6 +546,65 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Device");
+                });
+
+            modelBuilder.Entity("PozitronDev.BagTrack.Domain.Bags.Flight", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ActiveCarousel")
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("AirlineIATA")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("AllocatedCarousel")
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("NumberIATA")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<DateTime?>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Stop")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActiveCarousel");
+
+                    b.HasIndex("AirlineIATA");
+
+                    b.HasIndex("Date");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Flight");
                 });
 
             modelBuilder.Entity("PozitronDev.BagTrack.Domain.Messaging.InboxMessage", b =>
