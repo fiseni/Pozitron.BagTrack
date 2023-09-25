@@ -17,7 +17,7 @@ public class Bag : BaseEntity, IAggregateRoot
                string deviceId,
                string? carousel,
                string? airlineIATA,
-               string? flight,
+               string[]? flightNumbers,
                string? isResponseNeeded,
                string? julianDate)
     {
@@ -25,7 +25,10 @@ public class Bag : BaseEntity, IAggregateRoot
         DeviceId = deviceId;
         Carousel = carousel;
         AirlineIATA = airlineIATA;
-        Flight = flight;
+
+        Flight = flightNumbers is not null && flightNumbers.Length > 0
+            ? string.Join(",", flightNumbers)
+            : null;
 
         IsResponseNeeded = isResponseNeeded is not null && isResponseNeeded.Equals("y", StringComparison.OrdinalIgnoreCase);
 

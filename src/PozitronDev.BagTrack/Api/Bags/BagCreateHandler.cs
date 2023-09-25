@@ -31,12 +31,8 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
             .Where(x => x.AirlineIATA == airlineIATA)
             .Where(x => x.ActiveCarousel == carousel)
             .Take(4)
-            .Select(x => x.NumberIATA)
+            .Select(x => x.Number)
             .ToArrayAsync();
-
-        var flightsNo = flights.Length > 0
-            ? string.Join(",", flights)
-            : null;
 
         var bag = new Bag(
             utcNow,
@@ -44,7 +40,7 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
             request.DeviceId,
             carousel,
             airlineIATA,
-            flightsNo,
+            flights,
             request.IsResponseNeeded,
             request.JulianDate
         );

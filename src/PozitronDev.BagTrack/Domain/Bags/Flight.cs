@@ -4,7 +4,6 @@ public class Flight : BaseEntity
 {
     public string AirlineIATA { get; private set; } = default!;
     public string Number { get; private set; } = default!;
-    public string NumberIATA { get; private set; } = default!;
     public DateTime OriginDate { get; private set; }
     public string? ActiveCarousel { get; private set; }
     public string? AllocatedCarousel { get; private set; }
@@ -16,7 +15,6 @@ public class Flight : BaseEntity
     {
         AirlineIATA = airlineIATA;
         Number = number;
-        NumberIATA = $"{airlineIATA.Trim()}{Number.Trim()}";
         OriginDate = originDate;
         ActiveCarousel = carousel;
         AllocatedCarousel = carousel;
