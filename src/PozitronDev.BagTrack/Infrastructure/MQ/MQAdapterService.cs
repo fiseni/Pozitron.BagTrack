@@ -1,6 +1,5 @@
 ﻿using IBM.WMQ;
 using System.Collections;
-using System.Text.Json;
 
 namespace PozitronDev.BagTrack.Infrastructure.MQ;
 
@@ -29,18 +28,16 @@ public class MQAdapterService : IMQAdapterService
         };
     }
 
-    public bool SendMessageToQueue<T>(string queueName, T objToSend)
+    public bool SendMessageToQueue(string queueName, string data)
     {
         try
         {
-            var hearBeatConfirmationText = JsonSerializer.Serialize(objToSend);
-
             using (var queueManager = new MQQueueManager(_mqSettings.QueueManagerName, _queueManagerProperties))
             {
                 using (var outboundTopic = queueManager.AccessQueue(queueName, MQC.MQOO_INPUT_AS_Q_DEF + MQC.MQOO_OUTPUT + MQC.MQOO_FAIL_IF_QUIESCING))
                 {
                     var msg = new MQMessage { Persistence = MQC.MQPER_PERSISTENCE_AS_TOPIC_DEF };
-                    msg.WriteString(hearBeatConfirmationText);
+                    msg.WriteString(data);
                     outboundTopic.Put(msg);
                 }
             }
@@ -54,18 +51,16 @@ public class MQAdapterService : IMQAdapterService
         }
     }
 
-    public bool SendMessageToTopic<T>(string topicName, T objToSend)
+    public bool SendMessageToTopic(string topicName, string data)
     {
         try
         {
-            var hearBeatConfirmationText = JsonSerializer.Serialize(objToSend);
-
             using (var queueManager = new MQQueueManager(_mqSettings.QueueManagerName, _queueManagerProperties))
             {
                 using (var outboundTopic = queueManager.AccessTopic(topicName, null, MQC.MQTOPIC_OPEN_AS_PUBLICATION, MQC.MQOO_OUTPUT))
                 {
                     var msg = new MQMessage { Persistence = MQC.MQPER_PERSISTENCE_AS_TOPIC_DEF };
-                    msg.WriteString(hearBeatConfirmationText);
+                    msg.WriteString(data);
                     outboundTopic.Put(msg);
                 }
             }
@@ -110,7 +105,7 @@ public class MQAdapterService : IMQAdapterService
                 {
                     using (inboundDestination = queueManager.AccessQueue(topicOrQueueString, MQC.MQTOPIC_OPEN_AS_SUBSCRIPTION))
                     {
-                        _logger.LogInformation("IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, TopicQueueName: {TopicQueueName}.", 
+                        _logger.LogInformation("IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, TopicQueueName: {TopicQueueName}.",
                             queueManagerName, topicOrQueueString, CONNECTED);
                         await GetMessageLoop(messageHandler, inboundDestination, gmo, cancellationToken);
                     }
