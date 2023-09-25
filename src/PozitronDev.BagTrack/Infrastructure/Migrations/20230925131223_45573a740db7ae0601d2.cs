@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class e663bbda150725c982d2 : Migration
+    public partial class _45573a740db7ae0601d2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -64,7 +64,6 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AirlineIATA = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false),
                     Number = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false),
-                    NumberIATA = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false),
                     OriginDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ActiveCarousel = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
                     AllocatedCarousel = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
@@ -136,7 +135,7 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                 name: "IX_Flight_AirlineIATA_Number_OriginDate_IsDeleted",
                 table: "Flight",
                 columns: new[] { "AirlineIATA", "Number", "OriginDate", "IsDeleted" })
-                .Annotation("SqlServer:Include", new[] { "NumberIATA", "ActiveCarousel", "AllocatedCarousel", "Start", "Stop" });
+                .Annotation("SqlServer:Include", new[] { "ActiveCarousel", "AllocatedCarousel", "Start", "Stop" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Flight_IsDeleted",

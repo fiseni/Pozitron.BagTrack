@@ -12,8 +12,8 @@ using PozitronDev.BagTrack.Infrastructure;
 namespace PozitronDev.BagTrack.Infrastructure.Migrations
 {
     [DbContext(typeof(BagTrackDbContext))]
-    [Migration("20230919120301_e663bbda150725c982d2")]
-    partial class e663bbda150725c982d2
+    [Migration("20230925131223_45573a740db7ae0601d2")]
+    partial class _45573a740db7ae0601d2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -579,12 +579,6 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(10)");
 
-                    b.Property<string>("NumberIATA")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(10)");
-
                     b.Property<DateTime>("OriginDate")
                         .HasColumnType("datetime2");
 
@@ -600,7 +594,7 @@ namespace PozitronDev.BagTrack.Infrastructure.Migrations
 
                     b.HasIndex("AirlineIATA", "Number", "OriginDate", "IsDeleted");
 
-                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("AirlineIATA", "Number", "OriginDate", "IsDeleted"), new[] { "NumberIATA", "ActiveCarousel", "AllocatedCarousel", "Start", "Stop" });
+                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("AirlineIATA", "Number", "OriginDate", "IsDeleted"), new[] { "ActiveCarousel", "AllocatedCarousel", "Start", "Stop" });
 
                     b.HasIndex("AirlineIATA", "ActiveCarousel", "IsDeleted", "Start", "Stop");
 
