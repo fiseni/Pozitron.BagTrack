@@ -61,8 +61,8 @@ public class BaggageClaimMessageHandler : IMessageHandler
                 _ = DateTime.TryParse(resourceAllocation?.Element(aip + "TimeSlot")?.Element(aip + "Stop")?.Value, out var stop);
                 flightDto.Start = start;
                 flightDto.Stop = stop;
+                break;
             }
-            break;
         }
 
         return flightDto;
