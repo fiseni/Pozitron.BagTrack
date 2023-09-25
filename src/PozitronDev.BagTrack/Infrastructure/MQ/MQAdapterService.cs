@@ -76,15 +76,16 @@ public class MQAdapterService : IMQAdapterService
 
     public Task ListenToTopic(string topicString, Func<string, CancellationToken, Task> messageHandler, CancellationToken cancellationToken)
     {
-        return ListenToMq(_mqSettings.QueueManagerName, topicString, false, messageHandler, cancellationToken);
+        return ListenToMq(_mqSettings.PollingInterval, _mqSettings.QueueManagerName, topicString, false, messageHandler, cancellationToken);
     }
 
     public Task ListenToQueue(string queueName, Func<string, CancellationToken, Task> messageHandler, CancellationToken cancellationToken)
     {
-        return ListenToMq(_mqSettings.QueueManagerName, queueName, true, messageHandler, cancellationToken);
+        return ListenToMq(_mqSettings.PollingInterval, _mqSettings.QueueManagerName, queueName, true, messageHandler, cancellationToken);
     }
 
     private async Task ListenToMq(
+        int pollingInterval,
         string queueManagerName,
         string topicOrQueueString,
         bool isQueue,
@@ -107,7 +108,7 @@ public class MQAdapterService : IMQAdapterService
                     {
                         _logger.LogInformation("IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, TopicQueueName: {TopicQueueName}.",
                             queueManagerName, topicOrQueueString, CONNECTED);
-                        await GetMessageLoop(messageHandler, inboundDestination, gmo, cancellationToken);
+                        await GetMessageLoop(messageHandler, inboundDestination, gmo, pollingInterval, cancellationToken);
                     }
                 }
                 else
@@ -116,7 +117,7 @@ public class MQAdapterService : IMQAdapterService
                     {
                         _logger.LogInformation("IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, TopicQueueName: {TopicQueueName}.",
                             queueManagerName, topicOrQueueString, CONNECTED);
-                        await GetMessageLoop(messageHandler, inboundDestination, gmo, cancellationToken);
+                        await GetMessageLoop(messageHandler, inboundDestination, gmo, pollingInterval, cancellationToken);
                     }
                 }
             }
@@ -133,6 +134,7 @@ public class MQAdapterService : IMQAdapterService
         Func<string, CancellationToken, Task> messageHandler,
         MQDestination inboundDestination,
         MQGetMessageOptions gmo,
+        int pollingInterval,
         CancellationToken cancellationToken)
     {
         while (!cancellationToken.IsCancellationRequested)
@@ -149,7 +151,7 @@ public class MQAdapterService : IMQAdapterService
             {
                 if (mqException.Reason == MQC.MQRC_NO_MSG_AVAILABLE)
                 {
-                    await Task.Delay(200, cancellationToken);
+                    await Task.Delay(pollingInterval, cancellationToken);
                 }
                 else
                 {

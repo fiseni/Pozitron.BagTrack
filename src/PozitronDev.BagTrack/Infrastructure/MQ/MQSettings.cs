@@ -11,4 +11,5 @@ public class MQSettings
     public string Password { get; set; } = default!;
     public string QueueManagerName { get; set; } = default!;
     public string InputQueue { get; set; } = default!;
+    public int PollingInterval { get; set; } = 200;
 }
