@@ -19,7 +19,9 @@ public class MQAdapterService : IMQAdapterService
 
         _queueManagerProperties = new Hashtable
         {
+            { "TransportType", "TCP" },
             { MQC.TRANSPORT_PROPERTY, MQC.TRANSPORT_MQSERIES_MANAGED },
+            { MQC.CCSID_PROPERTY, _mqSettings.CCSID },
             { MQC.HOST_NAME_PROPERTY, _mqSettings.HostName },
             { MQC.PORT_PROPERTY, _mqSettings.Port },
             { MQC.CHANNEL_PROPERTY, _mqSettings.Channel },

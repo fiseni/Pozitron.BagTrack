@@ -10,6 +10,7 @@ public class MQSettings
     public string UserId { get; set; } = default!;
     public string Password { get; set; } = default!;
     public string QueueManagerName { get; set; } = default!;
+    public string CCSID { get; set; } = default!;
     public string InputQueue { get; set; } = default!;
     public int PollingInterval { get; set; } = 200;
 }
