@@ -106,7 +106,7 @@ public class MQAdapterService : IMQAdapterService
             {
                 if (isQueue)
                 {
-                    using (inboundDestination = queueManager.AccessQueue(topicOrQueueString, MQC.MQTOPIC_OPEN_AS_SUBSCRIPTION))
+                    using (inboundDestination = queueManager.AccessQueue(topicOrQueueString, MQC.MQOO_INPUT_AS_Q_DEF))
                     {
                         _logger.LogInformation("IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, TopicQueueName: {TopicQueueName}.",
                             queueManagerName, topicOrQueueString, CONNECTED);
