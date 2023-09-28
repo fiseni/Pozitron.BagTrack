@@ -9,6 +9,5 @@ public class BagTrackSettings
     [Required]
     public string ConnectionString { get; set; } = default!;
 
-    [Required]
     public string ApiKey { get; set; } = default!;
 }

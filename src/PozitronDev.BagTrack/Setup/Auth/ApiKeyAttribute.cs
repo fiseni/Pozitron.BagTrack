@@ -13,9 +13,11 @@ public class ApiKeyAttribute : Attribute, IAuthorizationFilter
 
     public void OnAuthorization(AuthorizationFilterContext context)
     {
-        var submittedApiKey = GetSubmittedApiKey(context.HttpContext);
-
         var apiKey = GetApiKey(context.HttpContext);
+
+        if (string.IsNullOrEmpty(apiKey)) return;
+
+        var submittedApiKey = GetSubmittedApiKey(context.HttpContext);
 
         if (!IsApiKeyValid(apiKey, submittedApiKey))
         {
