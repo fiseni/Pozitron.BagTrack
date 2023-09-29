@@ -21,13 +21,17 @@ public class MQAdapterService : IMQAdapterService
         {
             { "TransportType", "TCP" },
             { MQC.TRANSPORT_PROPERTY, MQC.TRANSPORT_MQSERIES_MANAGED },
-            { MQC.CCSID_PROPERTY, _mqSettings.CCSID },
             { MQC.HOST_NAME_PROPERTY, _mqSettings.HostName },
             { MQC.PORT_PROPERTY, _mqSettings.Port },
             { MQC.CHANNEL_PROPERTY, _mqSettings.Channel },
             { MQC.USER_ID_PROPERTY, _mqSettings.UserId },
             { MQC.PASSWORD_PROPERTY, _mqSettings.Password }
         };
+
+        if (!string.IsNullOrEmpty(_mqSettings.CCSID))
+        {
+            _queueManagerProperties.Add(MQC.CCSID_PROPERTY, _mqSettings.CCSID);
+        }
     }
 
     public bool SendMessageToQueue(string queueName, string data)
