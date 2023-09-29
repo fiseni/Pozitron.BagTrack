@@ -30,7 +30,7 @@ var app = builder.Build();
 app.ConfigureExceptionHandler(app.Environment);
 app.UseHangfire();
 app.UseCustomSwagger();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 app.UseAuthentication();
