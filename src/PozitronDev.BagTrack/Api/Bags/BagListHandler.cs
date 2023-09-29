@@ -47,7 +47,7 @@ public class BagListHandler : IRequestHandler<BagListRequest, PagedResponse<BagD
         var pagination = new Pagination(count, request);
 
         var data = await query
-            .OrderBy(x => x.BagTagId)
+            .OrderByDescending(x => x.Date)
             .Skip(pagination.Skip)
             .Take(pagination.Take)
             .Select(BagDtoMapper.Expression)
