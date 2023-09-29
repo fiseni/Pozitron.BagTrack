@@ -23,10 +23,18 @@ public class MQAdapterService : IMQAdapterService
             { MQC.TRANSPORT_PROPERTY, MQC.TRANSPORT_MQSERIES_MANAGED },
             { MQC.HOST_NAME_PROPERTY, _mqSettings.HostName },
             { MQC.PORT_PROPERTY, _mqSettings.Port },
-            { MQC.CHANNEL_PROPERTY, _mqSettings.Channel },
-            { MQC.USER_ID_PROPERTY, _mqSettings.UserId },
-            { MQC.PASSWORD_PROPERTY, _mqSettings.Password }
+            { MQC.CHANNEL_PROPERTY, _mqSettings.Channel }
         };
+
+        if (!string.IsNullOrEmpty(_mqSettings.UserId))
+        {
+            _queueManagerProperties.Add(MQC.USER_ID_PROPERTY, _mqSettings.UserId);
+        }
+
+        if (!string.IsNullOrEmpty(_mqSettings.Password))
+        {
+            _queueManagerProperties.Add(MQC.PASSWORD_PROPERTY, _mqSettings.Password);
+        }
 
         if (!string.IsNullOrEmpty(_mqSettings.CCSID))
         {
