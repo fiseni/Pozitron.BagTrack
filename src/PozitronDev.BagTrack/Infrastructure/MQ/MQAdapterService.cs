@@ -102,6 +102,8 @@ public class MQAdapterService : IMQAdapterService
 
         try
         {
+            _logger.LogInformation("IBM MQ Trying to connect to QueueManager: {QueueManager}, MQSettings: {@mqSettings}", queueManagerName, _mqSettings);
+
             using (var queueManager = new MQQueueManager(queueManagerName, queueManagerProperties))
             {
                 _logger.LogInformation("IBM MQ Connected to QueueManager: {QueueManager}", queueManagerName);
@@ -158,28 +160,32 @@ public class MQAdapterService : IMQAdapterService
 
     private Hashtable GetQueueManagerProperties()
     {
-        var queueManagerProperties = new Hashtable
-        {
-            { "TransportType", "TCP" },
-            { MQC.TRANSPORT_PROPERTY, MQC.TRANSPORT_MQSERIES_MANAGED },
-            { MQC.HOST_NAME_PROPERTY, _mqSettings.HostName },
-            { MQC.PORT_PROPERTY, _mqSettings.Port },
-            { MQC.CHANNEL_PROPERTY, _mqSettings.Channel }
-        };
+        var queueManagerProperties = new Hashtable();
+
+        queueManagerProperties.Add("TransportType", "TCP");
+        queueManagerProperties.Add(MQC.TRANSPORT_PROPERTY, MQC.TRANSPORT_MQSERIES_MANAGED);
+
+        if (!string.IsNullOrEmpty(_mqSettings.HostName))
+            queueManagerProperties.Add(MQC.HOST_NAME_PROPERTY, _mqSettings.HostName.Trim());
+
+        queueManagerProperties.Add(MQC.PORT_PROPERTY, _mqSettings.Port);
+
+        if (!string.IsNullOrEmpty(_mqSettings.Channel))
+            queueManagerProperties.Add(MQC.CHANNEL_PROPERTY, _mqSettings.Channel.Trim());
 
         if (!string.IsNullOrEmpty(_mqSettings.UserId))
         {
-            queueManagerProperties.Add(MQC.USER_ID_PROPERTY, _mqSettings.UserId);
+            queueManagerProperties.Add(MQC.USER_ID_PROPERTY, _mqSettings.UserId.Trim());
         }
 
         if (!string.IsNullOrEmpty(_mqSettings.Password))
         {
-            queueManagerProperties.Add(MQC.PASSWORD_PROPERTY, _mqSettings.Password);
+            queueManagerProperties.Add(MQC.PASSWORD_PROPERTY, _mqSettings.Password.Trim());
         }
 
         if (!string.IsNullOrEmpty(_mqSettings.CCSID))
         {
-            queueManagerProperties.Add(MQC.CCSID_PROPERTY, _mqSettings.CCSID);
+            queueManagerProperties.Add(MQC.CCSID_PROPERTY, _mqSettings.CCSID.Trim());
         }
 
         return queueManagerProperties;
