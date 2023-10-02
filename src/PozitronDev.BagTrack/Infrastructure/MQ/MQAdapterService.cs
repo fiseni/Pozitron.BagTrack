@@ -76,7 +76,7 @@ public class MQAdapterService : IMQAdapterService
         {
             var openOptionsForGet = MQC.MQSO_CREATE | MQC.MQSO_FAIL_IF_QUIESCING | MQC.MQSO_MANAGED | MQC.MQSO_NON_DURABLE;
 
-            _logger.LogInformation("IBM MQ Trying to connect to QueueManager: {QueueManager}, MQSettings: {@mqSettings}", queueManagerName, _mqSettings);
+            _logger.LogInformation("IBM MQ Trying to connect to QueueManager: {QueueManager}", queueManagerName);
 
             using (var queueManager = new MQQueueManager(queueManagerName, queueManagerProperties))
             {
@@ -103,7 +103,7 @@ public class MQAdapterService : IMQAdapterService
 
         try
         {
-            _logger.LogInformation("IBM MQ Trying to connect to QueueManager: {QueueManager}, MQSettings: {@mqSettings}", queueManagerName, _mqSettings);
+            _logger.LogInformation("IBM MQ Trying to connect to QueueManager: {QueueManager}", queueManagerName);
 
             using (var queueManager = new MQQueueManager(queueManagerName, queueManagerProperties))
             {
