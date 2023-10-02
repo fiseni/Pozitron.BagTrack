@@ -14,7 +14,10 @@
         <ValidationSummary />
 
         <div class="col-auto">
-            <InputDate @bind-Value="Model!.Date" class="col-auto form-control" />
+            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="Model!.FromDate" class="col-auto form-control" />
+        </div>
+        <div class="col-auto">
+            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="Model!.ToDate" class="col-auto form-control" />
         </div>
         <div class="col-auto">
             <InputText @bind-Value="Model!.BagTagId" DisplayName="BagTag Id" placeholder="BagTag Id" class="col-auto form-control" />
@@ -98,7 +101,8 @@
         Bags = new();
         Model = new();
         Pagination = Pagination.Default;
-        Model.Date = DateTime.UtcNow.Date;
+        Model.FromDate = DateTime.UtcNow.Date;
+        Model.ToDate = DateTime.UtcNow.Date.AddDays(1).AddSeconds(-1);
     }
 
     private async Task SelectedPage(int page)
@@ -110,12 +114,17 @@
     {
         string queryParameters = $"?bagTagId={Model.BagTagId}&carousel={Model.Carousel}&flight={Model.Flight}&airlineIATA={Model.AirlineIATA}&page={page}";
 
-        if (Model.Date.HasValue)
+        if (Model.FromDate.HasValue)
         {
-            queryParameters += $"&date={Model.Date.Value.ToString("yyyy-MM-dd")}";
+            queryParameters += $"&fromdate={Model.FromDate.Value.ToString("yyyy-MM-dd HH:mm")}";
         };
 
-        var result = await Http.GetFromJsonAsync<PagedResponse<BagDto>>($"bags{queryParameters}");
+        if (Model.ToDate.HasValue)
+        {
+            queryParameters += $"&todate={Model.ToDate.Value.ToString("yyyy-MM-dd HH:mm")}";
+        };
+
+        var result = await Http.GetFromJsonAsync<PagedResponse<BagDto>>($"api/bags{queryParameters}");
 
         if (result is null)
         {

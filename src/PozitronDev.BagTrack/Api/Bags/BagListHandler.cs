@@ -15,13 +15,15 @@ public class BagListHandler : IRequestHandler<BagListRequest, PagedResponse<BagD
 
     public async Task<PagedResponse<BagDto>> Handle(BagListRequest request, CancellationToken cancellationToken)
     {
-        var date = request.Date is null
+        var fromDate = request.FromDate is null
             ? _dateTime.UtcNow.Date
-            : request.Date.Value.Date;
+            : request.FromDate.Value;
 
-        var nextDay = date.AddDays(1);
+        var toDate = request.ToDate is null
+            ? fromDate.Date.AddDays(1).AddSeconds(-1)
+            : request.ToDate.Value;
 
-        var query = _dbContext.Bags.Where(x => x.Date >= date && x.Date < nextDay);
+        var query = _dbContext.Bags.Where(x => x.Date >= fromDate && x.Date <= toDate);
 
         if (request.BagTagId is not null)
         {

@@ -36,7 +36,7 @@ public class BagsController : ControllerBase
     public async Task<ActionResult<BagDto>> Create(BagCreateRequest request, [FromServices] IMediator mediator, CancellationToken cancellationToken)
         => Ok(await mediator.Send(request, cancellationToken));
 
-    [HttpGet("bags")]
+    [HttpGet("api/bags")]
     [SwaggerOperation(Summary = "Get Bag information by filter", Tags = new[] { "Bags" })]
     [ApiExplorerSettings(IgnoreApi = true)]
     public async Task<ActionResult<PagedResponse<BagDto>>> List([FromQuery] BagListRequest request, [FromServices] IMediator mediator, CancellationToken cancellationToken)
