@@ -37,7 +37,7 @@ public class MQAdapterService : IMQAdapterService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error in sending message to the queue {queueName}.", queueName);
+            _logger.LogError(ex, "IBM MQ Error in sending message to the queue {queueName}.", queueName);
             return false;
         }
     }
@@ -61,12 +61,12 @@ public class MQAdapterService : IMQAdapterService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error in sending message to the topic {topicName}.", topicName);
+            _logger.LogError(ex, "IBM MQ Error in sending message to the topic {topicName}.", topicName);
             return false;
         }
     }
 
-    public async Task ListenToTopic(string topicString, Func<string, CancellationToken, Task> messageHandler, CancellationToken cancellationToken)
+    public async Task ListenToTopic(string topicName, Func<string, CancellationToken, Task> messageHandler, CancellationToken cancellationToken)
     {
         var queueManagerProperties = GetQueueManagerProperties();
         var queueManagerName = _mqSettings.QueueManagerName;
@@ -76,21 +76,22 @@ public class MQAdapterService : IMQAdapterService
         {
             var openOptionsForGet = MQC.MQSO_CREATE | MQC.MQSO_FAIL_IF_QUIESCING | MQC.MQSO_MANAGED | MQC.MQSO_NON_DURABLE;
 
+            _logger.LogInformation("IBM MQ Trying to connect to QueueManager: {QueueManager}, MQSettings: {@mqSettings}", queueManagerName, _mqSettings);
+
             using (var queueManager = new MQQueueManager(queueManagerName, queueManagerProperties))
             {
                 _logger.LogInformation("IBM MQ Connected to QueueManager: {QueueManager}", queueManagerName);
 
-                using (var inboundDestination = queueManager.AccessTopic(topicString, null, MQC.MQTOPIC_OPEN_AS_SUBSCRIPTION, openOptionsForGet))
+                using (var inboundDestination = queueManager.AccessTopic(topicName, null, MQC.MQTOPIC_OPEN_AS_SUBSCRIPTION, openOptionsForGet))
                 {
-                    _logger.LogInformation("IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, TopicName: {TopicName}.", CONNECTED, queueManagerName, topicString);
+                    _logger.LogInformation("IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, TopicName: {TopicName}.", CONNECTED, queueManagerName, topicName);
                     await GetMessageLoop(messageHandler, inboundDestination, pollingInterval, _logger, cancellationToken);
                 }
             }
         }
         catch (MQException mqException)
         {
-            _logger.LogInformation("IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, TopicName: {TopicName}.", DISCONNECTED, queueManagerName, topicString);
-            _logger.LogError(mqException, "Error accessing the topic.");
+            _logger.LogError(mqException, "IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, TopicName: {TopicName}.", DISCONNECTED, queueManagerName, topicName);
         }
     }
 
@@ -118,8 +119,7 @@ public class MQAdapterService : IMQAdapterService
         }
         catch (MQException mqException)
         {
-            _logger.LogInformation("IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, QueueName: {QueueName}.", DISCONNECTED, queueManagerName, queueName);
-            _logger.LogError(mqException, "Error accessing the queue.");
+            _logger.LogError(mqException, "IBM MQ Adapter Connection Status Changed, Status: {ConnectionStatus}, QueueManager: {QueueManager}, QueueName: {QueueName}.", DISCONNECTED, queueManagerName, queueName);
         }
     }
 
@@ -151,7 +151,7 @@ public class MQAdapterService : IMQAdapterService
                 }
                 else
                 {
-                    logger.LogError(mqException, "Error getting or processing the messages.");
+                    logger.LogError(mqException, "IBM MQ Error getting or processing the messages.");
                     throw;
                 }
             }
@@ -174,19 +174,13 @@ public class MQAdapterService : IMQAdapterService
             queueManagerProperties.Add(MQC.CHANNEL_PROPERTY, _mqSettings.Channel.Trim());
 
         if (!string.IsNullOrEmpty(_mqSettings.UserId))
-        {
             queueManagerProperties.Add(MQC.USER_ID_PROPERTY, _mqSettings.UserId.Trim());
-        }
 
         if (!string.IsNullOrEmpty(_mqSettings.Password))
-        {
             queueManagerProperties.Add(MQC.PASSWORD_PROPERTY, _mqSettings.Password.Trim());
-        }
 
         if (!string.IsNullOrEmpty(_mqSettings.CCSID))
-        {
             queueManagerProperties.Add(MQC.CCSID_PROPERTY, _mqSettings.CCSID.Trim());
-        }
 
         return queueManagerProperties;
     }

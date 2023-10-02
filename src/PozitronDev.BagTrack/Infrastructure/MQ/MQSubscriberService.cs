@@ -42,9 +42,10 @@ public class MQSubscriberService : BackgroundService
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "Error occurred. Retrying in 5 minutes");
+                _logger.LogError(ex, "IBM MQ Error occurred.");
             }
 
+            _logger.LogError("IBM MQ Retrying in 5 minutes");
             await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
         }
     }
