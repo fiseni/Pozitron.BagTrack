@@ -20,10 +20,10 @@ public class BagListHandler : IRequestHandler<BagListRequest, PagedResponse<BagD
             : request.FromDate.Value;
 
         var toDate = request.ToDate is null
-            ? fromDate.Date.AddDays(1).AddSeconds(-1)
+            ? fromDate.Date.AddDays(1)
             : request.ToDate.Value;
 
-        var query = _dbContext.Bags.Where(x => x.Date >= fromDate && x.Date <= toDate);
+        var query = _dbContext.Bags.Where(x => x.Date >= fromDate && x.Date < toDate);
 
         if (request.BagTagId is not null)
         {
