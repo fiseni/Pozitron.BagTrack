@@ -31,6 +31,7 @@
     private void CreatePaginationLinks()
     {
         _links = new List<PagingLink>();
+        _links.Add(new PagingLink(1, Pagination.HasPrevious, "First"));
         _links.Add(new PagingLink(Pagination.Page - 1, Pagination.HasPrevious, "Previous"));
 
         for (int i = 1; i <= Pagination.TotalPages; i++)
@@ -42,6 +43,7 @@
         }
 
         _links.Add(new PagingLink(Pagination.Page + 1, Pagination.HasNext, "Next"));
+        _links.Add(new PagingLink(0, true, "Last"));
     }
 
     private async Task OnSelectedPage(PagingLink link)

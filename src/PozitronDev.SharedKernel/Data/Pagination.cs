@@ -85,9 +85,9 @@ public class Pagination
 
     private int GetHandledPage(int? page)
     {
-        if (!page.HasValue || page <= 0) return _paginationSettings.DefaultPage;
+        if (!page.HasValue || page.Value < 0) return _paginationSettings.DefaultPage;
 
-        if (page.Value > TotalPages) return TotalPages;
+        if (page.Value == 0 || page.Value > TotalPages) return TotalPages;
 
         return page.Value;
     }
