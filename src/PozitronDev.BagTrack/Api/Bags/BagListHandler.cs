@@ -17,11 +17,11 @@ public class BagListHandler : IRequestHandler<BagListRequest, PagedResponse<BagD
     {
         var fromDate = request.FromDate is null
             ? _dateTime.UtcNow.Date
-            : request.FromDate.Value;
+            : request.FromDate.Value.UtcDateTime;
 
         var toDate = request.ToDate is null
             ? fromDate.Date.AddDays(1)
-            : request.ToDate.Value;
+            : request.ToDate.Value.UtcDateTime;
 
         var query = _dbContext.Bags.Where(x => x.Date >= fromDate && x.Date < toDate);
 

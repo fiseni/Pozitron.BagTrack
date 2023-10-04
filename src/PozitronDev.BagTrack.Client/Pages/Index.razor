@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using PozitronDev.BagTrack.Contracts
 @using PozitronDev.SharedKernel.Data;
+@using System.Net;
 @inject HttpClient Http
 
 <PageTitle>Pozitron BagTrack - Arrival Bags</PageTitle>
@@ -58,7 +59,7 @@
             <tr>
                 <td>@bag.BagTagId</td>
                 <td>@bag.DeviceId</td>
-                <td>@bag.Date.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@bag.Date.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</td>
                 <td>@bag.Carousel</td>
                 <td>@bag.AirlineIATA</td>
                 <td>@bag.Flight</td>
@@ -101,8 +102,8 @@
         Bags = new();
         Model = new();
         Pagination = Pagination.Default;
-        Model.FromDate = DateTime.UtcNow.Date;
-        Model.ToDate = DateTime.UtcNow.Date.AddDays(1).AddMinutes(-1);
+        Model.FromDate = DateTime.Now.Date;
+        Model.ToDate = DateTime.Now.Date.AddDays(1).AddMinutes(-1);
     }
 
     private async Task SelectedPage(int page)
@@ -112,20 +113,23 @@
 
     private async Task PopulateBagsAsync(int page)
     {
-        string queryParameters = $"?bagTagId={Model.BagTagId}&carousel={Model.Carousel}&flight={Model.Flight}&airlineIATA={Model.AirlineIATA}&page={page}";
+        string queryParameters = $"bagTagId={Model.BagTagId}&carousel={Model.Carousel}&flight={Model.Flight}&airlineIATA={Model.AirlineIATA}&page={page}";
 
         if (Model.FromDate.HasValue)
         {
-            queryParameters += $"&fromdate={Model.FromDate.Value.ToString("yyyy-MM-dd HH:mm")}";
+            var fromDateEncoded = WebUtility.UrlEncode(Model.FromDate.Value.ToString("o"));
+            queryParameters += $"&fromdate={fromDateEncoded}";
         };
 
         if (Model.ToDate.HasValue)
         {
             var toDate = Model.ToDate.Value.AddMinutes(1);
-            queryParameters += $"&todate={toDate.ToString("yyyy-MM-dd HH:mm")}";
+            var toDateEncoded = WebUtility.UrlEncode(toDate.ToString("o"));
+            queryParameters += $"&todate={toDateEncoded}";
         };
 
-        var result = await Http.GetFromJsonAsync<PagedResponse<BagDto>>($"api/bags{queryParameters}");
+        var url = $"api/bags?{queryParameters}";
+        var result = await Http.GetFromJsonAsync<PagedResponse<BagDto>>(url);
 
         if (result is null)
         {
