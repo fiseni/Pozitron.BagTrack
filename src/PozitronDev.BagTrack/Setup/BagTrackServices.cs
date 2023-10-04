@@ -75,9 +75,14 @@ public static class BagTrackServices
         {
             PrepareSchemaIfNecessary = false,
             EnableHeavyMigrations = false,
+            QueuePollInterval = TimeSpan.FromSeconds(15),
+            SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
         };
         builder.Services.AddHangfire(x => x.UseSqlServerStorage(connectionString, options).UseConsole());
-        builder.Services.AddHangfireServer();
+        builder.Services.AddHangfireServer(options =>
+        {
+            options.WorkerCount = 1;
+        });
 
         builder.Services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
         builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -95,36 +100,34 @@ public static class BagTrackServices
         var jobSettings = new JobSettings();
         app.Configuration.Bind(JobSettings.SECTION_NAME, jobSettings);
 
-        if (!app.Environment.IsDevelopment() 
-            && !string.IsNullOrEmpty(jobSettings.DashboardUsername) 
+        var options = new DashboardOptions
+        {
+            DashboardTitle = "Pozitron BagTrack Jobs"
+        };
+
+        if (!app.Environment.IsDevelopment()
+            && !string.IsNullOrEmpty(jobSettings.DashboardUsername)
             && !string.IsNullOrEmpty(jobSettings.DashboardPassword))
         {
-            var options = new DashboardOptions
+            options.Authorization = new IDashboardAuthorizationFilter[]
             {
-                Authorization = new IDashboardAuthorizationFilter[]
-                {
-                    new BasicAuthAuthorizationFilter(
-                        new BasicAuthAuthorizationFilterOptions
+                new BasicAuthAuthorizationFilter(
+                    new BasicAuthAuthorizationFilterOptions
+                    {
+                        LoginCaseSensitive = false,
+                        Users = new[]
                         {
-                            LoginCaseSensitive = false,
-                            Users = new[]
+                            new BasicAuthAuthorizationUser
                             {
-                                new BasicAuthAuthorizationUser
-                                {
-                                    Login = jobSettings.DashboardUsername,
-                                    PasswordClear = jobSettings.DashboardPassword
-                                }
+                                Login = jobSettings.DashboardUsername,
+                                PasswordClear = jobSettings.DashboardPassword
                             }
-                        })
-                }
+                        }
+                    })
             };
-            app.UseHangfireDashboard("/jobs", options);
         }
-        else
-        {
-            app.UseHangfireDashboard("/jobs");
 
-        }
+        app.UseHangfireDashboard("/jobs", options);
 
         GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 0 });
         GlobalJobFilters.Filters.Add(new ProlongExpirationTimeAttribute());
