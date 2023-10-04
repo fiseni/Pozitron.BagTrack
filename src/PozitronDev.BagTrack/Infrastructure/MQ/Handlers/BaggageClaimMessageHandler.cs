@@ -19,7 +19,15 @@ public class BaggageClaimMessageHandler : IMessageHandler
 
         if (flight is null)
         {
-            var newFlight = new Flight(flightDto.Airline!, flightDto.FlightNumber!, flightDto.OriginDate!.Value, flightDto.Carousel, flightDto.Start, flightDto.Stop);
+            var newFlight = new Flight(
+                flightDto.Airline!, 
+                flightDto.FlightNumber!, 
+                flightDto.OriginDate!.Value, 
+                flightDto.Carousel, 
+                flightDto.Start, 
+                flightDto.Stop
+            );
+
             dbContext.Flights.Add(newFlight);
         }
         else
@@ -33,39 +41,77 @@ public class BaggageClaimMessageHandler : IMessageHandler
     private static FlightDto ExtractData(string xmlString)
     {
         var document = XDocument.Parse(xmlString);
-        XNamespace aidx = "http://www.iata.org/IATA/2007/00";
-        XNamespace aip = "http://www.sita.aero/aip/XMLSchema";
 
         var flightDto = new FlightDto();
 
-        var legIdentifier = document.Root?.Element(aidx + "FlightLeg")?.Element(aidx + "LegIdentifier");
-        flightDto.Airline = legIdentifier?.Element(aidx + "Airline")?.Value;
-        flightDto.FlightNumber = legIdentifier?.Element(aidx + "FlightNumber")?.Value;
+        var flightLeg = document.Root?.Element(XmlDoc.FlightLeg);
 
-        DateTime.TryParse(legIdentifier?.Element(aidx + "OriginDate")?.Value, out var date);
-        flightDto.OriginDate = date;
+        if (flightLeg is null) return flightDto;
 
-        var resourceAllocations = document.Root?.Element(aidx + "FlightLeg")?.Element(aidx + "TPA_Extension")?.Element(aip + "ResourceAllocations");
+        var legIdentifier = flightLeg?.Element(XmlDoc.LegIdentifier);
+        flightDto.Airline = legIdentifier?.Element(XmlDoc.Airline)?.Value;
+        flightDto.FlightNumber = legIdentifier?.Element(XmlDoc.FlightNumber)?.Value;
+
+        if (DateTime.TryParse(legIdentifier?.Element(XmlDoc.OriginDate)?.Value, out var date))
+        {
+            flightDto.OriginDate = date;
+        }
+
+        var resourceAllocations = flightLeg?.Element(XmlDoc.TPA_Extension)?.Element(XmlDoc.ResourceAllocations);
 
         if (resourceAllocations is null) return flightDto;
 
-        foreach (var resourceAllocation in resourceAllocations.Elements(aip + "ResourceAllocation"))
+        foreach (var resourceAllocation in resourceAllocations.Elements(XmlDoc.ResourceAllocation))
         {
-            var resourceType = resourceAllocation?.Element(aip + "Resource")?.Element(aip + "ResourceType")?.Value;
+            var resource = resourceAllocation?.Element(XmlDoc.Resource);
 
-            if (resourceType == "BAGGAGECLAIM")
+            if (resource is null) continue;
+
+            var resourceType = resource?.Element(XmlDoc.ResourceType)?.Value;
+
+            if (resourceType is not null && resourceType.Equals("BAGGAGECLAIM"))
             {
-                flightDto.Carousel = resourceAllocation?.Element(aip + "Resource")?.Element(aip + "Code")?.Value;
+                flightDto.Carousel = resource?.Element(XmlDoc.Code)?.Value;
 
-                _ = DateTime.TryParse(resourceAllocation?.Element(aip + "TimeSlot")?.Element(aip + "Start")?.Value, out var start);
-                _ = DateTime.TryParse(resourceAllocation?.Element(aip + "TimeSlot")?.Element(aip + "Stop")?.Value, out var stop);
-                flightDto.Start = start;
-                flightDto.Stop = stop;
+                var timeSlot = resourceAllocation?.Element(XmlDoc.TimeSlot);
+
+                if (timeSlot is null) break;
+
+                if (DateTimeOffset.TryParse(timeSlot?.Element(XmlDoc.Start)?.Value, out var start))
+                {
+                    flightDto.Start = start.UtcDateTime;
+                }
+                if (DateTimeOffset.TryParse(timeSlot?.Element(XmlDoc.Stop)?.Value, out var stop))
+                {
+                    flightDto.Stop = stop.UtcDateTime;
+                }
+
                 break;
             }
         }
 
         return flightDto;
+    }
+
+    private static class XmlDoc
+    {
+        public static readonly XNamespace Aidx = "http://www.iata.org/IATA/2007/00";
+        public static readonly XNamespace Aip = "http://www.sita.aero/aip/XMLSchema";
+
+        public static readonly XName FlightLeg = Aidx + "FlightLeg";
+        public static readonly XName LegIdentifier = Aidx + "LegIdentifier";
+        public static readonly XName Airline = Aidx + "Airline";
+        public static readonly XName FlightNumber = Aidx + "FlightNumber";
+        public static readonly XName OriginDate = Aidx + "OriginDate";
+        public static readonly XName TPA_Extension = Aidx + "TPA_Extension";
+        public static readonly XName ResourceAllocations = Aip + "ResourceAllocations";
+        public static readonly XName ResourceAllocation = Aip + "ResourceAllocation";
+        public static readonly XName Resource = Aip + "Resource";
+        public static readonly XName ResourceType = Aip + "ResourceType";
+        public static readonly XName Code = Aip + "Code";
+        public static readonly XName TimeSlot = Aip + "TimeSlot";
+        public static readonly XName Start = Aip + "Start";
+        public static readonly XName Stop = Aip + "Stop";
     }
 
     public record FlightDto
