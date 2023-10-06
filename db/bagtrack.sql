@@ -155,3 +155,46 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231006081920_2eaea6109706c478ac99')
+BEGIN
+    DROP INDEX [IX_Flight_AirlineIATA_Number_OriginDate_IsDeleted] ON [Flight];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231006081920_2eaea6109706c478ac99')
+BEGIN
+    ALTER TABLE [Flight] ADD [Agent] varchar(20) NULL;
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231006081920_2eaea6109706c478ac99')
+BEGIN
+    ALTER TABLE [Flight] ADD [FirstBag] datetime2 NULL;
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231006081920_2eaea6109706c478ac99')
+BEGIN
+    ALTER TABLE [Flight] ADD [LastBag] datetime2 NULL;
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231006081920_2eaea6109706c478ac99')
+BEGIN
+    CREATE INDEX [IX_Flight_AirlineIATA_Number_OriginDate_IsDeleted] ON [Flight] ([AirlineIATA], [Number], [OriginDate], [IsDeleted]);
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231006081920_2eaea6109706c478ac99')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20231006081920_2eaea6109706c478ac99', N'7.0.11');
+END;
+GO
+
+COMMIT;
+GO
+

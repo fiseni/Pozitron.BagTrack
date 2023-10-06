@@ -9,9 +9,21 @@ public class Flight : BaseEntity
     public string? AllocatedCarousel { get; private set; }
     public DateTime? Start { get; private set; }
     public DateTime? Stop { get; private set; }
+    public DateTime? FirstBag { get; private set; }
+    public DateTime? LastBag { get; private set; }
+    public string? Agent { get; private set; }
 
     private Flight() { }
-    public Flight(string airlineIATA, string number, DateTime originDate, string? carousel, DateTime? start, DateTime? stop)
+    public Flight(
+        string airlineIATA,
+        string number,
+        DateTime originDate,
+        string? carousel,
+        DateTime? start,
+        DateTime? stop,
+        DateTime? firstBag,
+        DateTime? lastBag,
+        string? agent)
     {
         AirlineIATA = airlineIATA;
         Number = number;
@@ -20,18 +32,24 @@ public class Flight : BaseEntity
         AllocatedCarousel = carousel;
         Start = start;
         Stop = stop;
+        FirstBag = firstBag;
+        LastBag = lastBag;
+        Agent = agent;
     }
 
-    public void UpdateCarousel(string? carousel, DateTime? start, DateTime? stop)
+    public void UpdateCarousel(string? carousel, DateTime? start, DateTime? stop, DateTime? firstBag, DateTime? lastBag)
     {
         ActiveCarousel = carousel;
 
-        if (carousel is not null)
+        if (!string.IsNullOrEmpty(carousel))
         {
             AllocatedCarousel = carousel;
         }
 
         Start = start;
         Stop = stop;
+
+        FirstBag ??= firstBag;
+        LastBag ??= lastBag;
     }
 }
