@@ -65,7 +65,22 @@ public class BagCreateHandler : IRequestHandler<BagCreateRequest, BagDto>
 
         if (flights.Count > 1)
         {
-            flights = flights.Where(x => x.FirstBag <= utcNow && x.Stop >= utcNow && x.LastBag == null).ToList();
+            var filteredFlights = flights.Where(x => x.FirstBag != null && x.FirstBag <= utcNow && x.Stop >= utcNow).ToList();
+
+            if (filteredFlights.Count > 0)
+            {
+                flights = filteredFlights;
+            }
+
+            if (filteredFlights.Count > 1)
+            {
+                filteredFlights = filteredFlights.Where(x => x.LastBag == null).ToList();
+
+                if (filteredFlights.Count > 0)
+                {
+                    flights = filteredFlights;
+                }
+            }
         }
 
         var result = flights.Count > 0
