@@ -19,7 +19,7 @@ public static class ModelBuilderExtensions
 
         modelBuilder.ConfigureTablesAndOwnedTypes(dbContext);
 
-        modelBuilder.ConfigureSoftDelete();
+        //modelBuilder.ConfigureSoftDelete();
     }
 
     private static void ConfigureTablesAndOwnedTypes(this ModelBuilder modelBuilder, DbContext dbContext)

@@ -1,6 +1,6 @@
 ﻿namespace PozitronDev.BagTrack.Domain.Bags;
 
-public class Airline : IAggregateRoot
+public class Airline
 {
     public int Id { get; private set; }
     public string IATA { get; private set; } = default!;

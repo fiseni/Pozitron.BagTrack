@@ -23,17 +23,4 @@ public class BagTrackDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
         => modelBuilder.ConfigureCustomRules(this, typeof(BagTrackMarker).Assembly);
-
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        // The order is important. Apply soft delete then auditing.
-        this.ApplySoftDelete();
-        //this.ApplyAuditing(_dateTime, _currentUser);
-
-        var result = await base.SaveChangesAsync(cancellationToken);
-
-        //await this.PublishDomainEvents(_mediator);
-
-        return result;
-    }
 }

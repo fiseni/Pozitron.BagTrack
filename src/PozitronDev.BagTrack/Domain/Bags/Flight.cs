@@ -1,7 +1,8 @@
 ﻿namespace PozitronDev.BagTrack.Domain.Bags;
 
-public class Flight : BaseEntity
+public class Flight
 {
+    public Guid Id { get; private set; }
     public string AirlineIATA { get; private set; } = default!;
     public string Number { get; private set; } = default!;
     public DateTime OriginDate { get; private set; }

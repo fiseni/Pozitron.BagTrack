@@ -1,7 +1,8 @@
 ﻿namespace PozitronDev.BagTrack.Domain.Bags;
 
-public class Bag : BaseEntity, IAggregateRoot
+public class Bag
 {
+    public Guid Id { get; private set; }
     public string BagTagId { get; private set; } = default!;
     public string DeviceId { get; private set; } = default!;
     public string? Carousel { get; private set; }

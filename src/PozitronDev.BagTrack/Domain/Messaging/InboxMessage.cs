@@ -1,11 +1,12 @@
 ﻿namespace PozitronDev.BagTrack.Domain.Messaging;
 
-public class InboxMessage : BaseEntity, IAggregateRoot
+public class InboxMessage
 {
 #pragma warning disable CS8618
     private InboxMessage() { }
 #pragma warning restore CS8618
 
+    public Guid Id { get; private set; }
     public MessageType Type { get; private set; }
     public MessageStatus Status { get; private set; }
     public DateTime CreatedDate { get; private set; }

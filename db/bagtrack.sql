@@ -198,3 +198,100 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104045_bdb7e8b26614519ec58d')
+BEGIN
+    DROP INDEX [IX_OutboxMessage_IsDeleted] ON [OutboxMessage];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104045_bdb7e8b26614519ec58d')
+BEGIN
+    DROP INDEX [IX_InboxMessage_IsDeleted] ON [InboxMessage];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104045_bdb7e8b26614519ec58d')
+BEGIN
+    DROP INDEX [IX_Flight_AirlineIATA_ActiveCarousel_IsDeleted_Start_Stop] ON [Flight];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104045_bdb7e8b26614519ec58d')
+BEGIN
+    DROP INDEX [IX_Flight_AirlineIATA_Number_OriginDate_IsDeleted] ON [Flight];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104045_bdb7e8b26614519ec58d')
+BEGIN
+    DROP INDEX [IX_Flight_IsDeleted] ON [Flight];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104045_bdb7e8b26614519ec58d')
+BEGIN
+    DROP INDEX [IX_Bag_IsDeleted] ON [Bag];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104045_bdb7e8b26614519ec58d')
+BEGIN
+    DECLARE @var0 sysname;
+    SELECT @var0 = [d].[name]
+    FROM [sys].[default_constraints] [d]
+    INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[OutboxMessage]') AND [c].[name] = N'IsDeleted');
+    IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [OutboxMessage] DROP CONSTRAINT [' + @var0 + '];');
+    ALTER TABLE [OutboxMessage] DROP COLUMN [IsDeleted];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104045_bdb7e8b26614519ec58d')
+BEGIN
+    DECLARE @var1 sysname;
+    SELECT @var1 = [d].[name]
+    FROM [sys].[default_constraints] [d]
+    INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[InboxMessage]') AND [c].[name] = N'IsDeleted');
+    IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [InboxMessage] DROP CONSTRAINT [' + @var1 + '];');
+    ALTER TABLE [InboxMessage] DROP COLUMN [IsDeleted];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104045_bdb7e8b26614519ec58d')
+BEGIN
+    DECLARE @var2 sysname;
+    SELECT @var2 = [d].[name]
+    FROM [sys].[default_constraints] [d]
+    INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Flight]') AND [c].[name] = N'IsDeleted');
+    IF @var2 IS NOT NULL EXEC(N'ALTER TABLE [Flight] DROP CONSTRAINT [' + @var2 + '];');
+    ALTER TABLE [Flight] DROP COLUMN [IsDeleted];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104045_bdb7e8b26614519ec58d')
+BEGIN
+    DECLARE @var3 sysname;
+    SELECT @var3 = [d].[name]
+    FROM [sys].[default_constraints] [d]
+    INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Bag]') AND [c].[name] = N'IsDeleted');
+    IF @var3 IS NOT NULL EXEC(N'ALTER TABLE [Bag] DROP CONSTRAINT [' + @var3 + '];');
+    ALTER TABLE [Bag] DROP COLUMN [IsDeleted];
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104045_bdb7e8b26614519ec58d')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20231028104045_bdb7e8b26614519ec58d', N'7.0.11');
+END;
+GO
+
+COMMIT;
+GO
+

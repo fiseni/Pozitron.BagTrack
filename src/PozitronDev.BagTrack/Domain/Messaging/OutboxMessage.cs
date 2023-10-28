@@ -1,11 +1,12 @@
 ﻿namespace PozitronDev.BagTrack.Domain.Messaging;
 
-public class OutboxMessage : BaseEntity, IAggregateRoot
+public class OutboxMessage
 {
 #pragma warning disable CS8618
     private OutboxMessage() { }
 #pragma warning restore CS8618
 
+    public Guid Id { get; private set; }
     public MessageType Type { get; private set; }
     public MessageStatus Status { get; private set; }
     public DateTime CreatedDate { get; private set; }
