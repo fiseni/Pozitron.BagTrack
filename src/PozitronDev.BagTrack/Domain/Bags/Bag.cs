@@ -8,6 +8,7 @@ public class Bag
     public string? Carousel { get; private set; }
     public string? AirlineIATA { get; private set; }
     public string? Flight { get; private set; }
+    public string? Agent { get; private set; }
     public string? JulianDate { get; private set; }
     public DateTime Date { get; private set; }
     public bool IsResponseNeeded { get; private set; }

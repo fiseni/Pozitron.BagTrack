@@ -295,3 +295,22 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104645_19da469a55e95d282d82')
+BEGIN
+    ALTER TABLE [Bag] ADD [Agent] varchar(50) NULL;
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028104645_19da469a55e95d282d82')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20231028104645_19da469a55e95d282d82', N'7.0.11');
+END;
+GO
+
+COMMIT;
+GO
+

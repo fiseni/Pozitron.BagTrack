@@ -12,6 +12,7 @@ public class BagConfiguration : IEntityTypeConfiguration<Bag>
         builder.Property(x => x.Carousel).HasMaxLength(10).IsUnicode(false);
         builder.Property(x => x.AirlineIATA).HasMaxLength(10).IsUnicode(false);
         builder.Property(x => x.Flight).HasMaxLength(50).IsUnicode(false);
+        builder.Property(x => x.Agent).HasMaxLength(50).IsUnicode(false);
         builder.Property(x => x.JulianDate).HasMaxLength(10).IsUnicode(false);
 
         builder.HasIndex(x => x.BagTagId);
