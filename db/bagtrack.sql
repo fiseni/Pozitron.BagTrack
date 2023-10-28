@@ -314,3 +314,28 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028160850_c98f977fecd46df95cbf')
+BEGIN
+    CREATE INDEX [IX_Flight_AirlineIATA_ActiveCarousel_Start_Stop] ON [Flight] ([AirlineIATA], [ActiveCarousel], [Start], [Stop]);
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028160850_c98f977fecd46df95cbf')
+BEGIN
+    CREATE INDEX [IX_Flight_AirlineIATA_Number_OriginDate] ON [Flight] ([AirlineIATA], [Number], [OriginDate]);
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231028160850_c98f977fecd46df95cbf')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20231028160850_c98f977fecd46df95cbf', N'7.0.11');
+END;
+GO
+
+COMMIT;
+GO
+

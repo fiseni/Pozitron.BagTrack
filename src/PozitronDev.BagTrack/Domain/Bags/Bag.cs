@@ -18,19 +18,36 @@ public class Bag
                string bagTagId,
                string deviceId,
                string? carousel,
-               string? airlineIATA,
-               string[]? flightNumbers,
+               IEnumerable<FlightInfo> flightInfo,
                string? isResponseNeeded,
                string? julianDate)
     {
         BagTagId = bagTagId;
         DeviceId = deviceId;
         Carousel = carousel;
-        AirlineIATA = airlineIATA;
 
-        Flight = flightNumbers is not null && flightNumbers.Length > 0
-            ? string.Join(",", flightNumbers)
-            : null;
+        AirlineIATA = flightInfo.FirstOrDefault()?.AirlineIATA;
+
+        var flightNumbers = flightInfo
+            .Where(x => !string.IsNullOrEmpty(x.FlightNumber))
+            .Select(x => x.FlightNumber)
+            .ToArray();
+
+        if (flightNumbers.Length > 0)
+        {
+            Flight = string.Join(",", flightNumbers);
+        }
+
+        var agents = flightInfo
+            .Where(x => !string.IsNullOrEmpty(x.Agent))
+            .Select(x => x.Agent)
+            .Distinct()
+            .ToArray();
+
+        if (agents.Length > 0)
+        {
+            Agent = string.Join(",", agents);
+        }
 
         IsResponseNeeded = isResponseNeeded is not null && isResponseNeeded.Equals("y", StringComparison.OrdinalIgnoreCase);
 

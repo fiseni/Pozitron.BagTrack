@@ -12,5 +12,8 @@ public class FlightConfiguration : IEntityTypeConfiguration<Flight>
         builder.Property(x => x.ActiveCarousel).HasMaxLength(10).IsUnicode(false);
         builder.Property(x => x.AllocatedCarousel).HasMaxLength(10).IsUnicode(false);
         builder.Property(x => x.Agent).HasMaxLength(20).IsUnicode(false);
+
+        builder.HasIndex(x => new { x.AirlineIATA, x.ActiveCarousel, x.Start, x.Stop });
+        builder.HasIndex(x => new { x.AirlineIATA, x.Number, x.OriginDate });
     }
 }

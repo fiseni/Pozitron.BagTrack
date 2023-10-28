@@ -46,11 +46,12 @@
     <thead>
         <tr>
             <th>BagTag Id</th>
-            <th>Device Id</th>
             <th>Date</th>
             <th>Carousel</th>
             <th>Airline IATA</th>
             <th>Flight</th>
+            <th>Agent</th>
+            <th>Device Id</th>
         </tr>
     </thead>
     <tbody>
@@ -58,11 +59,12 @@
         {
             <tr>
                 <td>@bag.BagTagId</td>
-                <td>@bag.DeviceId</td>
                 <td>@bag.Date.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</td>
                 <td>@bag.Carousel</td>
                 <td>@bag.AirlineIATA</td>
                 <td>@bag.Flight</td>
+                <td>@bag.Agent</td>
+                <td>@bag.DeviceId</td>
             </tr>
         }
     </tbody>
