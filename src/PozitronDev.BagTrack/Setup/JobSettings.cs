@@ -7,5 +7,8 @@ public class JobSettings
     public string? DashboardUsername { get; set; }
     public string? DashboardPassword { get; set; }
 
-    public string? SampleJob { get; set; }
+    public string? CleanBagsJob { get; set; }
+    public string? CleanFlightsJob { get; set; }
+    public string? CleanInboxMessagesJob { get; set; }
+    public int CleanOlderThanDays { get; set; } = 30;
 }

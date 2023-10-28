@@ -331,6 +331,7 @@ ASALocalRun/
 # Developer config files
 **/appsettings.Development.json
 **/appsettings.Staging.json
+**/appsettings.Deployed.json
 
 # DS_Store files from VS for Mac
 *.DS_Store

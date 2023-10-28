@@ -75,14 +75,15 @@ public static class BagTrackServices
         {
             PrepareSchemaIfNecessary = false,
             EnableHeavyMigrations = false,
-            QueuePollInterval = TimeSpan.FromSeconds(15),
-            SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+            //QueuePollInterval = TimeSpan.FromSeconds(15),
+            //SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
         };
         builder.Services.AddHangfire(x => x.UseSqlServerStorage(connectionString, options).UseConsole());
-        builder.Services.AddHangfireServer(options =>
-        {
-            options.WorkerCount = 1;
-        });
+        builder.Services.AddHangfireServer();
+        //builder.Services.AddHangfireServer(options =>
+        //{
+        //    options.WorkerCount = 1;
+        //});
 
         builder.Services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
         builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -132,7 +133,11 @@ public static class BagTrackServices
         GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 0 });
         GlobalJobFilters.Filters.Add(new ProlongExpirationTimeAttribute());
 
-        RecurringJob.AddOrUpdate<SampleJob>(nameof(SampleJob), job => job.Start(null!, CancellationToken.None), jobSettings.SampleJob);
+        RecurringJob.RemoveIfExists("SampleJob");
+
+        RecurringJob.AddOrUpdate<CleanBagsJob>(nameof(CleanBagsJob), job => job.Start(null!, CancellationToken.None), jobSettings.CleanBagsJob);
+        RecurringJob.AddOrUpdate<CleanFlightsJob>(nameof(CleanFlightsJob), job => job.Start(null!, CancellationToken.None), jobSettings.CleanFlightsJob);
+        RecurringJob.AddOrUpdate<CleanInboxMessagesJob>(nameof(CleanInboxMessagesJob), job => job.Start(null!, CancellationToken.None), jobSettings.CleanInboxMessagesJob);
 
         return app;
 
