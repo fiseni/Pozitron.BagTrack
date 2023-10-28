@@ -2,7 +2,7 @@
 
 namespace PozitronDev.BagTrack.Setup.Jobs;
 
-public class ConfigurationReloadJob : BackgroundService
+public class ConfigurationReloadJob : IHostedService
 {
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
@@ -11,13 +11,16 @@ public class ConfigurationReloadJob : BackgroundService
         _serviceScopeFactory = serviceScopeFactory;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
-        await Task.Delay(2000, stoppingToken);
-
         var scope = _serviceScopeFactory.CreateScope();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-        await mediator.Send(new ConfigurationReloadRequest(), stoppingToken);
+        await mediator.Send(new ConfigurationReloadRequest(), cancellationToken);
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace PozitronDev.BagTrack.Setup.Jobs;
 
-public class DbInitializerJob : BackgroundService
+public class DbInitializerJob : IHostedService
 {
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
@@ -10,11 +10,17 @@ public class DbInitializerJob : BackgroundService
     {
         _serviceScopeFactory = serviceScopeFactory;
     }
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
         var scope = _serviceScopeFactory.CreateScope();
         var dbInitializer = scope.ServiceProvider.GetRequiredService<BagTrackDbInitializer>();
 
-        await dbInitializer.SeedAsync(stoppingToken);
+        await dbInitializer.SeedAsync(cancellationToken);
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
     }
 }
