@@ -20,7 +20,7 @@ public class CleanBagsJob
 
     public async Task Start(PerformContext context, CancellationToken cancellationToken)
     {
-        var date = _dateTime.UtcNow.AddDays(-1 * _jobSettings.CleanOlderThanDays);
+        var date = _dateTime.UtcNow.AddDays(-1 * _jobSettings.CleanBagsOlderThanDays);
 
         using var scope = _serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<BagTrackDbContext>();

@@ -10,5 +10,7 @@ public class JobSettings
     public string? CleanBagsJob { get; set; }
     public string? CleanFlightsJob { get; set; }
     public string? CleanInboxMessagesJob { get; set; }
-    public int CleanOlderThanDays { get; set; } = 30;
+    public int CleanBagsOlderThanDays { get; set; } = 30;
+    public int CleanFlightsOlderThanDays { get; set; } = 30;
+    public int CleanInboxMessagesOlderThanDays { get; set; } = 30;
 }
