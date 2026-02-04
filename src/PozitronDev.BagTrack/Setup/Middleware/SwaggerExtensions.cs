@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿
+using Microsoft.OpenApi;
 
 namespace PozitronDev.BagTrack.Setup.Middleware;
 
@@ -27,22 +28,22 @@ public static class SwaggerExtensions
                 Scheme = "ApiKeyScheme"
             });
 
-            var key = new OpenApiSecurityScheme()
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "ApiKey"
-                },
-                In = ParameterLocation.Header
-            };
+            //var key = new OpenApiSecurityScheme()
+            //{
+            //    Reference = new OpenApiReference
+            //    {
+            //        Type = ReferenceType.SecurityScheme,
+            //        Id = "ApiKey"
+            //    },
+            //    In = ParameterLocation.Header
+            //};
 
-            var requirement = new OpenApiSecurityRequirement
-            {
-                { key, new List<string>() }
-            };
+            //var requirement = new OpenApiSecurityRequirement
+            //{
+            //    { key, new List<string>() }
+            //};
 
-            c.AddSecurityRequirement(requirement);
+            //c.AddSecurityRequirement(requirement);
         });
     }
 

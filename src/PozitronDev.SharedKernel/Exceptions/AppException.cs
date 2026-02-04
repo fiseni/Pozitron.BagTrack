@@ -1,6 +1,5 @@
 ﻿namespace PozitronDev.SharedKernel.Exceptions;
 
-[Serializable]
 public class AppException : Exception
 {
     /// <summary>
@@ -20,10 +19,5 @@ public class AppException : Exception
     public AppException(string message, Exception innerException) : base(message, innerException)
     {
 
-    }
-
-    protected AppException(SerializationInfo serializationInfo, StreamingContext streamingContext)
-    : base(serializationInfo, streamingContext)
-    {
     }
 }
