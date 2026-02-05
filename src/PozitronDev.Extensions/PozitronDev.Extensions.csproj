@@ -1,27 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.27.0" />
-    <PackageReference Include="BlazarTech.QueryableValues.SqlServer" Version="10.0.0" />
-    <PackageReference Include="DocumentFormat.OpenXml" Version="3.4.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.2" />
-    <PackageReference Include="AutoMapper" Version="14.0.0" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.2" />
-    <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
-    <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="9.3.1" />
-    <PackageReference Include="PozitronDev.Convert" Version="1.1.0" />
-    <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="BlazarTech.QueryableValues.SqlServer" />
+    <PackageReference Include="DocumentFormat.OpenXml" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="FluentValidation.AspNetCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="Serilog.AspNetCore" />
+    <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" />
+    <PackageReference Include="PozitronDev.Convert" />
+    <PackageReference Include="MediatR" />
   </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\PozitronDev.SharedKernel\PozitronDev.SharedKernel.csproj" />
   </ItemGroup>
-
+  
 </Project>
